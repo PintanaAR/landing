@@ -5,10 +5,13 @@ import { Modules } from '@/components/landing/Modules'
 import { POSFeature } from '@/components/landing/POSFeature'
 import { Stats } from '@/components/landing/Stats'
 import { Contact } from '@/components/landing/Contact'
+import { Footer } from '@/components/landing/Footer'
+import { StructuredData } from '@/components/landing/StructuredData'
 
 export default function Page() {
   return (
     <>
+      <StructuredData />
       <Nav />
       <main id="top">
         <Hero />
@@ -18,6 +21,7 @@ export default function Page() {
         <Stats />
         <Contact />
       </main>
+      <Footer />
     </>
   )
 }
