@@ -229,14 +229,17 @@ export function Hero() {
             style={{ fontSize: 'clamp(44px, 6vw, 68px)' }}
           >
             El sistema que su pintería{' '}
-            <span
-              className="bg-[linear-gradient(110deg,var(--purple)_0%,var(--purple-light)_45%,var(--purple)_100%)] bg-clip-text text-transparent"
-              style={{
-                backgroundSize: '220% 100%',
-                animation: reduce ? undefined : 'hero-shimmer 5s ease-in-out infinite',
-              }}
-            >
-              merecía
+            <span className="relative inline-block">
+              <span
+                className="bg-[linear-gradient(110deg,var(--purple)_0%,var(--purple-light)_45%,var(--purple)_100%)] bg-clip-text text-transparent"
+                style={{
+                  backgroundSize: '220% 100%',
+                  animation: reduce ? undefined : 'hero-shimmer 5s ease-in-out infinite',
+                }}
+              >
+                merecía
+              </span>
+              <BrushUnderline reduce={!!reduce} />
             </span>{' '}
             desde siempre
           </motion.h1>
@@ -287,5 +290,54 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg"
       />
     </section>
+  )
+}
+
+function BrushUnderline({ reduce }: { reduce: boolean }) {
+  const draw = reduce
+    ? { initial: { pathLength: 1, opacity: 1 } }
+    : {
+        initial: { pathLength: 0, opacity: 0 },
+        animate: { pathLength: 1, opacity: 1 },
+        transition: {
+          pathLength: { duration: 1.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+          opacity: { duration: 0.25 },
+          delay: 0.85,
+        },
+      }
+
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 120 14"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute -bottom-[0.32em] left-[-2%] h-[0.38em] w-[104%]"
+    >
+      <defs>
+        <linearGradient id="brush-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="var(--purple)" stopOpacity="0.25" />
+          <stop offset="35%" stopColor="var(--purple-light)" stopOpacity="0.95" />
+          <stop offset="70%" stopColor="var(--purple)" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="var(--purple-light)" stopOpacity="0.2" />
+        </linearGradient>
+      </defs>
+      <motion.path
+        d="M 3 8 C 22 3, 42 11, 60 7 C 78 3, 98 11, 117 6"
+        stroke="url(#brush-grad)"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        fill="none"
+        {...draw}
+      />
+      <motion.path
+        d="M 5 10 C 26 6, 44 12, 62 9 C 80 6, 96 12, 115 9"
+        stroke="url(#brush-grad)"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        fill="none"
+        opacity={0.55}
+        {...draw}
+      />
+    </svg>
   )
 }

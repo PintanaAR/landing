@@ -28,10 +28,34 @@ const bars = [
 ]
 
 const inventory = [
-  { sku: 'PIN-LAT-04', name: 'Látex interior 20L · Alba', stock: 12, status: 'OK' },
-  { sku: 'PIN-ESM-21', name: 'Esmalte sintético blanco 4L', stock: 4, status: 'BAJO' },
-  { sku: 'PIN-LAT-08', name: 'Látex exterior 10L · Sherwin', stock: 22, status: 'OK' },
-  { sku: 'PIN-DIL-03', name: 'Diluyente · aguarrás 1L', stock: 2, status: 'CRÍT' },
+  {
+    sku: 'PIN-LAT-04',
+    name: 'Látex interior 20L · Alba',
+    stock: 12,
+    status: 'OK',
+    swatch: '#F5F5F5',
+  },
+  {
+    sku: 'PIN-ESM-21',
+    name: 'Esmalte sintético blanco 4L',
+    stock: 4,
+    status: 'BAJO',
+    swatch: '#FAFAFA',
+  },
+  {
+    sku: 'PIN-LAT-08',
+    name: 'Látex exterior 10L · Beige claro',
+    stock: 22,
+    status: 'OK',
+    swatch: '#DDC8A0',
+  },
+  {
+    sku: 'PIN-DIL-03',
+    name: 'Diluyente · aguarrás 1L',
+    stock: 2,
+    status: 'CRÍT',
+    swatch: 'transparent',
+  },
 ]
 
 const sidebarItems = [
@@ -398,7 +422,22 @@ export function AppWindow() {
                         }
                       >
                         <td className="px-4 py-2.5 font-mono text-text-2">{row.sku}</td>
-                        <td className="px-4 py-2.5 text-text">{row.name}</td>
+                        <td className="px-4 py-2.5 text-text">
+                          <span className="inline-flex items-center gap-2">
+                            <span
+                              aria-hidden
+                              className="block h-3 w-3 shrink-0 rounded-[3px] ring-1 ring-inset ring-white/15"
+                              style={{
+                                backgroundColor: row.swatch,
+                                backgroundImage:
+                                  row.swatch === 'transparent'
+                                    ? 'repeating-linear-gradient(45deg,rgba(255,255,255,0.18)_0_2px,transparent_2px_4px)'
+                                    : undefined,
+                              }}
+                            />
+                            {row.name}
+                          </span>
+                        </td>
                         <td className="px-4 py-2.5 text-right text-text">{row.stock}</td>
                         <td className="px-4 py-2.5 text-right">
                           <span

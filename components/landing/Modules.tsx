@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Database,
   ShoppingCart,
-  Boxes,
+  PaintBucket,
   Users,
   CheckCircle2,
 } from 'lucide-react'
@@ -129,7 +129,7 @@ export function Modules() {
           <motion.div variants={fadeUp}>
             <BentoCard className="h-full">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
-                <Boxes size={20} strokeWidth={2} />
+                <PaintBucket size={20} strokeWidth={2} />
               </span>
               <h3 className="mt-5 font-display text-[20px] font-bold tracking-[-0.02em] text-text">
                 Inventario
