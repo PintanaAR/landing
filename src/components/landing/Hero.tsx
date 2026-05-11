@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { MagneticButton } from '@/components/ui/MagneticButton'
+import { HeroPaintBackdrop } from '@/components/ui/HeroPaintBackdrop'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -126,6 +127,9 @@ export function Hero() {
     >
       {/* Solid base */}
       <div className="absolute inset-0 bg-bg" aria-hidden />
+
+      {/* Paint identity layer — brush wash, splatters, drifting color chips */}
+      <HeroPaintBackdrop />
 
       {/* Faint ambient grid — wide soft radial mask */}
       <div
