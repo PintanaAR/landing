@@ -3,85 +3,154 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
-  Sparkles,
-  MessageCircle,
+  Mic,
+  BarChart3,
+  BellRing,
   Smartphone,
   ShieldCheck,
-  Mic,
   Paperclip,
   Phone,
   Video,
   MoreVertical,
   Check,
   CheckCheck,
+  Play,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
+type ChartItem = { label: string; pct: number }
+
 type Step =
   | { kind: 'user'; text: string }
+  | { kind: 'user-audio'; durationLabel: string; waveform: number[] }
   | { kind: 'typing' }
   | { kind: 'ai'; text: string }
+  | { kind: 'ai-chart'; title: string; items: ChartItem[]; total: string }
+  | { kind: 'pause'; ms: number }
 
-type Message = {
-  id: number
-  kind: 'user' | 'ai'
-  text: string
-}
+type Message =
+  | { id: number; kind: 'user'; text: string }
+  | { id: number; kind: 'user-audio'; durationLabel: string; waveform: number[] }
+  | { id: number; kind: 'ai'; text: string }
+  | { id: number; kind: 'ai-chart'; title: string; items: ChartItem[]; total: string }
 
 const SCRIPT: Step[] = [
-  { kind: 'user', text: '¿Cuánto vendí hoy?' },
+  // Scenario A — voice note → stock update
+  {
+    kind: 'user-audio',
+    durationLabel: '0:08',
+    waveform: [
+      20, 34, 52, 66, 44, 60, 82, 56, 70, 90, 64, 50, 36, 46, 60, 76, 56, 40,
+      30, 50, 64, 80, 60, 45, 35, 24, 40, 30,
+    ],
+  },
   { kind: 'typing' },
   {
     kind: 'ai',
     text:
-      'Hoy llevás $ 487.230 en 49 tickets. La hora más fuerte fue 11:30 (6 tickets).',
-  },
-  { kind: 'user', text: 'Sumá 12 baldes de látex blanco 20L de Alba al stock' },
-  { kind: 'typing' },
-  {
-    kind: 'ai',
-    text: '✅ Listo. Látex interior 20L · Alba: 24 unidades en depósito Centro.',
-  },
-  { kind: 'user', text: 'Hacé factura A a Constructora Sur por $ 124.560' },
-  { kind: 'typing' },
-  {
-    kind: 'ai',
-    text:
-      '¿Confirma? Factura A · Constructora Sur · CUIT 30-71042... · $ 124.560.',
+      'Entendí: 20 baldes látex blanco 20L · Alba + 15 baldes de 4L. ¿Cargo al depósito Centro?',
   },
   { kind: 'user', text: 'Sí, dale' },
   { kind: 'typing' },
   {
     kind: 'ai',
-    text:
-      '✅ Factura emitida. CAE 75041234567890. Te adjunto el PDF al chat.',
+    text: '✅ Stock cargado. 35 unidades en total. Te paso el comprobante por mail.',
+  },
+  { kind: 'pause', ms: 1800 },
+
+  // Scenario B — analytics + inline chart
+  { kind: 'user', text: '¿Qué colores vendí más esta semana?' },
+  { kind: 'typing' },
+  {
+    kind: 'ai-chart',
+    title: 'Top 5 colores · semana en curso',
+    items: [
+      { label: 'Blanco', pct: 38 },
+      { label: 'Beige', pct: 22 },
+      { label: 'Gris', pct: 18 },
+      { label: 'Negro', pct: 12 },
+      { label: 'Marfil', pct: 10 },
+    ],
+    total: '127 baldes vendidos · $ 1.842.500',
+  },
+  { kind: 'pause', ms: 2200 },
+
+  // Scenario C — proactive alert
+  {
+    kind: 'ai',
+    text: '⚠️ Stock bajo: Esmalte sintético blanco 4L queda en 3 unidades.',
+  },
+  {
+    kind: 'ai',
+    text: 'Última compra a Sherwin: $ 9.820/u hace 6 días. ¿Repongo 12 al mismo precio?',
+  },
+  { kind: 'user', text: 'Sí' },
+  { kind: 'typing' },
+  {
+    kind: 'ai',
+    text: '✅ Orden de compra #1247 enviada a Sherwin. Te aviso cuando confirmen.',
   },
 ]
 
-const STATIC_MESSAGES: Message[] = SCRIPT.filter(
-  (s): s is { kind: 'user' | 'ai'; text: string } => s.kind !== 'typing'
-).map((s, i) => ({ id: i, kind: s.kind, text: s.text }))
+const STATIC_MESSAGES: Message[] = (() => {
+  let id = 0
+  const out: Message[] = []
+  for (const step of SCRIPT) {
+    if (step.kind === 'typing' || step.kind === 'pause') continue
+    id += 1
+    if (step.kind === 'user') out.push({ id, kind: 'user', text: step.text })
+    else if (step.kind === 'user-audio')
+      out.push({ id, kind: 'user-audio', durationLabel: step.durationLabel, waveform: step.waveform })
+    else if (step.kind === 'ai') out.push({ id, kind: 'ai', text: step.text })
+    else if (step.kind === 'ai-chart')
+      out.push({
+        id,
+        kind: 'ai-chart',
+        title: step.title,
+        items: step.items,
+        total: step.total,
+      })
+  }
+  return out
+})()
 
 const features = [
   {
-    icon: Sparkles,
-    title: 'Hace lo mismo que un empleado',
+    icon: Mic,
+    title: 'Voz, texto y fotos — todo le sirve',
     desc:
-      'Si una persona puede hacerlo en el sistema, el asistente lo hace en WhatsApp. Sin excepciones.',
+      'Mandele un audio desde el mostrador, una foto del remito o un mensaje. El asistente entiende los tres y actúa.',
   },
   {
-    icon: MessageCircle,
-    title: 'Entiende el castellano de pintería',
+    icon: BarChart3,
+    title: 'Análisis y reportes al toque',
     desc:
-      'Reconoce productos, marcas, unidades (4L, 20L) y la forma de hablar de mostrador.',
+      '"¿Qué color vendí más?" "¿Quién me debe?" "Comparame con el mes pasado." Le contesta con números, no con teoría.',
   },
   {
-    icon: Smartphone,
-    title: 'Su WhatsApp de siempre',
+    icon: BellRing,
+    title: 'Avisa antes que pase',
     desc:
-      'No hay que instalar nada nuevo. Se agrega el contacto del asistente y listo.',
+      'Stock bajo, cliente que se atrasa, factura por reenviar — lo nota primero y le pinga con la acción ya armada.',
   },
 ]
+
+function stepWait(step: Step): number {
+  switch (step.kind) {
+    case 'typing':
+      return 1500
+    case 'pause':
+      return step.ms
+    case 'user':
+      return 1300
+    case 'user-audio':
+      return 2400
+    case 'ai':
+      return 2200
+    case 'ai-chart':
+      return 3400
+  }
+}
 
 export function WhatsAppFeature() {
   const reduce = useReducedMotion()
@@ -113,20 +182,47 @@ export function WhatsAppFeature() {
         timer = setTimeout(() => {
           stepIndex = 0
           reset()
-          timer = setTimeout(advance, 600)
-        }, 6500)
+          timer = setTimeout(advance, 700)
+        }, 6800)
         return
       }
       const step = SCRIPT[stepIndex++]
+      const wait = stepWait(step)
+
       if (step.kind === 'typing') {
         setIsTyping(true)
-        timer = setTimeout(advance, 1500)
+        timer = setTimeout(advance, wait)
         return
       }
+      if (step.kind === 'pause') {
+        setIsTyping(false)
+        timer = setTimeout(advance, wait)
+        return
+      }
+
       setIsTyping(false)
       const id = ++idRef.current
-      setMessages((prev) => [...prev, { id, kind: step.kind, text: step.text }])
-      timer = setTimeout(advance, step.kind === 'user' ? 1300 : 2300)
+      const next: Message =
+        step.kind === 'user'
+          ? { id, kind: 'user', text: step.text }
+          : step.kind === 'user-audio'
+          ? {
+              id,
+              kind: 'user-audio',
+              durationLabel: step.durationLabel,
+              waveform: step.waveform,
+            }
+          : step.kind === 'ai'
+          ? { id, kind: 'ai', text: step.text }
+          : {
+              id,
+              kind: 'ai-chart',
+              title: step.title,
+              items: step.items,
+              total: step.total,
+            }
+      setMessages((prev) => [...prev, next])
+      timer = setTimeout(advance, wait)
     }
 
     timer = setTimeout(advance, 600)
@@ -174,7 +270,6 @@ export function WhatsAppFeature() {
                   '0 0 0 1px rgba(255,255,255,0.04), 0 40px 90px rgba(0,0,0,0.7), 0 0 80px rgba(139,92,246,0.14)',
               }}
             >
-              {/* Notch */}
               <div
                 aria-hidden
                 className="absolute left-1/2 top-2 z-20 h-6 w-28 -translate-x-1/2 rounded-full bg-black"
@@ -216,7 +311,7 @@ export function WhatsAppFeature() {
                   <div className="space-y-1.5">
                     <AnimatePresence initial={false}>
                       {messages.map((m) => (
-                        <Bubble key={m.id} kind={m.kind} text={m.text} reduce={!!reduce} />
+                        <Bubble key={m.id} message={m} reduce={!!reduce} />
                       ))}
                       {isTyping && (
                         <motion.div
@@ -267,9 +362,9 @@ export function WhatsAppFeature() {
               </span>
             </h2>
             <p className="mt-5 max-w-[54ch] text-[17px] leading-[1.7] text-text-2">
-              Hable con el asistente como con un empleado. Le pide algo, él lo hace.
-              Facturar, cargar stock, ver caja, emitir notas — todo desde el chat de
-              siempre, sin tocar la computadora.
+              Hable con el asistente como con un empleado más. Le manda un audio,
+              una foto o un mensaje — entiende los tres y hace cualquier cosa que se
+              haga en el sistema.
             </p>
 
             <ul className="mt-8 space-y-5">
@@ -282,7 +377,7 @@ export function WhatsAppFeature() {
                     <h4 className="font-display text-[16px] font-bold tracking-[-0.01em] text-text">
                       {title}
                     </h4>
-                    <p className="mt-1 max-w-[48ch] text-[14px] leading-[1.6] text-text-2">
+                    <p className="mt-1 max-w-[50ch] text-[14px] leading-[1.6] text-text-2">
                       {desc}
                     </p>
                   </div>
@@ -290,17 +385,31 @@ export function WhatsAppFeature() {
               ))}
             </ul>
 
-            <div className="mt-8 inline-flex items-start gap-3 rounded-xl border border-border bg-surface-2/60 px-4 py-3">
-              <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-purple/15 text-purple">
-                <ShieldCheck size={14} strokeWidth={2.2} />
-              </span>
-              <p className="text-[13px] leading-[1.5] text-text-2">
-                <span className="font-semibold text-text">
-                  Confirma antes de mover plata.
-                </span>{' '}
-                Para facturar, cobrar o cargar stock, el asistente le pide el OK
-                primero. Usted siempre tiene la última palabra.
-              </p>
+            <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface-2/60">
+              <div className="flex items-start gap-3 px-4 py-3">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-purple/15 text-purple">
+                  <ShieldCheck size={14} strokeWidth={2.2} />
+                </span>
+                <p className="text-[13px] leading-[1.5] text-text-2">
+                  <span className="font-semibold text-text">
+                    Confirma antes de mover plata.
+                  </span>{' '}
+                  Para facturar, cobrar o cargar stock, el asistente le pide el OK
+                  primero.
+                </p>
+              </div>
+              <div className="flex items-start gap-3 border-t border-border px-4 py-3">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-purple/15 text-purple">
+                  <Smartphone size={14} strokeWidth={2.2} />
+                </span>
+                <p className="text-[13px] leading-[1.5] text-text-2">
+                  <span className="font-semibold text-text">
+                    Su WhatsApp de siempre.
+                  </span>{' '}
+                  Sin app nueva, sin instalar nada — Pintana se agrega como un
+                  contacto más.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -309,50 +418,128 @@ export function WhatsAppFeature() {
   )
 }
 
-function Bubble({
-  kind,
-  text,
-  reduce,
-}: {
-  kind: 'user' | 'ai'
-  text: string
-  reduce: boolean
-}) {
-  const isUser = kind === 'user'
+function Bubble({ message, reduce }: { message: Message; reduce: boolean }) {
+  const isUser = message.kind === 'user' || message.kind === 'user-audio'
   return (
     <motion.div
       layout
       initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        'flex',
-        isUser ? 'justify-end' : 'justify-start',
-      )}
+      className={cn('flex', isUser ? 'justify-end' : 'justify-start')}
     >
       <div
         className={cn(
-          'relative max-w-[78%] rounded-[14px] px-3 py-2 text-[12.5px] leading-snug text-white shadow-[0_1px_0_rgba(0,0,0,0.2)]',
+          'relative max-w-[82%] rounded-[14px] px-3 py-2 text-white shadow-[0_1px_0_rgba(0,0,0,0.2)]',
           isUser ? 'bg-[#005C4B]' : 'bg-[#1F2C34]'
         )}
       >
-        <p className="whitespace-pre-wrap break-words">{text}</p>
-        <div
-          className={cn(
-            'mt-0.5 flex items-center justify-end gap-1 text-[9.5px] text-white/55',
-          )}
-        >
-          <span>11:32</span>
-          {isUser &&
-            (reduce ? (
-              <CheckCheck size={11} className="text-[#53BDEB]" />
-            ) : (
-              <CheckCheck size={11} className="text-[#53BDEB]" />
-            ))}
-          {!isUser && <Check size={11} className="text-white/45" />}
-        </div>
+        {message.kind === 'user' || message.kind === 'ai' ? (
+          <p className="whitespace-pre-wrap break-words text-[12.5px] leading-snug">
+            {message.text}
+          </p>
+        ) : message.kind === 'user-audio' ? (
+          <AudioBlock durationLabel={message.durationLabel} waveform={message.waveform} />
+        ) : (
+          <ChartBlock
+            title={message.title}
+            items={message.items}
+            total={message.total}
+            reduce={reduce}
+          />
+        )}
+        <BubbleMeta isUser={isUser} />
       </div>
     </motion.div>
+  )
+}
+
+function BubbleMeta({ isUser }: { isUser: boolean }) {
+  return (
+    <div className="mt-0.5 flex items-center justify-end gap-1 text-[9.5px] text-white/55">
+      <span>11:32</span>
+      {isUser ? (
+        <CheckCheck size={11} className="text-[#53BDEB]" aria-hidden />
+      ) : (
+        <Check size={11} className="text-white/45" aria-hidden />
+      )}
+    </div>
+  )
+}
+
+function AudioBlock({
+  durationLabel,
+  waveform,
+}: {
+  durationLabel: string
+  waveform: number[]
+}) {
+  return (
+    <div className="flex min-w-[210px] items-center gap-2.5 py-0.5">
+      <span
+        aria-hidden
+        className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/15"
+      >
+        <Play size={11} fill="currentColor" className="translate-x-px text-white" />
+      </span>
+      <div className="flex h-6 flex-1 items-center gap-[1.5px]">
+        {waveform.map((h, i) => (
+          <span
+            key={i}
+            className={cn(
+              'block w-[2px] rounded-full',
+              i < 6 ? 'bg-white/90' : 'bg-white/45'
+            )}
+            style={{ height: `${Math.max(10, h)}%` }}
+          />
+        ))}
+      </div>
+      <span className="text-[10px] tabular-nums text-white/65">{durationLabel}</span>
+    </div>
+  )
+}
+
+function ChartBlock({
+  title,
+  items,
+  total,
+  reduce,
+}: {
+  title: string
+  items: ChartItem[]
+  total: string
+  reduce: boolean
+}) {
+  return (
+    <div className="min-w-[230px] space-y-1.5">
+      <p className="text-[11.5px] font-semibold text-white">{title}</p>
+      <ul className="space-y-1.5 pt-1">
+        {items.map((it, i) => (
+          <li
+            key={it.label}
+            className="flex items-center gap-2 text-[11px] text-white/80"
+          >
+            <span className="w-12 shrink-0 truncate">{it.label}</span>
+            <span className="relative h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+              <motion.span
+                initial={reduce ? false : { width: 0 }}
+                animate={{ width: `${it.pct}%` }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.05 + i * 0.06,
+                }}
+                className="block h-full rounded-full bg-[#00A884]"
+              />
+            </span>
+            <span className="w-8 shrink-0 text-right tabular-nums text-white/55">
+              {it.pct}%
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p className="pt-1 text-[10.5px] text-white/55">{total}</p>
+    </div>
   )
 }
 
