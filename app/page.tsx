@@ -1,5 +1,6 @@
 import { Nav } from '@/components/landing/Nav'
 import { Hero } from '@/components/landing/Hero'
+import { AppWindow } from '@/components/landing/AppWindow'
 
 export default function Page() {
   return (
@@ -7,6 +8,7 @@ export default function Page() {
       <Nav />
       <main id="top">
         <Hero />
+        <AppWindow />
       </main>
     </>
   )
