@@ -15,8 +15,22 @@ import {
   Check,
   CheckCheck,
   Play,
+  ArrowLeft,
+  Smile,
+  Camera,
+  Signal,
+  Wifi,
+  BatteryFull,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
+
+const COLOR_SWATCHES: Record<string, string> = {
+  Blanco: '#F5F5F5',
+  Beige: '#DDC8A0',
+  Gris: '#7E8084',
+  Negro: '#1E1E1E',
+  Marfil: '#F0E7CC',
+}
 
 type ChartItem = { label: string; pct: number }
 
@@ -270,17 +284,34 @@ export function WhatsAppFeature() {
                   '0 0 0 1px rgba(255,255,255,0.04), 0 40px 90px rgba(0,0,0,0.7), 0 0 80px rgba(139,92,246,0.14)',
               }}
             >
+              {/* Dynamic island */}
               <div
                 aria-hidden
                 className="absolute left-1/2 top-2 z-20 h-6 w-28 -translate-x-1/2 rounded-full bg-black"
               />
 
-              <div className="flex h-full flex-col pt-10">
+              {/* OS status bar */}
+              <div className="absolute inset-x-0 top-0 z-10 flex h-9 items-center justify-between px-6 pt-2 text-[11px] font-semibold tabular-nums text-white">
+                <span>11:32</span>
+                <span className="flex items-center gap-1.5 text-white">
+                  <Signal size={11} strokeWidth={2.5} aria-hidden />
+                  <Wifi size={12} strokeWidth={2.5} aria-hidden />
+                  <BatteryFull size={16} strokeWidth={2.2} aria-hidden />
+                </span>
+              </div>
+
+              <div className="flex h-full flex-col pt-9">
                 {/* Chat header */}
-                <div className="flex items-center gap-3 border-b border-white/5 bg-[#1F2C34] px-3 py-2">
+                <div className="flex items-center gap-2.5 border-b border-white/5 bg-[#1F2C34] px-2.5 py-2">
+                  <ArrowLeft
+                    size={18}
+                    strokeWidth={2}
+                    className="shrink-0 text-white/70"
+                    aria-hidden
+                  />
                   <span
                     aria-hidden
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-purple text-[14px] font-extrabold text-white"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-purple text-[13px] font-extrabold text-white"
                   >
                     P
                   </span>
@@ -288,15 +319,12 @@ export function WhatsAppFeature() {
                     <p className="truncate text-[13px] font-semibold text-white">
                       Pintana · Asistente
                     </p>
-                    <p className="inline-flex items-center gap-1.5 text-[10px] text-[#8FA1AC]">
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#00A884]" />
-                      en línea
-                    </p>
+                    <p className="text-[10.5px] text-[#8FA1AC]">en línea</p>
                   </div>
-                  <div className="flex items-center gap-3 text-white/50">
-                    <Video size={16} aria-hidden />
-                    <Phone size={16} aria-hidden />
-                    <MoreVertical size={16} aria-hidden />
+                  <div className="flex items-center gap-3.5 text-white/65">
+                    <Video size={16} strokeWidth={1.9} aria-hidden />
+                    <Phone size={15} strokeWidth={1.9} aria-hidden />
+                    <MoreVertical size={16} strokeWidth={2} aria-hidden />
                   </div>
                 </div>
 
@@ -333,12 +361,25 @@ export function WhatsAppFeature() {
                 </div>
 
                 {/* Input bar */}
-                <div className="flex items-center gap-2 bg-[#1F2C34] px-2 py-2">
-                  <Paperclip size={16} className="text-white/40" aria-hidden />
-                  <div className="flex-1 rounded-full bg-[#2A3942] px-3 py-1.5 text-[12px] text-white/40">
-                    Mensaje
+                <div className="flex items-center gap-2 bg-[#1F2C34] px-2.5 pb-3 pt-2">
+                  <div className="flex flex-1 items-center gap-2 rounded-full bg-[#2A3942] px-3 py-2 text-[12.5px] text-white/45">
+                    <Smile size={18} strokeWidth={1.9} className="shrink-0" aria-hidden />
+                    <span className="flex-1 truncate">Mensaje</span>
+                    <Paperclip
+                      size={16}
+                      strokeWidth={1.9}
+                      className="shrink-0 -rotate-45"
+                      aria-hidden
+                    />
+                    <Camera size={16} strokeWidth={1.9} className="shrink-0" aria-hidden />
                   </div>
-                  <Mic size={16} className="text-white/40" aria-hidden />
+                  <button
+                    type="button"
+                    aria-label="Grabar mensaje de voz"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00A884] text-white"
+                  >
+                    <Mic size={16} strokeWidth={2.2} aria-hidden />
+                  </button>
                 </div>
               </div>
             </div>
@@ -426,16 +467,19 @@ function Bubble({ message, reduce }: { message: Message; reduce: boolean }) {
       initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-      className={cn('flex', isUser ? 'justify-end' : 'justify-start')}
+      className={cn('flex', isUser ? 'justify-end pr-2' : 'justify-start pl-2')}
     >
       <div
         className={cn(
-          'relative max-w-[82%] rounded-[14px] px-3 py-2 text-white shadow-[0_1px_0_rgba(0,0,0,0.2)]',
-          isUser ? 'bg-[#005C4B]' : 'bg-[#1F2C34]'
+          'relative max-w-[82%] px-2.5 py-1.5 text-white shadow-[0_1px_0_rgba(0,0,0,0.2)]',
+          isUser
+            ? 'rounded-[8px] rounded-tr-[2px] bg-[#005C4B]'
+            : 'rounded-[8px] rounded-tl-[2px] bg-[#1F2C34]'
         )}
       >
+        <BubbleTail kind={isUser ? 'sent' : 'received'} />
         {message.kind === 'user' || message.kind === 'ai' ? (
-          <p className="whitespace-pre-wrap break-words text-[12.5px] leading-snug">
+          <p className="whitespace-pre-wrap break-words pr-12 text-[13px] leading-snug">
             {message.text}
           </p>
         ) : message.kind === 'user-audio' ? (
@@ -454,15 +498,44 @@ function Bubble({ message, reduce }: { message: Message; reduce: boolean }) {
   )
 }
 
+function BubbleTail({ kind }: { kind: 'sent' | 'received' }) {
+  if (kind === 'sent') {
+    return (
+      <svg
+        aria-hidden
+        width="9"
+        height="13"
+        viewBox="0 0 9 13"
+        className="absolute -right-[7px] top-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.2)]"
+      >
+        <path
+          d="M0 0 C1 4 4 7 9 9 L 9 0 Z"
+          fill="#005C4B"
+        />
+      </svg>
+    )
+  }
+  return (
+    <svg
+      aria-hidden
+      width="9"
+      height="13"
+      viewBox="0 0 9 13"
+      className="absolute -left-[7px] top-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.2)]"
+    >
+      <path
+        d="M9 0 C8 4 5 7 0 9 L 0 0 Z"
+        fill="#1F2C34"
+      />
+    </svg>
+  )
+}
+
 function BubbleMeta({ isUser }: { isUser: boolean }) {
   return (
-    <div className="mt-0.5 flex items-center justify-end gap-1 text-[9.5px] text-white/55">
-      <span>11:32</span>
-      {isUser ? (
-        <CheckCheck size={11} className="text-[#53BDEB]" aria-hidden />
-      ) : (
-        <Check size={11} className="text-white/45" aria-hidden />
-      )}
+    <div className="-mb-0.5 -mt-0.5 flex items-center justify-end gap-1 text-[9.5px] text-white/55">
+      <span className="tabular-nums">11:32</span>
+      {isUser && <CheckCheck size={12} className="text-[#53BDEB]" aria-hidden />}
     </div>
   )
 }
@@ -475,26 +548,34 @@ function AudioBlock({
   waveform: number[]
 }) {
   return (
-    <div className="flex min-w-[210px] items-center gap-2.5 py-0.5">
+    <div className="flex min-w-[225px] items-center gap-2 py-0.5">
       <span
         aria-hidden
-        className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/15"
+        className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-[#005C4B]"
       >
-        <Play size={11} fill="currentColor" className="translate-x-px text-white" />
+        <Play size={13} fill="currentColor" strokeWidth={0} className="translate-x-[1px]" />
       </span>
-      <div className="flex h-6 flex-1 items-center gap-[1.5px]">
-        {waveform.map((h, i) => (
-          <span
-            key={i}
-            className={cn(
-              'block w-[2px] rounded-full',
-              i < 6 ? 'bg-white/90' : 'bg-white/45'
-            )}
-            style={{ height: `${Math.max(10, h)}%` }}
-          />
-        ))}
+      <div className="flex flex-1 flex-col gap-1">
+        <div className="flex h-6 items-center gap-[1.8px]">
+          {waveform.map((h, i) => (
+            <span
+              key={i}
+              className={cn(
+                'block w-[2px] rounded-full',
+                i < 6 ? 'bg-white/95' : 'bg-white/40'
+              )}
+              style={{ height: `${Math.max(12, h)}%` }}
+            />
+          ))}
+        </div>
+        <span className="text-[10px] tabular-nums text-white/60">{durationLabel}</span>
       </div>
-      <span className="text-[10px] tabular-nums text-white/65">{durationLabel}</span>
+      <span
+        aria-hidden
+        className="ml-1 flex h-5 w-5 shrink-0 items-center justify-center text-white/55"
+      >
+        <Mic size={12} strokeWidth={2.2} />
+      </span>
     </div>
   )
 }
@@ -511,32 +592,40 @@ function ChartBlock({
   reduce: boolean
 }) {
   return (
-    <div className="min-w-[230px] space-y-1.5">
+    <div className="min-w-[240px] space-y-1.5">
       <p className="text-[11.5px] font-semibold text-white">{title}</p>
       <ul className="space-y-1.5 pt-1">
-        {items.map((it, i) => (
-          <li
-            key={it.label}
-            className="flex items-center gap-2 text-[11px] text-white/80"
-          >
-            <span className="w-12 shrink-0 truncate">{it.label}</span>
-            <span className="relative h-2 flex-1 overflow-hidden rounded-full bg-white/10">
-              <motion.span
-                initial={reduce ? false : { width: 0 }}
-                animate={{ width: `${it.pct}%` }}
-                transition={{
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: 0.05 + i * 0.06,
-                }}
-                className="block h-full rounded-full bg-[#00A884]"
+        {items.map((it, i) => {
+          const swatch = COLOR_SWATCHES[it.label]
+          return (
+            <li
+              key={it.label}
+              className="flex items-center gap-2 text-[11px] text-white/85"
+            >
+              <span
+                aria-hidden
+                className="block h-3 w-3 shrink-0 rounded-[3px] ring-1 ring-inset ring-white/20"
+                style={{ backgroundColor: swatch ?? '#9CA3AF' }}
               />
-            </span>
-            <span className="w-8 shrink-0 text-right tabular-nums text-white/55">
-              {it.pct}%
-            </span>
-          </li>
-        ))}
+              <span className="w-14 shrink-0 truncate">{it.label}</span>
+              <span className="relative h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+                <motion.span
+                  initial={reduce ? false : { width: 0 }}
+                  animate={{ width: `${it.pct}%` }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.05 + i * 0.06,
+                  }}
+                  className="block h-full rounded-full bg-[#00A884]"
+                />
+              </span>
+              <span className="w-8 shrink-0 text-right tabular-nums text-white/60">
+                {it.pct}%
+              </span>
+            </li>
+          )
+        })}
       </ul>
       <p className="pt-1 text-[10.5px] text-white/55">{total}</p>
     </div>
