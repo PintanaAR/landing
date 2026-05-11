@@ -9,6 +9,7 @@ const tabs = [
   { label: 'Producto', href: '#producto' },
   { label: 'Módulos', href: '#modulos' },
   { label: 'POS', href: '#pos' },
+  { label: 'WhatsApp', href: '#whatsapp' },
   { label: 'Contacto', href: '#contacto' },
 ]
 
