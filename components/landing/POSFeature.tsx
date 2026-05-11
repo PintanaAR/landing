@@ -124,7 +124,10 @@ export function POSFeature() {
               {/* Top bar */}
               <div className="flex items-center justify-between border-b border-border bg-surface-2/70 px-4 py-2.5">
                 <div className="flex items-center gap-2 text-[12px] text-text-2">
-                  <span className="inline-block h-2 w-2 rounded-full bg-purple shadow-[0_0_8px_rgba(139,92,246,0.7)]" />
+                  <span className="relative inline-flex h-2 w-2" aria-hidden>
+                    <span className="absolute inset-0 animate-ping rounded-full bg-purple opacity-60" />
+                    <span className="relative inline-block h-2 w-2 rounded-full bg-purple shadow-[0_0_8px_rgba(139,92,246,0.7)]" />
+                  </span>
                   <span className="font-semibold text-purple">Sesión activa</span>
                   <span className="text-text-3">· Caja 01 · Marta R.</span>
                 </div>
@@ -221,7 +224,9 @@ export function POSFeature() {
                     </div>
                   </div>
                   <div className="px-3.5 pb-3.5">
-                    <button className="relative w-full overflow-hidden rounded-[10px] bg-purple px-3 py-2.5 text-[13px] font-bold text-[#0B0A07] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none">
+                    <button
+                      className="relative w-full overflow-hidden rounded-[10px] bg-purple px-3 py-2.5 text-[13px] font-bold text-white shadow-[0_0_0_0_rgba(139,92,246,0)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none motion-safe:animate-[cta-breathe_3.4s_ease-in-out_infinite]"
+                    >
                       Cobrar ahora
                     </button>
                     <div className="mt-2 flex items-center justify-center gap-1.5 text-[10px] text-text-3">
