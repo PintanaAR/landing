@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   LayoutDashboard,
   Boxes,
@@ -26,49 +27,11 @@ const bars = [
   { label: 'Dom', value: 40 },
 ]
 
-const kpis = [
-  {
-    label: 'Ventas hoy',
-    value: '$ 482.350',
-    delta: '+12,4%',
-    up: true,
-    icon: DollarSign,
-  },
-  {
-    label: 'Tickets',
-    value: '47',
-    delta: '+5',
-    up: true,
-    icon: Receipt,
-  },
-  {
-    label: 'Ticket prom.',
-    value: '$ 10.262',
-    delta: '+3,1%',
-    up: true,
-    icon: TrendingUp,
-  },
-  {
-    label: 'Stock crítico',
-    value: '8',
-    delta: '−2',
-    up: false,
-    icon: Package,
-  },
-]
-
 const inventory = [
   { sku: 'PIN-LAT-04', name: 'Látex interior 20L · Alba', stock: 12, status: 'OK' },
   { sku: 'PIN-ESM-21', name: 'Esmalte sintético blanco 4L', stock: 4, status: 'BAJO' },
   { sku: 'PIN-LAT-08', name: 'Látex exterior 10L · Sherwin', stock: 22, status: 'OK' },
   { sku: 'PIN-DIL-03', name: 'Diluyente · aguarrás 1L', stock: 2, status: 'CRÍT' },
-]
-
-const activity = [
-  { who: 'Marta R.', what: 'Cobró ticket', detail: '$ 18.420 · MercadoPago', when: 'hace 1 min' },
-  { who: 'Sistema', what: 'Stock bajo', detail: 'Esmalte sintético blanco 4L', when: 'hace 4 min' },
-  { who: 'Juan L.', what: 'Factura A emitida', detail: 'CUIT 30-7045... · $ 124.560', when: 'hace 9 min' },
-  { who: 'Sistema', what: 'Sincronizó AFIP', detail: '12 comprobantes', when: 'hace 14 min' },
 ]
 
 const sidebarItems = [
@@ -80,14 +43,136 @@ const sidebarItems = [
   { icon: Settings, label: 'Ajustes' },
 ]
 
+type Activity = {
+  id: number
+  who: string
+  what: string
+  detail: string
+  age: number
+}
+
+const INITIAL_ACTIVITY: Activity[] = [
+  { id: 1, who: 'Marta R.', what: 'Cobró ticket', detail: '$ 18.420 · MercadoPago', age: 0 },
+  { id: 2, who: 'Sistema', what: 'Stock bajo', detail: 'Esmalte sintético blanco 4L', age: 24 },
+  { id: 3, who: 'Juan L.', what: 'Factura A emitida', detail: 'CUIT 30-7045... · $ 124.560', age: 65 },
+  { id: 4, who: 'Sistema', what: 'Sincronizó AFIP', detail: '12 comprobantes', age: 180 },
+]
+
+const PEOPLE = ['Marta R.', 'Juan L.', 'Carolina P.', 'Sebastián O.', 'Diego M.']
+const PRODUCTS_LOW = [
+  'Esmalte sintético blanco 4L',
+  'Látex interior 20L · Alba',
+  'Diluyente · aguarrás 1L',
+  'Rodillo antigota 22cm',
+  'Cinta de papel 50m',
+]
+const PAY_METHODS = ['MercadoPago', 'Efectivo', 'QR MercadoPago', 'Tarjeta débito']
+
+const pick = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]
+const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min))
+const fmt = (n: number) => n.toLocaleString('es-AR')
+
+function buildActivity(id: number): {
+  activity: Activity
+  ventasDelta: number
+  ticketsDelta: number
+} {
+  const kind = Math.random()
+  if (kind < 0.5) {
+    const amt = rand(4000, 38000)
+    return {
+      activity: {
+        id,
+        who: pick(PEOPLE),
+        what: 'Cobró ticket',
+        detail: `$ ${fmt(amt)} · ${pick(PAY_METHODS)}`,
+        age: 0,
+      },
+      ventasDelta: amt,
+      ticketsDelta: 1,
+    }
+  }
+  if (kind < 0.75) {
+    const amt = rand(30000, 240000)
+    return {
+      activity: {
+        id,
+        who: pick(PEOPLE),
+        what: 'Factura A emitida',
+        detail: `CUIT 30-${rand(1000000, 9999999)}... · $ ${fmt(amt)}`,
+        age: 0,
+      },
+      ventasDelta: amt,
+      ticketsDelta: 1,
+    }
+  }
+  if (kind < 0.9) {
+    return {
+      activity: {
+        id,
+        who: 'Sistema',
+        what: 'Stock bajo',
+        detail: pick(PRODUCTS_LOW),
+        age: 0,
+      },
+      ventasDelta: 0,
+      ticketsDelta: 0,
+    }
+  }
+  return {
+    activity: {
+      id,
+      who: 'Sistema',
+      what: 'Sincronizó AFIP',
+      detail: `${rand(3, 18)} comprobantes`,
+      age: 0,
+    },
+    ventasDelta: 0,
+    ticketsDelta: 0,
+  }
+}
+
+function fmtAge(age: number) {
+  if (age <= 1) return 'ahora'
+  if (age < 60) return `hace ${age} seg`
+  const m = Math.floor(age / 60)
+  return `hace ${m} min`
+}
+
 export function AppWindow() {
+  const reduce = useReducedMotion()
+  const [activity, setActivity] = useState<Activity[]>(INITIAL_ACTIVITY)
+  const [ventas, setVentas] = useState(482350)
+  const [tickets, setTickets] = useState(47)
+  const idRef = useRef(INITIAL_ACTIVITY.length)
+
+  useEffect(() => {
+    if (reduce) return
+
+    const ageTick = setInterval(() => {
+      setActivity((prev) => prev.map((a) => ({ ...a, age: a.age + 1 })))
+    }, 1000)
+
+    const addTick = setInterval(() => {
+      const id = ++idRef.current
+      const { activity: next, ventasDelta, ticketsDelta } = buildActivity(id)
+      setActivity((prev) => [next, ...prev].slice(0, 4))
+      if (ventasDelta) setVentas((v) => v + ventasDelta)
+      if (ticketsDelta) setTickets((t) => t + ticketsDelta)
+    }, 4200)
+
+    return () => {
+      clearInterval(ageTick)
+      clearInterval(addTick)
+    }
+  }, [reduce])
+
   return (
     <section
       id="producto-vista"
       aria-label="Vista del producto"
       className="relative -mt-16 pb-32"
     >
-      {/* Amber halo behind the window */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 top-24 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(139,92,246,0.12)_0%,transparent_70%)]"
@@ -150,9 +235,7 @@ export function AppWindow() {
                     key={label}
                     className={
                       'flex items-center gap-2.5 rounded-md px-2 py-2 text-[13px] font-medium ' +
-                      (active
-                        ? 'bg-surface-3 text-text'
-                        : 'text-text-2 hover:bg-surface-2')
+                      (active ? 'bg-surface-3 text-text' : 'text-text-2 hover:bg-surface-2')
                     }
                   >
                     <Icon size={15} strokeWidth={2} className={active ? 'text-purple' : ''} />
@@ -184,41 +267,28 @@ export function AppWindow() {
                   </h3>
                 </div>
                 <span className="hidden items-center gap-1.5 rounded-full border border-border bg-surface-2 px-2.5 py-1 text-[11px] text-text-2 sm:inline-flex">
-                  <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                  <span className="relative inline-flex h-1.5 w-1.5" aria-hidden>
+                    <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60" />
+                    <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-success" />
+                  </span>
                   AFIP conectado
                 </span>
               </div>
 
               {/* KPI cards */}
               <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4">
-                {kpis.map((k) => {
-                  const Icon = k.icon
-                  return (
-                    <div
-                      key={k.label}
-                      className="rounded-lg border border-border bg-surface-1 p-3"
-                    >
-                      <div className="flex items-center justify-between text-text-3">
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.08em]">
-                          {k.label}
-                        </span>
-                        <Icon size={13} aria-hidden />
-                      </div>
-                      <p className="mt-2 font-display text-[18px] font-extrabold tracking-[-0.02em] text-text">
-                        {k.value}
-                      </p>
-                      <p
-                        className={
-                          'mt-0.5 inline-flex items-center gap-0.5 text-[11px] font-semibold ' +
-                          (k.up ? 'text-success' : 'text-warning')
-                        }
-                      >
-                        {k.up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
-                        {k.delta}
-                      </p>
-                    </div>
-                  )
-                })}
+                <KpiCard label="Ventas hoy" icon={DollarSign} delta="+12,4%" up>
+                  <AnimatedNumber value={`$ ${fmt(ventas)}`} />
+                </KpiCard>
+                <KpiCard label="Tickets" icon={Receipt} delta="+5" up>
+                  <AnimatedNumber value={fmt(tickets)} />
+                </KpiCard>
+                <KpiCard label="Ticket prom." icon={TrendingUp} delta="+3,1%" up>
+                  $ 10.262
+                </KpiCard>
+                <KpiCard label="Stock crítico" icon={Package} delta="−2" up={false}>
+                  8
+                </KpiCard>
               </div>
 
               {/* Chart + activity */}
@@ -249,6 +319,11 @@ export function AppWindow() {
                               ? 'bg-gradient-to-t from-purple to-purple-light'
                               : 'bg-surface-3')
                           }
+                          style={
+                            i === 4 && !reduce
+                              ? { animation: 'peak-pulse 2.6s ease-in-out infinite' }
+                              : undefined
+                          }
                           aria-hidden
                         />
                         <span className="text-[10px] text-text-3">{b.label}</span>
@@ -258,22 +333,41 @@ export function AppWindow() {
                 </div>
 
                 <div className="rounded-lg border border-border bg-surface-1 p-4">
-                  <p className="mb-3 text-[12px] font-semibold text-text">Actividad</p>
+                  <div className="mb-3 flex items-center justify-between">
+                    <p className="text-[12px] font-semibold text-text">Actividad</p>
+                    <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.08em] text-text-3">
+                      <span className="relative inline-flex h-1.5 w-1.5" aria-hidden>
+                        <span className="absolute inset-0 animate-ping rounded-full bg-purple opacity-60" />
+                        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-purple" />
+                      </span>
+                      En vivo
+                    </span>
+                  </div>
                   <ul className="space-y-2.5">
-                    {activity.map((a, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-purple" />
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-[12px] text-text">
-                            <span className="font-semibold">{a.who}</span>{' '}
-                            <span className="text-text-2">{a.what}</span>
-                          </p>
-                          <p className="truncate text-[11px] text-text-3">
-                            {a.detail} · {a.when}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
+                    <AnimatePresence initial={false} mode="popLayout">
+                      {activity.map((a) => (
+                        <motion.li
+                          key={a.id}
+                          layout
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          className="flex items-start gap-2.5"
+                        >
+                          <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-purple" />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-[12px] text-text">
+                              <span className="font-semibold">{a.who}</span>{' '}
+                              <span className="text-text-2">{a.what}</span>
+                            </p>
+                            <p className="truncate text-[11px] text-text-3">
+                              {a.detail} · {fmtAge(a.age)}
+                            </p>
+                          </div>
+                        </motion.li>
+                      ))}
+                    </AnimatePresence>
                   </ul>
                 </div>
               </div>
@@ -330,5 +424,59 @@ export function AppWindow() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+function KpiCard({
+  label,
+  icon: Icon,
+  delta,
+  up,
+  children,
+}: {
+  label: string
+  icon: typeof DollarSign
+  delta: string
+  up: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div className="rounded-lg border border-border bg-surface-1 p-3">
+      <div className="flex items-center justify-between text-text-3">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.08em]">{label}</span>
+        <Icon size={13} aria-hidden />
+      </div>
+      <p className="mt-2 font-display text-[18px] font-extrabold tracking-[-0.02em] text-text">
+        {children}
+      </p>
+      <p
+        className={
+          'mt-0.5 inline-flex items-center gap-0.5 text-[11px] font-semibold ' +
+          (up ? 'text-success' : 'text-warning')
+        }
+      >
+        {up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
+        {delta}
+      </p>
+    </div>
+  )
+}
+
+function AnimatedNumber({ value }: { value: string }) {
+  return (
+    <span className="inline-block">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={value}
+          initial={{ y: -6, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 6, opacity: 0 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-block"
+        >
+          {value}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   )
 }
