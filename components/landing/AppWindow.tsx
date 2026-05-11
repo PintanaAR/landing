@@ -210,7 +210,7 @@ export function AppWindow() {
                       <p
                         className={
                           'mt-0.5 inline-flex items-center gap-0.5 text-[11px] font-semibold ' +
-                          (k.up ? 'text-success' : 'text-purple')
+                          (k.up ? 'text-success' : 'text-warning')
                         }
                       >
                         {k.up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
@@ -313,7 +313,7 @@ export function AppWindow() {
                               (row.status === 'OK'
                                 ? 'bg-success/15 text-success'
                                 : row.status === 'BAJO'
-                                ? 'bg-purple/15 text-purple-light'
+                                ? 'bg-warning/15 text-warning-light'
                                 : 'bg-danger/15 text-danger')
                             }
                           >

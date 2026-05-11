@@ -35,6 +35,10 @@ const config: Config = {
           3: 'var(--text-3)',
         },
         success: 'var(--success)',
+        warning: {
+          DEFAULT: 'var(--warning)',
+          light: 'var(--warning-light)',
+        },
         danger: 'var(--danger)',
       },
       fontFamily: {
