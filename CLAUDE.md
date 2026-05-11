@@ -144,8 +144,9 @@ const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
 
 ### Buttons
 ```tsx
-// Primary CTA — purple fill with inner gloss
-<button className="relative overflow-hidden bg-purple text-[#0B0A07] font-bold text-[14px]
+// Primary CTA — purple fill with inner gloss. White text (not near-black)
+// because dark text on #8B5CF6 falls below 4.5:1 AA contrast.
+<button className="relative overflow-hidden bg-purple text-white font-bold text-[14px]
   px-6 py-3 rounded-[10px] tracking-[-0.01em] transition-all duration-150
   hover:bg-[#7C3AED] hover:-translate-y-[1px]
   before:absolute before:inset-0 before:bg-gradient-to-br
@@ -171,15 +172,15 @@ Build the landing page in this exact order. Each section is a separate component
 
 ### 1. `<Nav />` — `components/landing/Nav.tsx`
 - Fixed, 58px height, `backdrop-blur-xl`, dark bg `rgba(6,6,8,0.75)`
-- Logo: amber square icon + "Pintana" wordmark
+- Logo: purple square icon + "Pintana" wordmark
 - Center: pill-shaped tab nav (`bg-surface-2`, `border border-border`, `rounded-full`)
-- Right: "Iniciar sesión" ghost link + "Solicitar demo" amber CTA
+- Right: "Iniciar sesión" ghost link + "Solicitar demo" purple CTA
 - Hides pill tabs on mobile, shows hamburger menu
 
 ### 2. `<Hero />` — `components/landing/Hero.tsx`
 - Full viewport height, centered content
 - Background layers (bottom to top): bg color → grid texture → left indigo glow → top purple glow → content
-- **Badge pill**: `"Nuevo: Integración MercadoPago en tiempo real"` with pulsing amber dot
+- **Badge pill**: `"Nuevo: Integración MercadoPago en tiempo real"` with pulsing purple dot
 - **h1**: `"El sistema que su pintería merecía desde siempre"` — "merecía" in purple gradient
 - **Subheadline**: short, direct, no jargon. Max 2 lines.
 - **CTA row**: Primary "Solicitar demo gratuita →" + Ghost "Ver el producto"
@@ -210,8 +211,8 @@ This is the most important "wow" section. It shows the actual ERP product.
 ### 5. `<POSFeature />` — `components/landing/POSFeature.tsx`
 - Two-column: left = copy + feature list, right = POS mockup
 - Feature list: 3 items with icon chip, h4, description
-- **POS mockup**: realistic preview showing product grid (6 items, one selected/amber) + cart sidebar with total + amber "Cobrar ahora" button showing `F1·F2·F3` shortcuts
-- Top bar of mockup shows "● Sesión activa" in amber
+- **POS mockup**: realistic preview showing product grid (6 items, one selected/purple) + cart sidebar with total + purple "Cobrar ahora" button showing `F1·F2·F3` shortcuts
+- Top bar of mockup shows "● Sesión activa" in purple
 
 ### 6. `<Stats />` — `components/landing/Stats.tsx`
 - Tight band, `border-y border-border`
@@ -354,7 +355,7 @@ components/
     Contact.tsx
     Footer.tsx
   ui/
-    Badge.tsx           ← Reusable purple badge pill
+    Badge.tsx           ← Reusable badge pill
     BentoCard.tsx       ← Card with mouse glow effect
     FeatureItem.tsx     ← Icon + title + description
 lib/
@@ -394,7 +395,6 @@ Schema.org structured data: `SoftwareApplication` type with `applicationCategory
 ## Anti-Patterns — Never Do These
 
 - ❌ Light/white background on any section (this is a dark-first brand)
-- ❌ Purple gradients (overused SaaS cliché, we use amber)
 - ❌ Stock photography or placeholder avatar images
 - ❌ Spinning loaders on the contact form (use skeleton or optimistic UI)
 - ❌ Cookie banners, newsletter popups, or exit-intent overlays
