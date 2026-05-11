@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
@@ -27,28 +28,135 @@ const trustSignals = [
   'Soporte en español',
 ]
 
+type Particle = {
+  id: number
+  left: number
+  size: number
+  duration: number
+  delay: number
+  drift: number
+  tone: 'purple' | 'indigo'
+}
+
+function generateParticles(n: number): Particle[] {
+  return Array.from({ length: n }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    size: 1 + Math.random() * 1.8,
+    duration: 18 + Math.random() * 14,
+    delay: -Math.random() * 22,
+    drift: (Math.random() - 0.5) * 60,
+    tone: Math.random() < 0.7 ? 'purple' : 'indigo',
+  }))
+}
+
 export function Hero() {
   const reduce = useReducedMotion()
+  const sectionRef = useRef<HTMLElement>(null)
+  const [particles, setParticles] = useState<Particle[]>([])
+
+  // Particles populate post-mount so server/client render the same empty layer.
+  useEffect(() => {
+    if (reduce) return
+    setParticles(generateParticles(26))
+  }, [reduce])
+
+  // Cursor-driven CSS variables, throttled via rAF; no React re-renders.
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el || reduce) return
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
+    let raf = 0
+    let nx = 0
+    let ny = 0
+
+    const apply = () => {
+      el.style.setProperty('--cursor-x', `${nx}px`)
+      el.style.setProperty('--cursor-y', `${ny}px`)
+      el.style.setProperty('--cursor-opacity', '1')
+      raf = 0
+    }
+
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect()
+      nx = e.clientX - rect.left
+      ny = e.clientY - rect.top
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
+
+    const onLeave = () => {
+      el.style.setProperty('--cursor-opacity', '0')
+    }
+
+    el.addEventListener('mousemove', onMove, { passive: true })
+    el.addEventListener('mouseleave', onLeave)
+    return () => {
+      el.removeEventListener('mousemove', onMove)
+      el.removeEventListener('mouseleave', onLeave)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [reduce])
 
   const driftPurple = reduce
     ? {}
-    : { animate: { x: [-40, 40, -40], y: [-20, 20, -20] }, transition: { duration: 22, repeat: Infinity, ease: 'easeInOut' as const } }
+    : {
+        animate: { x: [-40, 40, -40], y: [-20, 20, -20] },
+        transition: { duration: 22, repeat: Infinity, ease: 'easeInOut' as const },
+      }
 
   const driftIndigo = reduce
     ? {}
-    : { animate: { x: [30, -30, 30], y: [25, -15, 25] }, transition: { duration: 18, repeat: Infinity, ease: 'easeInOut' as const } }
+    : {
+        animate: { x: [30, -30, 30], y: [25, -15, 25] },
+        transition: { duration: 18, repeat: Infinity, ease: 'easeInOut' as const },
+      }
 
   return (
     <section
+      ref={sectionRef}
       id="producto"
       className="relative isolate overflow-hidden pt-[58px]"
       aria-label="Hero"
+      style={
+        {
+          '--cursor-x': '50%',
+          '--cursor-y': '30%',
+          '--cursor-opacity': '0',
+        } as React.CSSProperties
+      }
     >
-      {/* Background layers */}
+      {/* Solid base */}
       <div className="absolute inset-0 bg-bg" aria-hidden />
+
+      {/* Faint ambient grid — wide soft radial mask */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_20%,black_0%,transparent_80%)]"
+      />
+
+      {/* Bright grid only inside a tight cursor radius — "spotlight" reveal */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(196,181,253,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(196,181,253,0.18)_1px,transparent_1px)] bg-[size:60px_60px] transition-opacity duration-200"
+        style={{
+          maskImage:
+            'radial-gradient(220px circle at var(--cursor-x) var(--cursor-y), black 0%, transparent 70%)',
+          WebkitMaskImage:
+            'radial-gradient(220px circle at var(--cursor-x) var(--cursor-y), black 0%, transparent 70%)',
+          opacity: 'var(--cursor-opacity)',
+        }}
+      />
+
+      {/* Cursor-following soft purple spotlight */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        style={{
+          background:
+            'radial-gradient(520px circle at var(--cursor-x) var(--cursor-y), rgba(139,92,246,0.10), transparent 60%)',
+          opacity: 'var(--cursor-opacity)',
+        }}
       />
 
       {/* Slow rotating conic beam behind the headline */}
@@ -71,6 +179,28 @@ export function Hero() {
         {...driftPurple}
         className="pointer-events-none absolute left-1/2 top-[-220px] h-[640px] w-[860px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.10)_0%,transparent_65%)]"
       />
+
+      {/* Floating ambient particles */}
+      {particles.length > 0 && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {particles.map((p) => (
+            <span
+              key={p.id}
+              className={
+                'absolute bottom-[-4%] rounded-full will-change-transform ' +
+                (p.tone === 'purple' ? 'bg-purple-light/45' : 'bg-indigo/40')
+              }
+              style={{
+                left: `${p.left}%`,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                animation: `hero-particle-rise ${p.duration}s linear ${p.delay}s infinite`,
+                ['--particle-drift' as string]: `${p.drift}px`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Faint noise/grain — pure CSS, very subtle */}
       <div
@@ -152,7 +282,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Bottom fade into next section */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg"
