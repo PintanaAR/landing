@@ -3,6 +3,7 @@ import { Hero } from '@/components/landing/Hero'
 import { AppWindow } from '@/components/landing/AppWindow'
 import { Modules } from '@/components/landing/Modules'
 import { POSFeature } from '@/components/landing/POSFeature'
+import { Stats } from '@/components/landing/Stats'
 
 export default function Page() {
   return (
@@ -13,6 +14,7 @@ export default function Page() {
         <AppWindow />
         <Modules />
         <POSFeature />
+        <Stats />
       </main>
     </>
   )
