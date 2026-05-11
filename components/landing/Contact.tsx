@@ -70,7 +70,7 @@ const provinces = [
 const labelCls =
   'block text-[12px] font-semibold uppercase tracking-[0.08em] text-text-3'
 const inputCls =
-  'w-full rounded-[10px] border border-border bg-surface-2 px-3.5 py-2.5 text-[14px] text-text placeholder:text-text-3 transition-colors focus:border-amber/60 focus:outline-none focus:ring-2 focus:ring-amber/20'
+  'w-full rounded-[10px] border border-border bg-surface-2 px-3.5 py-2.5 text-[14px] text-text placeholder:text-text-3 transition-colors focus:border-purple/60 focus:outline-none focus:ring-2 focus:ring-purple/20'
 const errorCls = 'mt-1 inline-flex items-center gap-1 text-[12px] text-danger'
 
 export function Contact() {
@@ -119,7 +119,7 @@ export function Contact() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[80px] h-[420px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(245,158,11,0.06)_0%,transparent_70%)]"
+        className="pointer-events-none absolute left-1/2 top-[80px] h-[420px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(139,92,246,0.06)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -137,7 +137,7 @@ export function Contact() {
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
               Veamos su pintería con{' '}
-              <span className="bg-gradient-to-r from-amber to-amber-light bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
                 ojos nuevos
               </span>
             </h2>
@@ -149,7 +149,7 @@ export function Contact() {
             <ul className="mt-10 space-y-5">
               {contactPoints.map(({ icon: Icon, title, sub }) => (
                 <li key={title} className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                     <Icon size={17} strokeWidth={2} />
                   </span>
                   <div>
@@ -173,7 +173,7 @@ export function Contact() {
           >
             {status === 'success' ? (
               <div className="flex min-h-[480px] flex-col items-center justify-center text-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-amber/40 bg-amber/10 text-amber">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-purple/40 bg-purple/10 text-purple">
                   <CheckCircle2 size={26} />
                 </span>
                 <h3 className="mt-5 font-display text-[24px] font-extrabold tracking-[-0.02em] text-text">

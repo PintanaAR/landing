@@ -60,7 +60,7 @@ export function POSFeature() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-120px] top-[120px] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(245,158,11,0.06)_0%,transparent_70%)]"
+        className="pointer-events-none absolute right-[-120px] top-[120px] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.06)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -78,7 +78,7 @@ export function POSFeature() {
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
               El POS más rápido que probó{' '}
-              <span className="bg-gradient-to-r from-amber to-amber-light bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
                 en su vida
               </span>
             </h2>
@@ -90,7 +90,7 @@ export function POSFeature() {
             <ul className="mt-8 space-y-5">
               {features.map(({ icon: Icon, title, desc }) => (
                 <li key={title} className="flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                     <Icon size={18} strokeWidth={2} />
                   </span>
                   <div>
@@ -118,14 +118,14 @@ export function POSFeature() {
               className="relative overflow-hidden rounded-2xl border border-border-2 bg-surface-1"
               style={{
                 boxShadow:
-                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.55), 0 0 60px rgba(245,158,11,0.05)',
+                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.55), 0 0 60px rgba(139,92,246,0.05)',
               }}
             >
               {/* Top bar */}
               <div className="flex items-center justify-between border-b border-border bg-surface-2/70 px-4 py-2.5">
                 <div className="flex items-center gap-2 text-[12px] text-text-2">
-                  <span className="inline-block h-2 w-2 rounded-full bg-amber shadow-[0_0_8px_rgba(245,158,11,0.7)]" />
-                  <span className="font-semibold text-amber">Sesión activa</span>
+                  <span className="inline-block h-2 w-2 rounded-full bg-purple shadow-[0_0_8px_rgba(139,92,246,0.7)]" />
+                  <span className="font-semibold text-purple">Sesión activa</span>
                   <span className="text-text-3">· Caja 01 · Marta R.</span>
                 </div>
                 <span className="font-mono text-[11px] text-text-3">
@@ -151,12 +151,12 @@ export function POSFeature() {
                         className={
                           'relative rounded-lg border p-2.5 text-left transition-colors ' +
                           (p.selected
-                            ? 'border-amber/50 bg-amber/[0.06]'
+                            ? 'border-purple/50 bg-purple/[0.06]'
                             : 'border-border bg-surface-2 hover:border-border-2')
                         }
                       >
                         {p.selected && (
-                          <span className="absolute right-2 top-2 inline-block h-1.5 w-1.5 rounded-full bg-amber shadow-[0_0_6px_rgba(245,158,11,0.7)]" />
+                          <span className="absolute right-2 top-2 inline-block h-1.5 w-1.5 rounded-full bg-purple shadow-[0_0_6px_rgba(139,92,246,0.7)]" />
                         )}
                         <p className="text-[11px] uppercase tracking-[0.06em] text-text-3">
                           {p.tag}
@@ -221,7 +221,7 @@ export function POSFeature() {
                     </div>
                   </div>
                   <div className="px-3.5 pb-3.5">
-                    <button className="relative w-full overflow-hidden rounded-[10px] bg-amber px-3 py-2.5 text-[13px] font-bold text-[#0B0A07] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none">
+                    <button className="relative w-full overflow-hidden rounded-[10px] bg-purple px-3 py-2.5 text-[13px] font-bold text-[#0B0A07] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none">
                       Cobrar ahora
                     </button>
                     <div className="mt-2 flex items-center justify-center gap-1.5 text-[10px] text-text-3">

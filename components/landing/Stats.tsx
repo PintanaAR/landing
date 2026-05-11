@@ -65,7 +65,7 @@ function CountUp({ stat }: { stat: Stat }) {
         'inline-block font-display text-[42px] font-extrabold leading-none tracking-[-0.03em] transition-transform duration-200',
         pulse && 'scale-[1.04]',
         stat.accent
-          ? 'bg-gradient-to-b from-amber-light to-amber bg-clip-text text-transparent'
+          ? 'bg-gradient-to-b from-purple-light to-purple bg-clip-text text-transparent'
           : 'text-text'
       )}
     >

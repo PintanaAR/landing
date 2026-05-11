@@ -39,10 +39,10 @@ This landing page must feel like Linear, Vercel, or Loom — premium, confident,
   --border:      rgba(255, 255, 255, 0.07);
   --border-2:    rgba(255, 255, 255, 0.12);
 
-  --amber:       #F59E0B;
-  --amber-light: #FCD34D;
-  --amber-glow:  rgba(245, 158, 11, 0.15);
-  --amber-soft:  rgba(245, 158, 11, 0.06);
+  --purple:       #8B5CF6;
+  --purple-light: #C4B5FD;
+  --purple-glow:  rgba(139, 92, 246, 0.15);
+  --purple-soft:  rgba(139, 92, 246, 0.06);
 
   --indigo:      #6366F1;
   --indigo-glow: rgba(99, 102, 241, 0.12);
@@ -63,7 +63,7 @@ Map to Tailwind in `tailwind.config.ts`:
 colors: {
   bg: 'var(--bg)',
   surface: { 1: 'var(--surface-1)', 2: 'var(--surface-2)', 3: 'var(--surface-3)' },
-  amber: { DEFAULT: 'var(--amber)', light: 'var(--amber-light)', glow: 'var(--amber-glow)', soft: 'var(--amber-soft)' },
+  purple: { DEFAULT: 'var(--purple)', light: 'var(--purple-light)', glow: 'var(--purple-glow)', soft: 'var(--purple-soft)' },
   border: { DEFAULT: 'var(--border)', 2: 'var(--border-2)' },
   text: { DEFAULT: 'var(--text)', 2: 'var(--text-2)', 3: 'var(--text-3)' },
 }
@@ -82,9 +82,9 @@ colors: {
 - Body: `15–17px`, weight 400, line-height 1.7
 - Labels/overlines: `11px`, weight 600, uppercase, tracking `0.1em`
 
-**Amber gradient text** — use on key words in h1/h2 (one per section max):
+**Purple gradient text** — use on key words in h1/h2 (one per section max):
 ```tsx
-<span className="bg-gradient-to-r from-amber to-amber-light bg-clip-text text-transparent">
+<span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
   merecía
 </span>
 ```
@@ -94,9 +94,9 @@ These are the effects that create the "premium dark SaaS" feeling. Use them deli
 
 **Radial glow blobs** — soft, low-opacity, never overpowering:
 ```tsx
-// Hero amber glow (top-center)
+// Hero purple glow (top-center)
 <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[600px]
-  bg-[radial-gradient(ellipse_at_50%_40%,rgba(245,158,11,0.08)_0%,transparent_65%)]
+  bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.08)_0%,transparent_65%)]
   pointer-events-none" />
 
 // Indigo glow (left accent)
@@ -120,13 +120,13 @@ These are the effects that create the "premium dark SaaS" feeling. Use them deli
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.35), transparent);
 }
 ```
 
 **App window shadow** — the product screenshot/mockup section:
 ```css
-box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(245,158,11,0.04);
+box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(139,92,246,0.04);
 ```
 
 **Interactive card hover** — mouse-following inner glow:
@@ -139,15 +139,15 @@ const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
 }
 
 // CSS:
-// .card::after { background: radial-gradient(circle at var(--cx) var(--cy), rgba(245,158,11,0.04), transparent 60%) }
+// .card::after { background: radial-gradient(circle at var(--cx) var(--cy), rgba(139,92,246,0.04), transparent 60%) }
 ```
 
 ### Buttons
 ```tsx
-// Primary CTA — amber fill with inner gloss
-<button className="relative overflow-hidden bg-amber text-[#0B0A07] font-bold text-[14px]
+// Primary CTA — purple fill with inner gloss
+<button className="relative overflow-hidden bg-purple text-[#0B0A07] font-bold text-[14px]
   px-6 py-3 rounded-[10px] tracking-[-0.01em] transition-all duration-150
-  hover:bg-[#D97706] hover:-translate-y-[1px]
+  hover:bg-[#7C3AED] hover:-translate-y-[1px]
   before:absolute before:inset-0 before:bg-gradient-to-br
   before:from-white/15 before:to-transparent before:pointer-events-none">
   Solicitar demo gratuita →
@@ -161,7 +161,7 @@ const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
 </button>
 ```
 
-**Only one primary amber button visible at a time per viewport.** Secondary buttons may coexist.
+**Only one primary purple button visible at a time per viewport.** Secondary buttons may coexist.
 
 ---
 
@@ -178,9 +178,9 @@ Build the landing page in this exact order. Each section is a separate component
 
 ### 2. `<Hero />` — `components/landing/Hero.tsx`
 - Full viewport height, centered content
-- Background layers (bottom to top): bg color → grid texture → left indigo glow → top amber glow → content
+- Background layers (bottom to top): bg color → grid texture → left indigo glow → top purple glow → content
 - **Badge pill**: `"Nuevo: Integración MercadoPago en tiempo real"` with pulsing amber dot
-- **h1**: `"El sistema que su pintería merecía desde siempre"` — "merecía" in amber gradient
+- **h1**: `"El sistema que su pintería merecía desde siempre"` — "merecía" in purple gradient
 - **Subheadline**: short, direct, no jargon. Max 2 lines.
 - **CTA row**: Primary "Solicitar demo gratuita →" + Ghost "Ver el producto"
 - **Social proof row**: 4 avatar stack + separator + count + separator + star rating
@@ -192,7 +192,7 @@ This is the most important "wow" section. It shows the actual ERP product.
 - macOS-style window chrome: traffic lights, tab bar with "Dashboard / Inventario / POS", `⌘K` search pill
 - Full app shell inside: sidebar + main content with live-looking data
 - **Content to show**: KPI row (4 stats), bar chart (weekly sales), activity feed, mini inventory table
-- Amber glow radiating from bottom of the window: `radial-gradient(ellipse, rgba(245,158,11,0.12), transparent)`
+- Purple glow radiating from bottom of the window: `radial-gradient(ellipse, rgba(139,92,246,0.12), transparent)`
 - Animate bars on mount with a staggered height transition
 - This section has NO headline — it's a pure product visual that speaks for itself
 
@@ -216,16 +216,16 @@ This is the most important "wow" section. It shows the actual ERP product.
 ### 6. `<Stats />` — `components/landing/Stats.tsx`
 - Tight band, `border-y border-border`
 - 4 stats in a grid separated by 1px border lines
-- Numbers: 42px, weight 800, alternating white/amber gradient text
+- Numbers: 42px, weight 800, alternating white/purple gradient text
 - No icons, no decoration — the numbers ARE the design
 - Animate count-up on scroll entry (use `react-countup` or custom hook)
 
 ### 7. `<Contact />` — `components/landing/Contact.tsx`
 Two-column layout:
 - **Left**: overline + h2 + 2-line sub + 4 contact points (icon chip + title + subtitle)
-- **Right**: form card with top-edge amber glow
+- **Right**: form card with top-edge purple glow
   - Form fields: Nombre, Apellido (grid), Email, WhatsApp, Provincia (select), Sucursales (select), Textarea
-  - Submit: full-width amber button
+  - Submit: full-width purple button
   - Note: "🔒 Sus datos están seguros. No hacemos spam."
   - On success: replace form with a success state (checkmark + "¡Gracias! Le contactamos pronto")
   - On error: show inline error toast
@@ -270,7 +270,7 @@ Stagger each element 60ms. First element starts at 100ms delay. NO layout shifts
 ```tsx
 // On viewport entry, animate from 0 to target over 1.5s
 // Use easeOut curve so it decelerates naturally
-// Amber numbers pulse once on completion (scale 1 → 1.04 → 1, 200ms)
+// Purple numbers pulse once on completion (scale 1 → 1.04 → 1, 200ms)
 ```
 
 ### App Window Bars
@@ -354,7 +354,7 @@ components/
     Contact.tsx
     Footer.tsx
   ui/
-    Badge.tsx           ← Reusable amber badge pill
+    Badge.tsx           ← Reusable purple badge pill
     BentoCard.tsx       ← Card with mouse glow effect
     FeatureItem.tsx     ← Icon + title + description
 lib/

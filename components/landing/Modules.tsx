@@ -61,7 +61,7 @@ export function Modules() {
             style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
           >
             Todo integrado.{' '}
-            <span className="bg-gradient-to-r from-amber to-amber-light bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
               Cero fricción.
             </span>
           </motion.h2>
@@ -86,10 +86,10 @@ export function Modules() {
             <BentoCard topGlow className="h-full">
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-soft via-transparent to-transparent"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-soft via-transparent to-transparent"
               />
               <div className="relative">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                   <Database size={20} strokeWidth={2} />
                 </span>
                 <h3 className="mt-5 font-display text-[20px] font-bold tracking-[-0.02em] text-text">
@@ -112,7 +112,7 @@ export function Modules() {
           {/* POS narrow */}
           <motion.div variants={fadeUp}>
             <BentoCard className="h-full">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                 <ShoppingCart size={20} strokeWidth={2} />
               </span>
               <h3 className="mt-5 font-display text-[20px] font-bold tracking-[-0.02em] text-text">
@@ -128,7 +128,7 @@ export function Modules() {
           {/* Inventario narrow */}
           <motion.div variants={fadeUp}>
             <BentoCard className="h-full">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                 <Boxes size={20} strokeWidth={2} />
               </span>
               <h3 className="mt-5 font-display text-[20px] font-bold tracking-[-0.02em] text-text">
@@ -146,10 +146,10 @@ export function Modules() {
             <BentoCard topGlow className="h-full">
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-bl from-amber-soft via-transparent to-transparent"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-bl from-purple-soft via-transparent to-transparent"
               />
               <div className="relative">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-amber">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
                   <Users size={20} strokeWidth={2} />
                 </span>
                 <h3 className="mt-5 font-display text-[20px] font-bold tracking-[-0.02em] text-text">
@@ -167,7 +167,7 @@ export function Modules() {
                     'Auditoría de cada operación',
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2 text-text-2">
-                      <CheckCircle2 size={14} className="text-amber" />
+                      <CheckCircle2 size={14} className="text-purple" />
                       {f}
                     </li>
                   ))}

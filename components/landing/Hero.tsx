@@ -46,7 +46,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-220px] h-[640px] w-[860px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(245,158,11,0.10)_0%,transparent_65%)]"
+        className="pointer-events-none absolute left-1/2 top-[-220px] h-[640px] w-[860px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.10)_0%,transparent_65%)]"
       />
 
       <div className="container-page relative flex min-h-[calc(100vh-58px)] flex-col items-center justify-center py-24 text-center">
@@ -66,7 +66,7 @@ export function Hero() {
             style={{ fontSize: 'clamp(44px, 6vw, 68px)' }}
           >
             El sistema que su pintería{' '}
-            <span className="bg-gradient-to-r from-amber to-amber-light bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
               merecía
             </span>{' '}
             desde siempre
@@ -120,7 +120,7 @@ export function Hero() {
                   <Star
                     key={i}
                     size={13}
-                    className="fill-amber text-amber"
+                    className="fill-purple text-purple"
                     aria-hidden
                   />
                 ))}

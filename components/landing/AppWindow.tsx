@@ -90,7 +90,7 @@ export function AppWindow() {
       {/* Amber halo behind the window */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-24 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(245,158,11,0.12)_0%,transparent_70%)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-24 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(139,92,246,0.12)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -102,7 +102,7 @@ export function AppWindow() {
           className="relative mx-auto w-full max-w-[1120px] overflow-hidden rounded-[18px] border border-border-2 bg-surface-1"
           style={{
             boxShadow:
-              '0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(245,158,11,0.04)',
+              '0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(139,92,246,0.04)',
           }}
         >
           {/* Window chrome */}
@@ -155,7 +155,7 @@ export function AppWindow() {
                         : 'text-text-2 hover:bg-surface-2')
                     }
                   >
-                    <Icon size={15} strokeWidth={2} className={active ? 'text-amber' : ''} />
+                    <Icon size={15} strokeWidth={2} className={active ? 'text-purple' : ''} />
                     {label}
                   </span>
                 ))}
@@ -165,7 +165,7 @@ export function AppWindow() {
                   Cierre Z
                 </p>
                 <p className="mt-1 text-[13px] text-text">Pendiente</p>
-                <button className="mt-2 inline-flex items-center gap-1 text-[12px] font-semibold text-amber hover:underline">
+                <button className="mt-2 inline-flex items-center gap-1 text-[12px] font-semibold text-purple hover:underline">
                   Generar <ArrowUpRight size={12} />
                 </button>
               </div>
@@ -210,7 +210,7 @@ export function AppWindow() {
                       <p
                         className={
                           'mt-0.5 inline-flex items-center gap-0.5 text-[11px] font-semibold ' +
-                          (k.up ? 'text-success' : 'text-amber')
+                          (k.up ? 'text-success' : 'text-purple')
                         }
                       >
                         {k.up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
@@ -246,7 +246,7 @@ export function AppWindow() {
                           className={
                             'w-full rounded-t-[3px] ' +
                             (i === 4
-                              ? 'bg-gradient-to-t from-amber to-amber-light'
+                              ? 'bg-gradient-to-t from-purple to-purple-light'
                               : 'bg-surface-3')
                           }
                           aria-hidden
@@ -262,7 +262,7 @@ export function AppWindow() {
                   <ul className="space-y-2.5">
                     {activity.map((a, i) => (
                       <li key={i} className="flex items-start gap-2.5">
-                        <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber" />
+                        <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-purple" />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-[12px] text-text">
                             <span className="font-semibold">{a.who}</span>{' '}
@@ -313,7 +313,7 @@ export function AppWindow() {
                               (row.status === 'OK'
                                 ? 'bg-success/15 text-success'
                                 : row.status === 'BAJO'
-                                ? 'bg-amber/15 text-amber-light'
+                                ? 'bg-purple/15 text-purple-light'
                                 : 'bg-danger/15 text-danger')
                             }
                           >

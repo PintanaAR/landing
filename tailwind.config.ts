@@ -15,11 +15,11 @@ const config: Config = {
           2: 'var(--surface-2)',
           3: 'var(--surface-3)',
         },
-        amber: {
-          DEFAULT: 'var(--amber)',
-          light: 'var(--amber-light)',
-          glow: 'var(--amber-glow)',
-          soft: 'var(--amber-soft)',
+        purple: {
+          DEFAULT: 'var(--purple)',
+          light: 'var(--purple-light)',
+          glow: 'var(--purple-glow)',
+          soft: 'var(--purple-soft)',
         },
         indigo: {
           DEFAULT: 'var(--indigo)',
