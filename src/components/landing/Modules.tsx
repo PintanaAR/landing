@@ -7,6 +7,8 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { BentoCard } from '@/components/ui/BentoCard'
+import { PaintDrip } from '@/components/ui/PaintDrip'
+import { PaintSplatter } from '@/components/ui/PaintSplatter'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -35,12 +37,10 @@ export function Modules() {
     <section
       id="modulos"
       aria-label="Módulos"
-      className="relative bg-surface-1 py-24 md:py-32"
+      className="relative overflow-hidden bg-surface-1 pb-24 pt-36 md:pb-32 md:pt-44"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border-2 to-transparent"
-      />
+      <PaintDrip className="absolute inset-x-0 top-0" />
+      <PaintSplatter />
 
       <div className="container-page">
         <motion.div
