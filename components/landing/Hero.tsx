@@ -1,8 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
+import { MagneticButton } from '@/components/ui/MagneticButton'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -27,6 +28,16 @@ const trustSignals = [
 ]
 
 export function Hero() {
+  const reduce = useReducedMotion()
+
+  const driftPurple = reduce
+    ? {}
+    : { animate: { x: [-40, 40, -40], y: [-20, 20, -20] }, transition: { duration: 22, repeat: Infinity, ease: 'easeInOut' as const } }
+
+  const driftIndigo = reduce
+    ? {}
+    : { animate: { x: [30, -30, 30], y: [25, -15, 25] }, transition: { duration: 18, repeat: Infinity, ease: 'easeInOut' as const } }
+
   return (
     <section
       id="producto"
@@ -39,13 +50,36 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_20%,black_0%,transparent_80%)]"
       />
-      <div
+
+      {/* Slow rotating conic beam behind the headline */}
+      {!reduce && (
+        <motion.div
+          aria-hidden
+          animate={{ rotate: 360 }}
+          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+          className="pointer-events-none absolute left-1/2 top-[40%] h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-1/2 opacity-70 [background:conic-gradient(from_0deg,transparent_0deg,rgba(139,92,246,0.07)_60deg,transparent_180deg,rgba(99,102,241,0.06)_270deg,transparent_360deg)] [mask-image:radial-gradient(circle_at_center,black_0%,transparent_60%)]"
+        />
+      )}
+
+      <motion.div
         aria-hidden
+        {...driftIndigo}
         className="pointer-events-none absolute left-[-120px] top-[140px] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.10)_0%,transparent_70%)]"
       />
+      <motion.div
+        aria-hidden
+        {...driftPurple}
+        className="pointer-events-none absolute left-1/2 top-[-220px] h-[640px] w-[860px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.10)_0%,transparent_65%)]"
+      />
+
+      {/* Faint noise/grain — pure CSS, very subtle */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-220px] h-[640px] w-[860px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.10)_0%,transparent_65%)]"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
+        }}
       />
 
       <div className="container-page relative flex min-h-[calc(100vh-58px)] flex-col items-center justify-center py-24 text-center">
@@ -65,7 +99,13 @@ export function Hero() {
             style={{ fontSize: 'clamp(44px, 6vw, 68px)' }}
           >
             El sistema que su pintería{' '}
-            <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
+            <span
+              className="bg-[linear-gradient(110deg,var(--purple)_0%,var(--purple-light)_45%,var(--purple)_100%)] bg-clip-text text-transparent"
+              style={{
+                backgroundSize: '220% 100%',
+                animation: reduce ? undefined : 'hero-shimmer 5s ease-in-out infinite',
+              }}
+            >
               merecía
             </span>{' '}
             desde siempre
@@ -84,10 +124,10 @@ export function Hero() {
             variants={fadeUp}
             className="mt-9 flex flex-wrap items-center justify-center gap-3"
           >
-            <a href="#contacto" className="btn-primary">
+            <MagneticButton href="#contacto" className="btn-primary">
               Solicitar demo gratuita
               <ArrowRight size={16} strokeWidth={2.5} />
-            </a>
+            </MagneticButton>
             <a href="#producto-vista" className="btn-secondary">
               Ver el producto
             </a>

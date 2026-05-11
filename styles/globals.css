@@ -44,6 +44,25 @@ body {
   color: #0B0A07;
 }
 
+@keyframes hero-shimmer {
+  0%, 100% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* Scrollbar — subtle, dark */
 ::-webkit-scrollbar {
   width: 10px;
