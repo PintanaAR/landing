@@ -2,6 +2,7 @@ import { Nav } from '@/components/landing/Nav'
 import { Hero } from '@/components/landing/Hero'
 import { AppWindow } from '@/components/landing/AppWindow'
 import { Modules } from '@/components/landing/Modules'
+import { POSFeature } from '@/components/landing/POSFeature'
 
 export default function Page() {
   return (
@@ -11,6 +12,7 @@ export default function Page() {
         <Hero />
         <AppWindow />
         <Modules />
+        <POSFeature />
       </main>
     </>
   )
