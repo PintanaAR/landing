@@ -13,25 +13,25 @@ type Stat = {
 
 const stats: Stat[] = [
   {
-    value: 120,
-    format: (n) => `+${Math.round(n)}`,
-    label: 'Pinturerías activas',
+    value: 24,
+    format: (n) => `${Math.round(n)}`,
+    label: 'Provincias y CABA soportadas',
   },
   {
-    value: 38,
-    format: (n) => `${Math.round(n)}%`,
-    label: 'Menos tiempo en cierre de caja',
+    value: 5,
+    format: (n) => `${Math.round(n)}`,
+    label: 'Módulos integrados de fábrica',
     accent: true,
   },
   {
-    value: 2.4,
-    format: (n) => `${n.toFixed(1)}M`,
-    label: 'Tickets emitidos en AFIP',
+    value: 3,
+    format: (n) => `${Math.round(n)}`,
+    label: 'Tipos de factura AFIP: A, B y C',
   },
   {
-    value: 99.97,
-    format: (n) => `${n.toFixed(2)}%`,
-    label: 'Disponibilidad del servicio',
+    value: 100,
+    format: (n) => `${Math.round(n)}%`,
+    label: 'En la nube · sin instalación',
     accent: true,
   },
 ]

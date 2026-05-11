@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Star } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 
 const fadeUp = {
@@ -20,11 +20,10 @@ const container = {
   },
 }
 
-const avatars = [
-  { initials: 'MR', bg: 'bg-[#C2410C]' },
-  { initials: 'JL', bg: 'bg-[#0E7490]' },
-  { initials: 'AS', bg: 'bg-[#7C3AED]' },
-  { initials: 'PG', bg: 'bg-[#15803D]' },
+const trustSignals = [
+  'Compatible AFIP',
+  'MercadoPago integrado',
+  'Soporte en español',
 ]
 
 export function Hero() {
@@ -94,40 +93,22 @@ export function Hero() {
             </a>
           </motion.div>
 
-          <motion.div
+          <motion.ul
             variants={fadeUp}
-            className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-[13px] text-text-2"
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] text-text-2"
           >
-            <div className="flex -space-x-2">
-              {avatars.map((a) => (
+            {trustSignals.map((label) => (
+              <li key={label} className="inline-flex items-center gap-1.5">
                 <span
-                  key={a.initials}
-                  className={`inline-flex h-7 w-7 items-center justify-center rounded-full border border-bg text-[10px] font-bold text-white ${a.bg}`}
                   aria-hidden
+                  className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-purple/15 text-purple"
                 >
-                  {a.initials}
+                  <Check size={10} strokeWidth={3} />
                 </span>
-              ))}
-            </div>
-            <span className="h-3.5 w-px bg-border-2" aria-hidden />
-            <span>
-              <span className="font-semibold text-text">+120</span> pinturerías ya operan con Pintana
-            </span>
-            <span className="h-3.5 w-px bg-border-2" aria-hidden />
-            <span className="flex items-center gap-1">
-              <span className="flex">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star
-                    key={i}
-                    size={13}
-                    className="fill-purple text-purple"
-                    aria-hidden
-                  />
-                ))}
-              </span>
-              <span className="font-semibold text-text">4.9</span> en reseñas
-            </span>
-          </motion.div>
+                {label}
+              </li>
+            ))}
+          </motion.ul>
         </motion.div>
       </div>
 

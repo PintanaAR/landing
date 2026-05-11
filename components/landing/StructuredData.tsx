@@ -13,11 +13,6 @@ export function StructuredData() {
       priceCurrency: 'ARS',
       description: 'Demo gratuita',
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '120',
-    },
   }
 
   return (
