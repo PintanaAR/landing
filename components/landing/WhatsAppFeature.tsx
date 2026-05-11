@@ -23,6 +23,7 @@ import {
   BatteryFull,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
+import { PintanaIcon } from '@/components/ui/PintanaIcon'
 
 const COLOR_SWATCHES: Record<string, string> = {
   Blanco: '#F5F5F5',
@@ -311,9 +312,9 @@ export function WhatsAppFeature() {
                   />
                   <span
                     aria-hidden
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-purple text-[13px] font-extrabold text-white"
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#0F1A20] ring-1 ring-inset ring-white/10"
                   >
-                    P
+                    <PintanaIcon size={22} />
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[13px] font-semibold text-white">
