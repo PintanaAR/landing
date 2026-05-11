@@ -7,12 +7,10 @@ import { WhatsAppFeature } from '@/components/landing/WhatsAppFeature'
 import { Stats } from '@/components/landing/Stats'
 import { Contact } from '@/components/landing/Contact'
 import { Footer } from '@/components/landing/Footer'
-import { StructuredData } from '@/components/landing/StructuredData'
 
-export default function Page() {
+export function App() {
   return (
     <>
-      <StructuredData />
       <Nav />
       <main id="top">
         <Hero />

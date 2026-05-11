@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useRef, useState } from 'react'
 import { useInView, animate } from 'framer-motion'
 import { cn } from '@/lib/cn'
