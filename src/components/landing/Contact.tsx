@@ -134,13 +134,13 @@ export function Contact() {
               className="mt-3 max-w-[15ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              Veamos su pintería con{' '}
+              Veamos tu pintería con{' '}
               <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
                 ojos nuevos
               </span>
             </h2>
             <p className="mt-4 max-w-[50ch] text-[16px] leading-[1.7] text-text-2">
-              Le mostramos el sistema funcionando con datos reales de su negocio
+              Te mostramos el sistema funcionando con datos reales de tu negocio
               en una llamada de 30 minutos. Sin compromiso.
             </p>
 
@@ -175,10 +175,10 @@ export function Contact() {
                   <CheckCircle2 size={26} />
                 </span>
                 <h3 className="mt-5 font-display text-[24px] font-extrabold tracking-[-0.02em] text-text">
-                  ¡Gracias! Le contactamos pronto
+                  ¡Gracias! Te contactamos pronto
                 </h3>
                 <p className="mt-3 max-w-[36ch] text-[14px] text-text-2">
-                  Recibimos su consulta. Un miembro del equipo le va a escribir
+                  Recibimos tu consulta. Un miembro del equipo te va a escribir
                   en menos de 4 horas hábiles.
                 </p>
                 <button
@@ -304,7 +304,7 @@ export function Contact() {
 
                 <div>
                   <label htmlFor="message" className={labelCls}>
-                    ¿En qué le podemos ayudar?
+                    ¿En qué te podemos ayudar?
                   </label>
                   <textarea
                     id="message"
@@ -335,7 +335,7 @@ export function Contact() {
 
                 <p className="flex items-center justify-center gap-1.5 pt-1 text-[12px] text-text-3">
                   <Lock size={11} />
-                  Sus datos están seguros. No hacemos spam.
+                  Tus datos están seguros. No hacemos spam.
                 </p>
               </form>
             )}

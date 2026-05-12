@@ -75,9 +75,9 @@ export function POSFeature() {
               className="mt-3 max-w-[14ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              El POS más rápido que probó{' '}
+              El POS más rápido que probaste{' '}
               <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
-                en su vida
+                en tu vida
               </span>
             </h2>
             <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.7] text-text-2">

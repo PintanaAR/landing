@@ -230,7 +230,7 @@ export function Hero() {
             className="mt-7 max-w-[16ch] font-display font-extrabold leading-[1.04] tracking-[-0.035em] text-text"
             style={{ fontSize: 'clamp(44px, 6vw, 68px)' }}
           >
-            El sistema que su pintería{' '}
+            El sistema que tu pintería{' '}
             <span className="relative inline-block">
               <span
                 className="bg-[linear-gradient(110deg,var(--purple)_0%,var(--purple-light)_45%,var(--purple)_100%)] bg-clip-text text-transparent"

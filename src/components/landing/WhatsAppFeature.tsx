@@ -134,7 +134,7 @@ const features = [
     icon: Mic,
     title: 'Voz, texto y fotos — todo le sirve',
     desc:
-      'Mandele un audio desde el mostrador, una foto del remito o un mensaje. El asistente entiende los tres y actúa.',
+      'Mandale un audio desde el mostrador, una foto del remito o un mensaje. El asistente entiende los tres y actúa.',
   },
   {
     icon: BarChart3,
@@ -146,7 +146,7 @@ const features = [
     icon: BellRing,
     title: 'Avisa antes que pase',
     desc:
-      'Stock bajo, cliente que se atrasa, factura por reenviar — lo nota primero y le pinga con la acción ya armada.',
+      'Stock bajo, cliente que se atrasa, factura por reenviar — lo nota primero y te pinga con la acción ya armada.',
   },
 ]
 
@@ -403,13 +403,13 @@ export function WhatsAppFeature() {
               className="mt-3 max-w-[18ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              Si sabe usar WhatsApp,{' '}
+              Si sabés usar WhatsApp,{' '}
               <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
-                sabe usar Pintana
+                sabés usar Pintana
               </span>
             </h2>
             <p className="mt-5 max-w-[54ch] text-[17px] leading-[1.7] text-text-2">
-              Hable con el asistente como con un empleado más. Le manda un audio,
+              Hablá con el asistente como con un empleado más. Le mandás un audio,
               una foto o un mensaje — entiende los tres y hace cualquier cosa que se
               haga en el sistema.
             </p>
@@ -441,7 +441,7 @@ export function WhatsAppFeature() {
                   <span className="font-semibold text-text">
                     Confirma antes de mover plata.
                   </span>{' '}
-                  Para facturar, cobrar o cargar stock, el asistente le pide el OK
+                  Para facturar, cobrar o cargar stock, el asistente te pide el OK
                   primero.
                 </p>
               </div>
@@ -451,7 +451,7 @@ export function WhatsAppFeature() {
                 </span>
                 <p className="text-[13px] leading-[1.5] text-text-2">
                   <span className="font-semibold text-text">
-                    Su WhatsApp de siempre.
+                    Tu WhatsApp de siempre.
                   </span>{' '}
                   Sin app nueva, sin instalar nada — Pintana se agrega como un
                   contacto más.

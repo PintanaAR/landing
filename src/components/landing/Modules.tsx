@@ -117,7 +117,7 @@ export function Modules() {
                 Punto de venta
               </h3>
               <p className="mt-2 text-[15px] leading-[1.65] text-text-2">
-                Cobre en segundos desde el mostrador. Atajos de teclado, MercadoPago y
+                Cobrá en segundos desde el mostrador. Atajos de teclado, MercadoPago y
                 ticket fiscal sin cambiar de pantalla.
               </p>
             </BentoCard>
