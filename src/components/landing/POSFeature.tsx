@@ -9,18 +9,18 @@ import {
 const features = [
   {
     icon: Keyboard,
-    title: 'Atajos de teclado',
-    desc: 'F1 para cobrar, F2 para descuento, F3 para anular. Las manos no se mueven del teclado.',
+    title: 'Atajos simples',
+    desc: 'Las acciones más usadas a un toque. No hay que buscar botones cuando hay cola.',
   },
   {
     icon: CreditCard,
     title: 'MercadoPago integrado',
-    desc: 'QR dinámico, link de pago o tarjeta. El ticket se cierra solo cuando entra la plata.',
+    desc: 'QR, link de pago o tarjeta. El ticket se cierra solo cuando entra la plata.',
   },
   {
     icon: Receipt,
-    title: 'Ticket fiscal en un click',
-    desc: 'Factura A, B o C emitida contra AFIP sin pasar a otra pantalla.',
+    title: 'Factura AFIP en un toque',
+    desc: 'Factura A, B o C emitida contra AFIP sin cambiar de pantalla.',
   },
 ]
 
@@ -58,7 +58,7 @@ export function POSFeature() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-120px] top-[120px] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.06)_0%,transparent_70%)]"
+        className="pointer-events-none absolute right-[-120px] top-[120px] h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.04)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -72,23 +72,20 @@ export function POSFeature() {
           >
             <span className="overline">Mostrador</span>
             <h2
-              className="mt-3 max-w-[14ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
+              className="mt-3 max-w-[16ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              El POS más rápido que probaste{' '}
-              <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
-                en tu vida
-              </span>
+              Para cobrar cuando el local está lleno.
             </h2>
             <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.7] text-text-2">
-              Diseñado para vender mientras hay cola. Sin esperar pantallas, sin
-              hojas sueltas, sin contar el vuelto con la calculadora del celular.
+              Sin esperar pantallas, sin hojas sueltas, sin contar el vuelto
+              con la calculadora del celular.
             </p>
 
             <ul className="mt-8 space-y-5">
               {features.map(({ icon: Icon, title, desc }) => (
                 <li key={title} className="flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-2">
                     <Icon size={18} strokeWidth={2} />
                   </span>
                   <div>
@@ -116,17 +113,17 @@ export function POSFeature() {
               className="theme-dark relative overflow-hidden rounded-2xl border border-border-2 bg-surface-1"
               style={{
                 boxShadow:
-                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.55), 0 0 60px rgba(139,92,246,0.05)',
+                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.55)',
               }}
             >
               {/* Top bar */}
               <div className="flex items-center justify-between border-b border-border bg-surface-2/70 px-4 py-2.5">
                 <div className="flex items-center gap-2 text-[12px] text-text-2">
                   <span className="relative inline-flex h-2 w-2" aria-hidden>
-                    <span className="absolute inset-0 animate-ping rounded-full bg-purple opacity-60" />
-                    <span className="relative inline-block h-2 w-2 rounded-full bg-purple shadow-[0_0_8px_rgba(139,92,246,0.7)]" />
+                    <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-50" />
+                    <span className="relative inline-block h-2 w-2 rounded-full bg-success" />
                   </span>
-                  <span className="font-semibold text-purple">Sesión activa</span>
+                  <span className="font-semibold text-text">Sesión activa</span>
                   <span className="text-text-3">· Caja 01 · Marta R.</span>
                 </div>
                 <span className="font-mono text-[11px] text-text-3">
@@ -157,7 +154,7 @@ export function POSFeature() {
                         }
                       >
                         {p.selected && (
-                          <span className="absolute right-2 top-2 inline-block h-1.5 w-1.5 rounded-full bg-purple shadow-[0_0_6px_rgba(139,92,246,0.7)]" />
+                          <span className="absolute right-2 top-2 inline-block h-1.5 w-1.5 rounded-full bg-purple" />
                         )}
                         <p className="text-[11px] uppercase tracking-[0.06em] text-text-3">
                           {p.tag}
@@ -223,7 +220,7 @@ export function POSFeature() {
                   </div>
                   <div className="px-3.5 pb-3.5">
                     <button
-                      className="relative w-full overflow-hidden rounded-[10px] bg-purple px-3 py-2.5 text-[13px] font-bold text-white shadow-[0_0_0_0_rgba(139,92,246,0)] before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none motion-safe:animate-[cta-breathe_3.4s_ease-in-out_infinite]"
+                      className="relative w-full overflow-hidden rounded-[10px] bg-purple px-3 py-2.5 text-[13px] font-bold text-white before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:to-transparent before:pointer-events-none"
                     >
                       Cobrar ahora
                     </button>

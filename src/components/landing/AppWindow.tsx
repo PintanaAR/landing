@@ -197,7 +197,7 @@ export function AppWindow() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-24 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(139,92,246,0.12)_0%,transparent_70%)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-24 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(139,92,246,0.06)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -209,7 +209,7 @@ export function AppWindow() {
           className="theme-dark relative mx-auto w-full max-w-[1120px] overflow-hidden rounded-[18px] border border-border-2 bg-surface-1"
           style={{
             boxShadow:
-              '0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(139,92,246,0.04)',
+              '0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8)',
           }}
         >
           {/* Window chrome */}
@@ -260,7 +260,7 @@ export function AppWindow() {
                       (active ? 'bg-surface-3 text-text' : 'text-text-2 hover:bg-surface-2')
                     }
                   >
-                    <Icon size={15} strokeWidth={2} className={active ? 'text-purple' : ''} />
+                    <Icon size={15} strokeWidth={2} className={active ? 'text-text' : ''} />
                     {label}
                   </span>
                 ))}
@@ -270,7 +270,7 @@ export function AppWindow() {
                   Cierre Z
                 </p>
                 <p className="mt-1 text-[13px] text-text">Pendiente</p>
-                <button className="mt-2 inline-flex items-center gap-1 text-[12px] font-semibold text-purple hover:underline">
+                <button className="mt-2 inline-flex items-center gap-1 text-[12px] font-semibold text-text hover:underline">
                   Generar <ArrowUpRight size={12} />
                 </button>
               </div>
@@ -324,7 +324,11 @@ export function AppWindow() {
                   </div>
                   <div className="flex h-32 items-end gap-2">
                     {bars.map((b, i) => (
-                      <div key={b.label} className="flex flex-1 flex-col items-center gap-1.5">
+                      <div
+                        key={b.label}
+                        className="relative flex flex-1 flex-col items-center gap-1.5"
+                      >
+                        {i === 4 && <PeakAnnotation />}
                         <motion.span
                           initial={{ height: 0 }}
                           whileInView={{ height: `${b.value}%` }}
@@ -341,11 +345,6 @@ export function AppWindow() {
                               ? 'bg-gradient-to-t from-purple to-purple-light'
                               : 'bg-surface-3')
                           }
-                          style={
-                            i === 4 && !reduce
-                              ? { animation: 'peak-pulse 2.6s ease-in-out infinite' }
-                              : undefined
-                          }
                           aria-hidden
                         />
                         <span className="text-[10px] text-text-3">{b.label}</span>
@@ -359,8 +358,8 @@ export function AppWindow() {
                     <p className="text-[12px] font-semibold text-text">Actividad</p>
                     <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.08em] text-text-3">
                       <span className="relative inline-flex h-1.5 w-1.5" aria-hidden>
-                        <span className="absolute inset-0 animate-ping rounded-full bg-purple opacity-60" />
-                        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-purple" />
+                        <span className="absolute inset-0 animate-ping rounded-full bg-text-2 opacity-40" />
+                        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-text-2" />
                       </span>
                       En vivo
                     </span>
@@ -377,7 +376,7 @@ export function AppWindow() {
                           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                           className="flex items-start gap-2.5"
                         >
-                          <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-purple" />
+                          <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-text-3" />
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-[12px] text-text">
                               <span className="font-semibold">{a.who}</span>{' '}
@@ -515,5 +514,62 @@ function AnimatedNumber({ value }: { value: string }) {
         </motion.span>
       </AnimatePresence>
     </span>
+  )
+}
+
+// Hand-drawn margin note pointing to the Friday peak — like a contractor's
+// scribble on a printout. Reads as storytelling, not decoration.
+function PeakAnnotation() {
+  return (
+    <motion.div
+      aria-hidden
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: 0.95, duration: 0.45 }}
+      className="pointer-events-none absolute -top-12 left-1/2 z-10 hidden h-12 w-[124px] -translate-x-1 sm:block"
+    >
+      <span
+        className="absolute right-1 top-0 whitespace-nowrap font-display text-[11px] italic leading-none text-text-2"
+        style={{ transform: 'rotate(-4deg)' }}
+      >
+        tu mejor día
+      </span>
+      <svg
+        viewBox="0 0 124 48"
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full text-text-2"
+      >
+        <motion.path
+          d="M 104 14 C 86 20, 72 28, 52 38 C 32 46, 14 48, 4 48"
+          stroke="currentColor"
+          strokeOpacity="0.55"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          fill="none"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{
+            delay: 1.1,
+            duration: 0.7,
+            ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+          }}
+        />
+        <motion.path
+          d="M 10 44 L 4 48 L 9 50"
+          stroke="currentColor"
+          strokeOpacity="0.55"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.55 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ delay: 1.7, duration: 0.3 }}
+        />
+      </svg>
+    </motion.div>
   )
 }

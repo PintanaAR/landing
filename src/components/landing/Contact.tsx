@@ -117,7 +117,7 @@ export function Contact() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[80px] h-[420px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(139,92,246,0.06)_0%,transparent_70%)]"
+        className="pointer-events-none absolute left-1/2 top-[80px] h-[420px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(139,92,246,0.04)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -131,23 +131,20 @@ export function Contact() {
           >
             <span className="overline">Hablemos</span>
             <h2
-              className="mt-3 max-w-[15ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
+              className="mt-3 max-w-[17ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              Veamos tu pintería con{' '}
-              <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
-                ojos nuevos
-              </span>
+              Veámoslo funcionando en tu pintería.
             </h2>
             <p className="mt-4 max-w-[50ch] text-[16px] leading-[1.7] text-text-2">
-              Te mostramos el sistema funcionando con datos reales de tu negocio
-              en una llamada de 30 minutos. Sin compromiso.
+              30 minutos. Te mostramos el sistema con datos reales de tu
+              negocio y te pasamos un presupuesto a tu medida. Sin compromiso.
             </p>
 
             <ul className="mt-10 space-y-5">
               {contactPoints.map(({ icon: Icon, title, sub }) => (
                 <li key={title} className="flex items-start gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-2">
                     <Icon size={17} strokeWidth={2} />
                   </span>
                   <div>

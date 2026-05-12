@@ -130,21 +130,21 @@ const STATIC_MESSAGES: Message[] = (() => {
 const features = [
   {
     icon: Mic,
-    title: 'Voz, texto y fotos — todo le sirve',
+    title: 'Audio, foto o texto',
     desc:
-      'Mandale un audio desde el mostrador, una foto del remito o un mensaje. El asistente entiende los tres y actúa.',
+      'Mandale un audio desde el mostrador, una foto del remito o un mensaje. Entiende los tres.',
   },
   {
     icon: BarChart3,
-    title: 'Análisis y reportes al toque',
+    title: 'Te contesta con números',
     desc:
-      '"¿Qué color vendí más?" "¿Quién me debe?" "Comparame con el mes pasado." Le contesta con números, no con teoría.',
+      '"¿Qué color vendí más?" "¿Quién me debe?" "Comparame con el mes pasado." Datos concretos, no teoría.',
   },
   {
     icon: BellRing,
     title: 'Avisa antes que pase',
     desc:
-      'Stock bajo, cliente que se atrasa, factura por reenviar — lo nota primero y te pinga con la acción ya armada.',
+      'Stock bajo, cliente atrasado, factura por reenviar — lo nota primero y te avisa con la acción ya armada.',
   },
 ]
 
@@ -263,7 +263,7 @@ export function WhatsAppFeature() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[50%] top-[10%] h-[520px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(0,168,132,0.07)_0%,transparent_70%)]"
+        className="pointer-events-none absolute left-[50%] top-[10%] h-[520px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(0,168,132,0.05)_0%,transparent_70%)]"
       />
 
       <div className="container-page">
@@ -280,7 +280,7 @@ export function WhatsAppFeature() {
               className="relative mx-auto aspect-[9/19] overflow-hidden rounded-[44px] border border-white/10 bg-[#0B141A]"
               style={{
                 boxShadow:
-                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 90px rgba(0,0,0,0.7), 0 0 80px rgba(139,92,246,0.14)',
+                  '0 0 0 1px rgba(255,255,255,0.04), 0 40px 90px rgba(0,0,0,0.7)',
               }}
             >
               {/* Dynamic island */}
@@ -391,26 +391,22 @@ export function WhatsAppFeature() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
           >
-            <span className="overline">WhatsApp · Asistente IA</span>
+            <span className="overline">Asistente en WhatsApp</span>
             <h2
               className="mt-3 max-w-[18ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              Si sabés usar WhatsApp,{' '}
-              <span className="bg-gradient-to-r from-purple to-purple-light bg-clip-text text-transparent">
-                sabés usar Pintana
-              </span>
+              Si sabés usar WhatsApp, sabés usar Pintana.
             </h2>
             <p className="mt-5 max-w-[54ch] text-[17px] leading-[1.7] text-text-2">
-              Hablá con el asistente como con un empleado más. Le mandás un audio,
-              una foto o un mensaje — entiende los tres y hace cualquier cosa que se
-              haga en el sistema.
+              Hablale al asistente como a un empleado. Audio, foto o texto —
+              entiende los tres y hace lo que se hace en el sistema.
             </p>
 
             <ul className="mt-8 space-y-5">
               {features.map(({ icon: Icon, title, desc }) => (
                 <li key={title} className="flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-purple">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-2">
                     <Icon size={18} strokeWidth={2} />
                   </span>
                   <div>
@@ -427,7 +423,7 @@ export function WhatsAppFeature() {
 
             <div className="mt-8 overflow-hidden rounded-xl border border-border bg-surface-2/60">
               <div className="flex items-start gap-3 px-4 py-3">
-                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-purple/15 text-purple">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border bg-surface-1 text-text-2">
                   <ShieldCheck size={14} strokeWidth={2.2} />
                 </span>
                 <p className="text-[13px] leading-[1.5] text-text-2">
@@ -439,7 +435,7 @@ export function WhatsAppFeature() {
                 </p>
               </div>
               <div className="flex items-start gap-3 border-t border-border px-4 py-3">
-                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-purple/15 text-purple">
+                <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border bg-surface-1 text-text-2">
                   <Smartphone size={14} strokeWidth={2.2} />
                 </span>
                 <p className="text-[13px] leading-[1.5] text-text-2">
