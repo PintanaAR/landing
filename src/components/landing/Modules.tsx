@@ -37,7 +37,7 @@ export function Modules() {
     <section
       id="modulos"
       aria-label="Módulos"
-      className="relative bg-surface-1 pb-24 pt-36 md:pb-32 md:pt-44"
+      className="relative bg-surface-1 pb-24 mt-36 md:pb-32"
     >
       {/* The drip's top sits exactly at AppWindow's content-end (which is
           now `pb-6` below the window mockup), so the band's top edge is

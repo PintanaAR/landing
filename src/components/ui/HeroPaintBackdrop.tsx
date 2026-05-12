@@ -69,7 +69,13 @@ export function HeroPaintBackdrop() {
             <stop offset="50%" stopColor="var(--indigo)" stopOpacity="0.08" />
             <stop offset="100%" stopColor="var(--indigo)" stopOpacity="0" />
           </linearGradient>
-          <filter id="hero-stroke-blur">
+          <filter
+            id="hero-stroke-blur"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+          >
             <feGaussianBlur stdDeviation="14" />
           </filter>
         </defs>
@@ -107,7 +113,19 @@ export function HeroPaintBackdrop() {
           aria-hidden
         >
           <defs>
-            <filter id="hero-anim-blur">
+            {/* Filter region expanded to 200%/200% with -50% offsets so the
+                blur halo fades to zero well before reaching the filter's
+                edge. Default region (~120%/120%) was too tight for a 62px
+                stroke + ~21px blur halo on a wide-but-short bbox, which
+                produced a visible hard edge where the blur was clipped —
+                most obvious where the two strokes crossed. */}
+            <filter
+              id="hero-anim-blur"
+              x="-50%"
+              y="-50%"
+              width="200%"
+              height="200%"
+            >
               <feGaussianBlur stdDeviation="7" />
             </filter>
           </defs>
