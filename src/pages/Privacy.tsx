@@ -4,6 +4,7 @@
 // reviewed and adapted by a qualified lawyer before being relied on as the
 // final Privacy Policy. Do not treat as legal advice.
 import { LegalLayout } from '@/components/legal/LegalLayout'
+import { site } from '@/lib/site'
 
 export function Privacy() {
   return (
@@ -30,7 +31,7 @@ export function Privacy() {
         <strong>Pintana</strong>, con domicilio en la Ciudad Autónoma de
         Buenos Aires, Argentina. Para cualquier consulta sobre el tratamiento
         de sus datos personales puede escribirnos a{' '}
-        <a href="mailto:privacidad@pintana.com.ar">privacidad@pintana.com.ar</a>.
+        <a href={`mailto:${site.email.privacy}`}>{site.email.privacy}</a>.
       </p>
 
       <h2>3. Datos que recopilamos</h2>
@@ -201,7 +202,7 @@ export function Privacy() {
       </ul>
       <p>
         Para ejercer estos derechos, escríbanos a{' '}
-        <a href="mailto:privacidad@pintana.com.ar">privacidad@pintana.com.ar</a>{' '}
+        <a href={`mailto:${site.email.privacy}`}>{site.email.privacy}</a>{' '}
         adjuntando una copia de su documento de identidad. Responderemos
         dentro de los plazos previstos por la normativa. Si considera que
         sus derechos no fueron debidamente atendidos, puede presentar un
@@ -247,13 +248,14 @@ export function Privacy() {
       <ul>
         <li>
           Correo electrónico:{' '}
-          <a href="mailto:privacidad@pintana.com.ar">
-            privacidad@pintana.com.ar
-          </a>
+          <a href={`mailto:${site.email.privacy}`}>{site.email.privacy}</a>
         </li>
         <li>
-          Autoridad de control: Agencia de Acceso a la Información Pública
-          (AAIP), Av. Pte. Julio A. Roca 710, piso 2, CABA.
+          Autoridad de control:{' '}
+          <a href={site.links.aaip} target="_blank" rel="noopener noreferrer">
+            Agencia de Acceso a la Información Pública (AAIP)
+          </a>
+          .
         </li>
       </ul>
     </LegalLayout>

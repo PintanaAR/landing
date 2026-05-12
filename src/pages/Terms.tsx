@@ -5,6 +5,7 @@
 // before being relied on as the final Terms of Service. Do not treat as
 // legal advice.
 import { LegalLayout } from '@/components/legal/LegalLayout'
+import { site } from '@/lib/site'
 
 export function Terms() {
   return (
@@ -243,7 +244,7 @@ export function Terms() {
         correo electrónico a las direcciones registradas. Pintana utilizará
         la dirección que el Cliente haya indicado en su cuenta; el Cliente
         podrá contactarnos en{' '}
-        <a href="mailto:hola@pintana.com.ar">hola@pintana.com.ar</a>.
+        <a href={`mailto:${site.email.general}`}>{site.email.general}</a>.
       </p>
 
       <h2>15. Disposiciones generales</h2>

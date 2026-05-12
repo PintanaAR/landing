@@ -14,16 +14,17 @@ import {
 } from 'lucide-react'
 import { contactSchema, type ContactInput } from '@/lib/validations'
 import { cn } from '@/lib/cn'
+import { site } from '@/lib/site'
 
 const contactPoints = [
   {
     icon: Mail,
-    title: 'hola@pintana.com.ar',
+    title: site.email.general,
     sub: 'Respondemos en menos de 4 horas hábiles',
   },
   {
     icon: Phone,
-    title: '+54 9 11 6000 0000',
+    title: site.phone.display,
     sub: 'Lun a Vie · 9 a 19 hs',
   },
   {
@@ -33,7 +34,7 @@ const contactPoints = [
   },
   {
     icon: MapPin,
-    title: 'Buenos Aires, Argentina',
+    title: site.location.city,
     sub: 'Soporte local · sin call centers offshore',
   },
 ]
@@ -252,7 +253,7 @@ export function Contact() {
                     type="tel"
                     autoComplete="tel"
                     className={cn(inputCls, 'mt-1.5')}
-                    placeholder="+54 9 11 0000 0000"
+                    placeholder={site.phone.placeholder}
                     {...register('phone')}
                   />
                 </div>
