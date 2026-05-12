@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { cn } from '@/lib/cn'
@@ -52,15 +52,17 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href="#"
-            className="hidden text-[13px] font-medium text-text-2 transition-colors hover:text-text md:inline-block"
-          >
-            Iniciar sesión
-          </a>
           <ThemeToggle className="hidden md:inline-flex" />
-          <a href="#contacto" className="btn-primary !px-4 !py-2 !text-[13px]">
+          <a
+            href="#contacto"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-border-2 bg-surface-2 px-3.5 py-1.5 text-[13px] font-medium text-text transition-all duration-150 hover:border-text-3 hover:bg-surface-3"
+          >
             Solicitar demo
+            <ArrowRight
+              size={13}
+              strokeWidth={2.5}
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+            />
           </a>
           <button
             type="button"
@@ -87,13 +89,6 @@ export function Nav() {
                 {t.label}
               </a>
             ))}
-            <a
-              href="#"
-              onClick={() => setOpen(false)}
-              className="rounded-md px-2 py-2.5 text-[14px] font-medium text-text-2 transition-colors hover:bg-surface-2 hover:text-text"
-            >
-              Iniciar sesión
-            </a>
             <div className="mt-2 flex items-center gap-2 px-2">
               <ThemeToggle />
               <span className="text-[12px] text-text-3">Tema</span>
