@@ -202,4 +202,43 @@ h1, h2, h3, h4 {
   .card-mouse-glow:hover::after {
     opacity: 1;
   }
+
+  /* Long-form legal document typography */
+  .legal-prose h2 {
+    @apply mt-12 font-display text-[22px] font-bold tracking-[-0.02em] text-text;
+  }
+  .legal-prose h2:first-child {
+    @apply mt-0;
+  }
+  .legal-prose h3 {
+    @apply mt-8 font-display text-[17px] font-bold tracking-[-0.01em] text-text;
+  }
+  .legal-prose p {
+    @apply mt-4;
+  }
+  .legal-prose ul {
+    @apply mt-4 space-y-2 pl-5;
+    list-style: disc;
+  }
+  .legal-prose ol {
+    @apply mt-4 space-y-2 pl-5;
+    list-style: decimal;
+  }
+  .legal-prose li::marker {
+    color: var(--text-3);
+  }
+  .legal-prose strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .legal-prose a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--text-3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 150ms ease;
+  }
+  .legal-prose a:hover {
+    text-decoration-color: var(--text);
+  }
 }

@@ -77,7 +77,7 @@ const INITIAL_ACTIVITY: Activity[] = [
   { id: 1, who: 'Marta R.', what: 'Cobró ticket', detail: '$ 18.420 · MercadoPago', age: 0 },
   { id: 2, who: 'Sistema', what: 'Stock bajo', detail: 'Esmalte sintético blanco 4L', age: 24 },
   { id: 3, who: 'Juan L.', what: 'Factura A emitida', detail: 'CUIT 30-7045... · $ 124.560', age: 65 },
-  { id: 4, who: 'Sistema', what: 'Sincronizó AFIP', detail: '12 comprobantes', age: 180 },
+  { id: 4, who: 'Sistema', what: 'Sincronizó ARCA', detail: '12 comprobantes', age: 180 },
 ]
 
 const PEOPLE = ['Marta R.', 'Juan L.', 'Carolina P.', 'Sebastián O.', 'Diego M.']
@@ -145,7 +145,7 @@ function buildActivity(id: number): {
     activity: {
       id,
       who: 'Sistema',
-      what: 'Sincronizó AFIP',
+      what: 'Sincronizó ARCA',
       detail: `${rand(3, 18)} comprobantes`,
       age: 0,
     },
@@ -293,7 +293,7 @@ export function AppWindow() {
                     <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60" />
                     <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-success" />
                   </span>
-                  AFIP conectado
+                  ARCA conectado
                 </span>
               </div>
 

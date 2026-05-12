@@ -19,8 +19,8 @@ const features = [
   },
   {
     icon: Receipt,
-    title: 'Factura AFIP en un toque',
-    desc: 'Factura A, B o C emitida contra AFIP sin cambiar de pantalla.',
+    title: 'Factura ARCA en un toque',
+    desc: 'Factura A, B o C emitida contra ARCA sin cambiar de pantalla.',
   },
 ]
 

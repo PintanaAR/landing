@@ -307,7 +307,7 @@ export function Contact() {
                     id="message"
                     rows={4}
                     className={cn(inputCls, 'mt-1.5 resize-none')}
-                    placeholder="Hoy uso planilla y un POS viejo. Quisiera ver cómo funciona la facturación AFIP…"
+                    placeholder="Hoy uso planilla y un POS viejo. Quisiera ver cómo funciona la facturación ARCA…"
                     {...register('message')}
                   />
                 </div>

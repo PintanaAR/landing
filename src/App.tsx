@@ -1,25 +1,28 @@
-import { Nav } from '@/components/landing/Nav'
-import { Hero } from '@/components/landing/Hero'
-import { AppWindow } from '@/components/landing/AppWindow'
-import { Modules } from '@/components/landing/Modules'
-import { POSFeature } from '@/components/landing/POSFeature'
-import { WhatsAppFeature } from '@/components/landing/WhatsAppFeature'
-import { Contact } from '@/components/landing/Contact'
-import { Footer } from '@/components/landing/Footer'
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { Home } from '@/pages/Home'
+import { Privacy } from '@/pages/Privacy'
+import { Terms } from '@/pages/Terms'
+
+// On every route change, jump to top so legal pages don't open mid-scroll.
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) return // let the browser handle anchor scroll
+    window.scrollTo(0, 0)
+  }, [pathname, hash])
+  return null
+}
 
 export function App() {
   return (
     <>
-      <Nav />
-      <main id="top">
-        <Hero />
-        <AppWindow />
-        <Modules />
-        <POSFeature />
-        <WhatsAppFeature />
-        <Contact />
-      </main>
-      <Footer />
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/privacidad" element={<Privacy />} />
+        <Route path="/terminos" element={<Terms />} />
+      </Routes>
     </>
   )
 }

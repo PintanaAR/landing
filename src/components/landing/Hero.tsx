@@ -73,8 +73,8 @@ export function Hero() {
             className="mt-6 max-w-[56ch] text-[17px] leading-[1.7] text-text-2"
           >
             ERP, punto de venta e inventario en una sola pantalla.
-            Facturás en AFIP y cobrás con MercadoPago desde el mostrador,
-            sin papeles.
+            Facturás en ARCA (ex-AFIP) y cobrás con MercadoPago desde el
+            mostrador, sin papeles.
           </motion.p>
 
           <motion.div

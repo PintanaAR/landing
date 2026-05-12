@@ -142,11 +142,11 @@ export function Modules() {
                   ERP central
                 </h3>
                 <p className="mt-2 max-w-[52ch] text-[15px] leading-[1.65] text-text-2">
-                  Ventas, compras, caja, cuentas corrientes y facturación AFIP
+                  Ventas, compras, caja, cuentas corrientes y facturación ARCA
                   en un solo lugar.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <TagPill>Facturación AFIP A/B/C</TagPill>
+                  <TagPill>Facturación ARCA A/B/C</TagPill>
                   <TagPill>Cuentas corrientes</TagPill>
                   <TagPill>Caja y banco</TagPill>
                   <TagPill>Multi-sucursal</TagPill>

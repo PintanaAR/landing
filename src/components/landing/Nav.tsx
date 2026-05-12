@@ -5,10 +5,10 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { cn } from '@/lib/cn'
 
 const tabs = [
-  { label: 'Producto', href: '#producto' },
-  { label: 'Módulos', href: '#modulos' },
-  { label: 'Asistente', href: '#whatsapp' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'Producto', href: '/#producto' },
+  { label: 'Módulos', href: '/#modulos' },
+  { label: 'Asistente', href: '/#whatsapp' },
+  { label: 'Contacto', href: '/#contacto' },
 ]
 
 export function Nav() {
@@ -32,7 +32,7 @@ export function Nav() {
       )}
     >
       <div className="container-page flex h-full items-center justify-between">
-        <a href="#top" className="flex items-center" aria-label="Pintana — Inicio">
+        <a href="/" className="flex items-center" aria-label="Pintana — Inicio">
           <Logo />
         </a>
 
@@ -54,7 +54,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <ThemeToggle className="hidden md:inline-flex" />
           <a
-            href="#contacto"
+            href="/#contacto"
             className="group inline-flex items-center gap-1.5 rounded-full border border-border-2 bg-surface-2 px-3.5 py-1.5 text-[13px] font-medium text-text transition-all duration-150 hover:border-text-3 hover:bg-surface-3"
           >
             Solicitar demo
