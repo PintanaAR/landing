@@ -4,8 +4,8 @@ import { Logo } from '@/components/ui/Logo'
 type LinkItem = { label: string; href: string; external?: boolean }
 
 const links: LinkItem[] = [
-  { label: 'Privacidad', href: '/privacidad' },
-  { label: 'Términos', href: '/terminos' },
+  { label: 'Privacidad', href: '/privacy' },
+  { label: 'Términos', href: '/tos' },
   { label: 'Soporte', href: '/#contacto' },
   { label: 'Contacto', href: '/#contacto' },
 ]

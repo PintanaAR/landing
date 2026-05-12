@@ -20,8 +20,8 @@ export function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/privacidad" element={<Privacy />} />
-        <Route path="/terminos" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/tos" element={<Terms />} />
       </Routes>
     </>
   )

@@ -135,7 +135,7 @@ export function Terms() {
         (productos, clientes, ventas, comprobantes, etc.) son y siguen
         siendo de su exclusiva propiedad. Pintana los trata por cuenta y
         orden del Cliente, exclusivamente para la prestación del Servicio
-        y conforme a la <a href="/privacidad">Política de Privacidad</a>.
+        y conforme a la <a href="/privacy">Política de Privacidad</a>.
       </p>
       <p>
         El Cliente puede solicitar la <strong>exportación</strong> de sus
