@@ -134,7 +134,7 @@ export function POSFeature() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-[1fr_240px]">
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr_220px] lg:grid-cols-[1fr_240px]">
                 {/* Product grid */}
                 <div className="border-r border-border p-3">
                   <div className="mb-2 flex items-center justify-between">

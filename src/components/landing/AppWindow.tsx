@@ -245,7 +245,7 @@ export function AppWindow() {
           </div>
 
           {/* App body */}
-          <div className="grid grid-cols-[180px_1fr] md:grid-cols-[210px_1fr]">
+          <div className="grid grid-cols-1 md:grid-cols-[210px_1fr]">
             {/* Sidebar */}
             <aside className="hidden border-r border-border bg-surface-1 p-3 md:block">
               <p className="px-2 pb-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-text-3">
@@ -405,7 +405,7 @@ export function AppWindow() {
                 <table className="w-full text-left text-[12px]">
                   <thead className="text-text-3">
                     <tr>
-                      <th className="px-4 py-2 font-medium">SKU</th>
+                      <th className="hidden px-4 py-2 font-medium sm:table-cell">SKU</th>
                       <th className="px-4 py-2 font-medium">Producto</th>
                       <th className="px-4 py-2 font-medium text-right">Stock</th>
                       <th className="px-4 py-2 font-medium text-right">Estado</th>
@@ -419,7 +419,7 @@ export function AppWindow() {
                           i !== inventory.length - 1 ? 'border-b border-border' : ''
                         }
                       >
-                        <td className="px-4 py-2.5 font-mono text-text-2">{row.sku}</td>
+                        <td className="hidden px-4 py-2.5 font-mono text-text-2 sm:table-cell">{row.sku}</td>
                         <td className="px-4 py-2.5 text-text">
                           <span className="inline-flex items-center gap-2">
                             <span
