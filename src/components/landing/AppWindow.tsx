@@ -193,7 +193,7 @@ export function AppWindow() {
     <section
       id="producto-vista"
       aria-label="Vista del producto"
-      className="relative -mt-16 pb-32"
+      className="relative -mt-16 pb-6"
     >
       <div
         aria-hidden

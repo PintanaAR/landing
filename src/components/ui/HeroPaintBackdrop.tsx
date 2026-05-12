@@ -95,10 +95,10 @@ export function HeroPaintBackdrop() {
         />
       </svg>
 
-      {/* Animated brushstrokes — slow paint strokes traveling along curved
-          paths, like an invisible brush is painting on the hero canvas.
-          Each stroke is a wide soft-edged segment (~30% of the path length)
-          that travels via pathOffset animation, fades off, pauses, repeats. */}
+      {/* Animated brushstrokes — periodically draw themselves across the
+          hero like a brush is painting on the canvas, then fade out, pause,
+          repeat. Two strokes with offset timings so the page always has
+          *something* tracing somewhere but they don't sync up. */}
       {!reduce && (
         <svg
           className="absolute inset-0 h-full w-full"
@@ -107,53 +107,48 @@ export function HeroPaintBackdrop() {
           aria-hidden
         >
           <defs>
-            <linearGradient id="hero-anim-stroke" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="var(--purple)" stopOpacity="0" />
-              <stop offset="35%" stopColor="var(--purple-light)" stopOpacity="0.6" />
-              <stop offset="65%" stopColor="var(--purple)" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="var(--purple)" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="hero-anim-stroke-2" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="var(--indigo)" stopOpacity="0" />
-              <stop offset="50%" stopColor="var(--indigo)" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="var(--indigo)" stopOpacity="0" />
-            </linearGradient>
             <filter id="hero-anim-blur">
-              <feGaussianBlur stdDeviation="6" />
+              <feGaussianBlur stdDeviation="7" />
             </filter>
           </defs>
+          {/* Upper stroke: purple, sweeps left to right with a gentle dip */}
           <motion.path
-            d="M -150 240 C 200 80, 600 380, 1000 180 C 1300 50, 1600 320, 1850 200"
-            stroke="url(#hero-anim-stroke)"
-            strokeWidth={48}
+            d="M 120 230 C 380 100, 720 380, 1080 210 C 1360 80, 1480 240, 1520 220"
+            stroke="var(--purple-light)"
+            strokeWidth={62}
             strokeLinecap="round"
             fill="none"
             filter="url(#hero-anim-blur)"
-            pathLength={0.32}
-            style={{ opacity: 0.55 }}
-            animate={{ pathOffset: [-0.32, 1.05] }}
+            animate={{
+              pathLength: [0, 1, 1, 0],
+              opacity: [0, 0.85, 0.85, 0],
+            }}
             transition={{
-              duration: 13,
+              duration: 11,
+              times: [0, 0.4, 0.7, 1],
               repeat: Infinity,
               ease: 'easeInOut',
-              repeatDelay: 2.5,
+              repeatDelay: 2,
             }}
           />
+          {/* Lower stroke: indigo, sweeps right to left with a gentle arc */}
           <motion.path
-            d="M 1800 660 C 1450 760, 1050 480, 650 680 C 350 820, 50 600, -150 730"
-            stroke="url(#hero-anim-stroke-2)"
-            strokeWidth={44}
+            d="M 1500 660 C 1240 770, 880 510, 540 690 C 280 800, 140 620, 110 720"
+            stroke="var(--indigo)"
+            strokeWidth={56}
             strokeLinecap="round"
             fill="none"
             filter="url(#hero-anim-blur)"
-            pathLength={0.28}
-            style={{ opacity: 0.5 }}
-            animate={{ pathOffset: [-0.28, 1.05] }}
+            animate={{
+              pathLength: [0, 1, 1, 0],
+              opacity: [0, 0.75, 0.75, 0],
+            }}
             transition={{
-              duration: 16,
+              duration: 14,
+              times: [0, 0.4, 0.7, 1],
               repeat: Infinity,
               ease: 'easeInOut',
-              delay: 4,
+              delay: 5,
               repeatDelay: 3,
             }}
           />

@@ -37,13 +37,15 @@ export function Modules() {
     <section
       id="modulos"
       aria-label="Módulos"
-      className="relative bg-surface-1 pb-24 pt-32 md:pb-32 md:pt-40"
+      className="relative bg-surface-1 pb-24 pt-36 md:pb-32 md:pt-44"
     >
-      {/* Drip is intentionally pulled upward with -top-12 so the band
-          sits at the AppWindow/Modules boundary instead of leaving a
-          strip of empty bg-bg above it. Section drops overflow-hidden
-          so the band can extend up into the previous section. */}
-      <PaintDrip className="absolute inset-x-0 -top-12 z-0" />
+      {/* The drip's top sits exactly at AppWindow's content-end (which is
+          now `pb-6` below the window mockup), so the band's top edge is
+          flush against the previous section's content. Visual flow:
+          window mockup → band → drips → Modules content. No empty bg
+          strip above the band. Section drops overflow-hidden so the band
+          can extend up into the previous section. */}
+      <PaintDrip className="absolute inset-x-0 -top-6 z-0" />
       <PaintSplatter />
 
       <div className="container-page relative z-10">
