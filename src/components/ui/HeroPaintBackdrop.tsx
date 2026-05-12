@@ -95,6 +95,71 @@ export function HeroPaintBackdrop() {
         />
       </svg>
 
+      {/* Animated brushstrokes — slow paint strokes traveling along curved
+          paths, like an invisible brush is painting on the hero canvas.
+          Each stroke is a wide soft-edged segment (~30% of the path length)
+          that travels via pathOffset animation, fades off, pauses, repeats. */}
+      {!reduce && (
+        <svg
+          className="absolute inset-0 h-full w-full"
+          preserveAspectRatio="xMidYMid slice"
+          viewBox="0 0 1600 900"
+          aria-hidden
+        >
+          <defs>
+            <linearGradient id="hero-anim-stroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--purple)" stopOpacity="0" />
+              <stop offset="35%" stopColor="var(--purple-light)" stopOpacity="0.6" />
+              <stop offset="65%" stopColor="var(--purple)" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="var(--purple)" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="hero-anim-stroke-2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--indigo)" stopOpacity="0" />
+              <stop offset="50%" stopColor="var(--indigo)" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="var(--indigo)" stopOpacity="0" />
+            </linearGradient>
+            <filter id="hero-anim-blur">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+          </defs>
+          <motion.path
+            d="M -150 240 C 200 80, 600 380, 1000 180 C 1300 50, 1600 320, 1850 200"
+            stroke="url(#hero-anim-stroke)"
+            strokeWidth={48}
+            strokeLinecap="round"
+            fill="none"
+            filter="url(#hero-anim-blur)"
+            pathLength={0.32}
+            style={{ opacity: 0.55 }}
+            animate={{ pathOffset: [-0.32, 1.05] }}
+            transition={{
+              duration: 13,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              repeatDelay: 2.5,
+            }}
+          />
+          <motion.path
+            d="M 1800 660 C 1450 760, 1050 480, 650 680 C 350 820, 50 600, -150 730"
+            stroke="url(#hero-anim-stroke-2)"
+            strokeWidth={44}
+            strokeLinecap="round"
+            fill="none"
+            filter="url(#hero-anim-blur)"
+            pathLength={0.28}
+            style={{ opacity: 0.5 }}
+            animate={{ pathOffset: [-0.28, 1.05] }}
+            transition={{
+              duration: 16,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: 4,
+              repeatDelay: 3,
+            }}
+          />
+        </svg>
+      )}
+
       {/* Paint splatters near the corners */}
       <svg
         className="absolute left-[3%] top-[18%] h-[180px] w-[180px] opacity-[0.07]"
