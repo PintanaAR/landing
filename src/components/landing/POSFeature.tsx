@@ -113,7 +113,7 @@ export function POSFeature() {
             className="relative"
           >
             <div
-              className="relative overflow-hidden rounded-2xl border border-border-2 bg-surface-1"
+              className="theme-dark relative overflow-hidden rounded-2xl border border-border-2 bg-surface-1"
               style={{
                 boxShadow:
                   '0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px rgba(0,0,0,0.55), 0 0 60px rgba(139,92,246,0.05)',

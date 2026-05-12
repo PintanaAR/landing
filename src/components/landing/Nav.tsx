@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/Logo'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { cn } from '@/lib/cn'
 
 const tabs = [
@@ -27,8 +28,8 @@ export function Nav() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 h-[58px] backdrop-blur-xl transition-colors',
         scrolled
-          ? 'bg-[rgba(6,6,8,0.78)] border-b border-border'
-          : 'bg-[rgba(6,6,8,0.55)] border-b border-transparent'
+          ? 'bg-[rgba(var(--section-fade),0.78)] border-b border-border'
+          : 'bg-[rgba(var(--section-fade),0.55)] border-b border-transparent',
       )}
     >
       <div className="container-page flex h-full items-center justify-between">
@@ -58,10 +59,8 @@ export function Nav() {
           >
             Iniciar sesión
           </a>
-          <a
-            href="#contacto"
-            className="btn-primary !px-4 !py-2 !text-[13px]"
-          >
+          <ThemeToggle className="hidden md:inline-flex" />
+          <a href="#contacto" className="btn-primary !px-4 !py-2 !text-[13px]">
             Solicitar demo
           </a>
           <button
@@ -77,7 +76,7 @@ export function Nav() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-[rgba(6,6,8,0.95)] backdrop-blur-xl md:hidden">
+        <div className="border-t border-border bg-[rgba(var(--section-fade),0.95)] backdrop-blur-xl md:hidden">
           <div className="container-page flex flex-col py-3">
             {tabs.map((t) => (
               <a
@@ -96,6 +95,10 @@ export function Nav() {
             >
               Iniciar sesión
             </a>
+            <div className="mt-2 flex items-center gap-2 px-2">
+              <ThemeToggle />
+              <span className="text-[12px] text-text-3">Tema</span>
+            </div>
           </div>
         </div>
       )}

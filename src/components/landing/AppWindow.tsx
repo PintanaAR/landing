@@ -206,7 +206,7 @@ export function AppWindow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mx-auto w-full max-w-[1120px] overflow-hidden rounded-[18px] border border-border-2 bg-surface-1"
+          className="theme-dark relative mx-auto w-full max-w-[1120px] overflow-hidden rounded-[18px] border border-border-2 bg-surface-1"
           style={{
             boxShadow:
               '0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.8), 0 0 80px rgba(139,92,246,0.04)',

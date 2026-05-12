@@ -134,7 +134,7 @@ export function Hero() {
       {/* Faint ambient grid — wide soft radial mask */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_20%,black_0%,transparent_80%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_20%,black_0%,transparent_80%)]"
       />
 
       {/* Bright grid only inside a tight cursor radius — "spotlight" reveal */}

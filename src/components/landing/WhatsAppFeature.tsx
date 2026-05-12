@@ -281,7 +281,7 @@ export function WhatsAppFeature() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto w-full max-w-[360px]"
+            className="theme-dark mx-auto w-full max-w-[360px]"
           >
             <div
               className="relative mx-auto aspect-[9/19] overflow-hidden rounded-[44px] border border-white/10 bg-[#0B141A]"

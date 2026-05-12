@@ -24,6 +24,24 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <script>
+      // Apply theme before render to avoid FOUC. Honors localStorage, then
+      // prefers-color-scheme. Default is light; dark is opt-in.
+      (function () {
+        try {
+          var saved = localStorage.getItem('pintana-theme')
+          var sysDark =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          var theme = saved || (sysDark ? 'dark' : 'light')
+          if (theme === 'dark') {
+            document.documentElement.classList.add('theme-dark')
+          } else {
+            document.documentElement.classList.add('theme-light')
+          }
+        } catch (e) {}
+      })()
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
