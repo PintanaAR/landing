@@ -32,6 +32,15 @@
   --grid-line: rgba(15, 17, 23, 0.05);
   --noise-blend: multiply;
   --section-fade: 250, 250, 250; /* RGB triplet of --bg, for gradient fades */
+
+  /* Font stack — loaded via index.html <link>. These vars were lost
+     during the Next.js → Vite migration (next/font used to inject them);
+     without them every Tailwind font-body/font-display class fell back
+     to the system sans, which was the "wrong-looking font" symptom. */
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui,
+    sans-serif;
 }
 
 /* Dark theme — applied either by explicit class (manual toggle) or by
