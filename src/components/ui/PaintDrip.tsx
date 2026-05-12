@@ -23,19 +23,40 @@ const DEFAULT_DRIPS: Drip[] = [
   { x: 93, width: 6, length: 36, delay: 0.2 },
 ]
 
+// Brand purple ramp — deep-end values matched to the PintanaIcon palette
+// so the drips read as the same paint as the band, not a separate hue.
+const SEAM_COLOR = '#5B21B6' // also the band's bottom stop
+const MID_DEEP = '#4C1D95'
+const BULB_DEEP = '#3B1FA8'
+
 function dripPath(w: number, L: number, R: number) {
-  const cx = R + 1
-  const stemH = Math.max(L - 2 * R, 2)
+  // Build an elongated teardrop: vertical bulb that's ~20% taller than wide,
+  // entirely cubic-Bezier curves (no arc) so the bottom doesn't read as a
+  // half-circle stamp.
+  const cx = R + 2
+  const bulbH = R * 2.4
+  const stemH = Math.max(L - bulbH, 4)
+  const widestY = stemH + bulbH * 0.5
+  const bottomY = stemH + bulbH
   return [
     `M ${cx - w / 2} 0`,
     `L ${cx + w / 2} 0`,
     `L ${cx + w / 2} ${stemH}`,
-    `C ${cx + w / 2} ${stemH + R * 0.4},`,
-    `${cx + R * 0.85} ${stemH + R * 0.55},`,
-    `${cx + R} ${stemH + R}`,
-    `A ${R} ${R} 0 0 1 ${cx - R} ${stemH + R}`,
-    `C ${cx - R * 0.85} ${stemH + R * 0.55},`,
-    `${cx - w / 2} ${stemH + R * 0.4},`,
+    // Right side: stem → widest point
+    `C ${cx + w / 2 + (R - w / 2) * 0.4} ${stemH + (widestY - stemH) * 0.35},`,
+    `${cx + R * 0.98} ${stemH + (widestY - stemH) * 0.75},`,
+    `${cx + R} ${widestY}`,
+    // Right side: widest → bottom tip, with a slight inward pinch
+    `C ${cx + R} ${widestY + (bottomY - widestY) * 0.55},`,
+    `${cx + R * 0.55} ${bottomY - 1},`,
+    `${cx} ${bottomY}`,
+    // Left side: bottom tip → widest (mirror)
+    `C ${cx - R * 0.55} ${bottomY - 1},`,
+    `${cx - R} ${widestY + (bottomY - widestY) * 0.55},`,
+    `${cx - R} ${widestY}`,
+    // Left side: widest → stem (mirror)
+    `C ${cx - R * 0.98} ${stemH + (widestY - stemH) * 0.75},`,
+    `${cx - w / 2 - (R - w / 2) * 0.4} ${stemH + (widestY - stemH) * 0.35},`,
     `${cx - w / 2} ${stemH}`,
     `Z`,
   ].join(' ')
@@ -57,7 +78,7 @@ export function PaintDrip({
     R: Math.max(d.width * 1.15, 6),
   }))
   const maxLen = Math.max(...dripWithR.map((d) => d.length))
-  const totalHeight = bandHeight + maxLen + 4
+  const totalHeight = bandHeight + maxLen + 6
 
   return (
     <div
@@ -65,7 +86,9 @@ export function PaintDrip({
       className={cn('pointer-events-none relative w-full overflow-hidden', className)}
       style={{ height: `${totalHeight}px` }}
     >
-      {/* Band with wavy bottom edge */}
+      {/* Band with wavy bottom edge — the gradient's lower 25% is solid
+          SEAM_COLOR so wherever the wavy edge falls, the connection color
+          to the drips below is the same flat tone. */}
       <svg
         className="absolute inset-x-0 top-0 w-full"
         preserveAspectRatio="none"
@@ -75,8 +98,10 @@ export function PaintDrip({
         <defs>
           <linearGradient id={`${idBase}-band`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--purple-light)" />
-            <stop offset="45%" stopColor="var(--purple)" />
-            <stop offset="100%" stopColor="#5B21B6" />
+            <stop offset="30%" stopColor="var(--purple)" />
+            <stop offset="60%" stopColor="#6D28D9" />
+            <stop offset="78%" stopColor={SEAM_COLOR} />
+            <stop offset="100%" stopColor={SEAM_COLOR} />
           </linearGradient>
         </defs>
         <path
@@ -94,16 +119,17 @@ export function PaintDrip({
 
       {dripWithR.map((drip, i) => {
         const { width: w, length, R } = drip
-        const vbW = 2 * R + 2
+        const vbW = 2 * R + 4
         const cx = vbW / 2
         const gradId = `${idBase}-drip-${i}`
+        const shineId = `${idBase}-drip-${i}-shine`
         return (
           <motion.svg
             key={i}
             className="absolute"
             style={{
               left: `${drip.x}%`,
-              top: `${bandHeight - 6}px`,
+              top: `${bandHeight - 4}px`,
               transform: 'translateX(-50%)',
             }}
             width={vbW}
@@ -120,27 +146,28 @@ export function PaintDrip({
           >
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--purple-light)" />
-                <stop offset="35%" stopColor="var(--purple)" />
-                <stop offset="100%" stopColor="#5B21B6" />
+                {/* Top color matches band bottom — invisible seam. */}
+                <stop offset="0%" stopColor={SEAM_COLOR} />
+                <stop offset="55%" stopColor={MID_DEEP} />
+                <stop offset="100%" stopColor={BULB_DEEP} />
               </linearGradient>
-              <radialGradient
-                id={`${gradId}-shine`}
-                cx="30%"
-                cy="25%"
-                r="55%"
-              >
-                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                <stop offset="55%" stopColor="rgba(255,255,255,0.12)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              <radialGradient id={shineId} cx="32%" cy="28%" r="48%">
+                <stop offset="0%" stopColor="rgba(196,181,253,0.65)" />
+                <stop offset="55%" stopColor="rgba(196,181,253,0.18)" />
+                <stop offset="100%" stopColor="rgba(196,181,253,0)" />
               </radialGradient>
             </defs>
             <path d={dripPath(w, length, R)} fill={`url(#${gradId})`} />
-            <circle
+            {/* Wet highlight catches "light" on the bulb's upper-left.
+                Uses purple-light tint rather than pure white so it reads as
+                gloss on purple paint, not chalk dust. */}
+            <ellipse
               cx={cx - R * 0.25}
-              cy={length - R - R * 0.2}
-              r={R * 0.7}
-              fill={`url(#${gradId}-shine)`}
+              cy={length - R * 1.2 - R * 0.2}
+              rx={R * 0.55}
+              ry={R * 0.75}
+              fill={`url(#${shineId})`}
+              transform={`rotate(-12 ${cx - R * 0.25} ${length - R * 1.2 - R * 0.2})`}
             />
           </motion.svg>
         )
