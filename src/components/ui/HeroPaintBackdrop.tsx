@@ -49,7 +49,15 @@ export function HeroPaintBackdrop() {
   }, [])
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      // Force the entire paint backdrop onto its own GPU compositing layer so
+      // its continuous SVG animations don't invalidate the content layer
+      // sitting above it (was producing intermittent twitches in the hero
+      // content region — classic compositor churn).
+      style={{ transform: 'translate3d(0, 0, 0)' }}
+    >
       {/* Large soft brush-stroke wash — sweeps diagonally behind the headline */}
       <svg
         className="absolute left-1/2 top-[12%] w-[140%] -translate-x-1/2"
@@ -101,76 +109,63 @@ export function HeroPaintBackdrop() {
         />
       </svg>
 
-      {/* Animated brushstrokes — periodically draw themselves across the
-          hero like a brush is painting on the canvas, then fade out, pause,
-          repeat. Two strokes with offset timings so the page always has
-          *something* tracing somewhere but they don't sync up. */}
+      {/* Animated brushstrokes — periodically trace across the hero, fade
+          out, pause, repeat. Two strokes with offset timings so the page
+          always has *something* tracing somewhere but they don't sync up.
+          NOTE: the SVG feGaussianBlur that used to soften these strokes was
+          recomputing on every frame as pathLength changed, which was the
+          main source of intermittent content-layer flicker (the brush
+          sweeps fire periodically — matching the user's "sometimes twitches"
+          report). Replaced with a CSS filter on the SVG wrapper so the blur
+          is compositor-accelerated and cached, and cycles are slowed so the
+          sweep is rarer + less attention-grabbing. */}
       {!reduce && (
         <svg
           className="absolute inset-0 h-full w-full"
           preserveAspectRatio="xMidYMid slice"
           viewBox="0 0 1600 900"
           aria-hidden
+          style={{ filter: 'blur(6px)', transform: 'translate3d(0, 0, 0)' }}
         >
-          <defs>
-            {/* Filter region expanded to 200%/200% with -50% offsets so the
-                blur halo fades to zero well before reaching the filter's
-                edge. Default region (~120%/120%) was too tight for a 62px
-                stroke + ~21px blur halo on a wide-but-short bbox, which
-                produced a visible hard edge where the blur was clipped —
-                most obvious where the two strokes crossed. */}
-            <filter
-              id="hero-anim-blur"
-              x="-50%"
-              y="-50%"
-              width="200%"
-              height="200%"
-            >
-              <feGaussianBlur stdDeviation="7" />
-            </filter>
-          </defs>
           {/* Both stroke endpoints are pulled well inward from the viewBox
-              edges (x in [300, 1320] of a 0..1600 viewBox), so the fully-
-              drawn rounded linecaps have ~280 units of clear margin on
+              edges so the fully-drawn rounded linecaps have clear margin on
               each side instead of nearly touching the hero's overflow-
               hidden boundary. */}
           <motion.path
             d="M 320 240 C 520 100, 780 400, 1040 220 C 1240 90, 1300 270, 1320 240"
             stroke="var(--purple-light)"
-            strokeWidth={62}
+            strokeWidth={48}
             strokeLinecap="round"
             fill="none"
-            filter="url(#hero-anim-blur)"
             animate={{
               pathLength: [0, 1, 1, 0],
-              opacity: [0, 0.85, 0.85, 0],
+              opacity: [0, 0.55, 0.55, 0],
             }}
             transition={{
-              duration: 11,
+              duration: 16,
               times: [0, 0.4, 0.7, 1],
               repeat: Infinity,
               ease: 'easeInOut',
-              repeatDelay: 2,
+              repeatDelay: 5,
             }}
           />
           <motion.path
             d="M 1300 660 C 1100 790, 820 510, 540 680 C 340 800, 300 600, 320 660"
             stroke="var(--indigo)"
-            strokeWidth={56}
+            strokeWidth={42}
             strokeLinecap="round"
             fill="none"
-            filter="url(#hero-anim-blur)"
             animate={{
               pathLength: [0, 1, 1, 0],
-              opacity: [0, 0.75, 0.75, 0],
+              opacity: [0, 0.45, 0.45, 0],
             }}
             transition={{
-              duration: 14,
+              duration: 18,
               times: [0, 0.4, 0.7, 1],
               repeat: Infinity,
               ease: 'easeInOut',
-              delay: 5,
-              repeatDelay: 3,
+              delay: 6,
+              repeatDelay: 6,
             }}
           />
         </svg>
