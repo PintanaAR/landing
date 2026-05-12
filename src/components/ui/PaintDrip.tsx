@@ -130,30 +130,43 @@ export function PaintDrip({
             }}
           >
             <defs>
+              {/* Body color: mostly flat. Holds SEAM_COLOR through the hidden
+                  region AND well past the visible start, then nudges to
+                  MID_DEEP only in the bottom third where paint physically
+                  pools at the bulb. A flat-ish fill reads as opaque paint;
+                  a smooth top-to-bottom gradient reads as glowing slime. */}
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                {/* Hidden + visible-start region: SEAM_COLOR. Even if the
-                    wave edge dips lower than expected, the color of the
-                    drip at the join is the same flat tone the band ends on. */}
                 <stop offset="0%" stopColor={SEAM_COLOR} />
-                <stop offset={`${(bandHeight / totalDripH) * 100 + 8}%`} stopColor={SEAM_COLOR} />
-                <stop offset="65%" stopColor={MID_DEEP} />
-                <stop offset="100%" stopColor={BULB_DEEP} />
+                <stop offset="78%" stopColor={SEAM_COLOR} />
+                <stop offset="100%" stopColor={MID_DEEP} />
               </linearGradient>
-              <radialGradient id={shineId} cx="32%" cy="28%" r="48%">
-                <stop offset="0%" stopColor="rgba(196,181,253,0.65)" />
-                <stop offset="55%" stopColor="rgba(196,181,253,0.18)" />
-                <stop offset="100%" stopColor="rgba(196,181,253,0)" />
+              {/* Directional shadow: subtle darken on the right side so the
+                  drip looks like it has a back side away from the light.
+                  Slime is bright on every side; paint isn't. */}
+              <linearGradient id={`${gradId}-shadow`} x1="0" y1="0.5" x2="1" y2="0.5">
+                <stop offset="0%" stopColor="rgba(0,0,0,0)" />
+                <stop offset="55%" stopColor="rgba(0,0,0,0)" />
+                <stop offset="100%" stopColor="rgba(0,0,0,0.22)" />
+              </linearGradient>
+              {/* Specular reflection: small sharp white dot (not a tinted
+                  wash). Real paint catches light at one point that's much
+                  smaller than the surface. */}
+              <radialGradient id={shineId} cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
+                <stop offset="45%" stopColor="rgba(255,255,255,0.08)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
               </radialGradient>
             </defs>
             <g transform={`translate(1, 0)`}>
               <path d={path} fill={`url(#${gradId})`} />
+              <path d={path} fill={`url(#${gradId}-shadow)`} />
               <ellipse
-                cx={cx - 1 - R * 0.3}
-                cy={totalDripH - R * 1.55}
-                rx={R * 0.55}
-                ry={R * 0.78}
+                cx={cx - 1 - R * 0.32}
+                cy={totalDripH - R * 1.7}
+                rx={R * 0.18}
+                ry={R * 0.3}
                 fill={`url(#${shineId})`}
-                transform={`rotate(-12 ${cx - 1 - R * 0.3} ${totalDripH - R * 1.55})`}
+                transform={`rotate(-22 ${cx - 1 - R * 0.32} ${totalDripH - R * 1.7})`}
               />
             </g>
           </motion.svg>
