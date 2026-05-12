@@ -22,8 +22,6 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { PintanaIcon } from '@/components/ui/PintanaIcon'
-import { PaintDrip } from '@/components/ui/PaintDrip'
-import { PaintSplatter } from '@/components/ui/PaintSplatter'
 
 const COLOR_SWATCHES: Record<string, string> = {
   Blanco: '#F5F5F5',
@@ -257,20 +255,15 @@ export function WhatsAppFeature() {
     <section
       id="whatsapp"
       aria-label="Asistente en WhatsApp"
-      className="relative overflow-hidden bg-surface-1 pb-24 pt-36 md:pb-32 md:pt-44"
+      className="relative overflow-hidden bg-surface-1 py-24 md:py-32"
     >
-      <PaintDrip className="absolute inset-x-0 top-0" />
-      <PaintSplatter
-        splatters={[
-          { cx: 8, cy: 35, size: 70, rotation: -18 },
-          { cx: 92, cy: 22, size: 55, rotation: 28 },
-          { cx: 16, cy: 88, size: 85, rotation: 10 },
-          { cx: 84, cy: 72, size: 65, rotation: -34 },
-        ]}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border-2 to-transparent"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[50%] top-[20%] h-[520px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(0,168,132,0.07)_0%,transparent_70%)]"
+        className="pointer-events-none absolute left-[50%] top-[10%] h-[520px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(0,168,132,0.07)_0%,transparent_70%)]"
       />
 
       <div className="container-page">

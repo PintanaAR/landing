@@ -37,12 +37,16 @@ export function Modules() {
     <section
       id="modulos"
       aria-label="Módulos"
-      className="relative overflow-hidden bg-surface-1 pb-24 pt-36 md:pb-32 md:pt-44"
+      className="relative bg-surface-1 pb-24 pt-32 md:pb-32 md:pt-40"
     >
-      <PaintDrip className="absolute inset-x-0 top-0" />
+      {/* Drip is intentionally pulled upward with -top-12 so the band
+          sits at the AppWindow/Modules boundary instead of leaving a
+          strip of empty bg-bg above it. Section drops overflow-hidden
+          so the band can extend up into the previous section. */}
+      <PaintDrip className="absolute inset-x-0 -top-12 z-0" />
       <PaintSplatter />
 
-      <div className="container-page">
+      <div className="container-page relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"

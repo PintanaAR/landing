@@ -10,24 +10,28 @@ type Drip = {
 }
 
 const DEFAULT_DRIPS: Drip[] = [
-  { x: 5, width: 9, length: 78, delay: 0.05 },
-  { x: 13, width: 6, length: 44, delay: 0.18 },
-  { x: 22, width: 13, length: 132, delay: 0.08 },
-  { x: 30, width: 5, length: 30, delay: 0.22 },
-  { x: 40, width: 11, length: 96, delay: 0.04 },
-  { x: 48, width: 7, length: 60, delay: 0.16 },
-  { x: 58, width: 15, length: 152, delay: 0.1 },
-  { x: 67, width: 6, length: 50, delay: 0.24 },
-  { x: 75, width: 10, length: 84, delay: 0.07 },
-  { x: 84, width: 8, length: 108, delay: 0.14 },
-  { x: 93, width: 5, length: 38, delay: 0.2 },
+  { x: 5, width: 8, length: 68, delay: 0.05 },
+  { x: 13, width: 6, length: 38, delay: 0.18 },
+  { x: 22, width: 12, length: 108, delay: 0.08 },
+  { x: 30, width: 5, length: 26, delay: 0.22 },
+  { x: 40, width: 10, length: 82, delay: 0.04 },
+  { x: 48, width: 7, length: 52, delay: 0.16 },
+  { x: 58, width: 13, length: 124, delay: 0.1 },
+  { x: 67, width: 6, length: 44, delay: 0.24 },
+  { x: 75, width: 9, length: 72, delay: 0.07 },
+  { x: 84, width: 8, length: 92, delay: 0.14 },
+  { x: 93, width: 5, length: 34, delay: 0.2 },
 ]
 
-// Brand purple ramp — pulled from the PintanaIcon paint-drop palette
-// so the drip reads as the same paint as the band, not a separate hue.
-const SEAM_COLOR = '#5B21B6'
-const MID_DEEP = '#4C1D95'
-const BULB_DEEP = '#3B1FA8'
+// Terracotta ramp — deliberately outside the brand purple family so the
+// drip reads as a contrasting paint accent rather than another purple
+// element on an already purple-heavy page. Classic interior paint color.
+const SEAM_COLOR = '#C2410C' // band bottom = drip top
+const MID_DEEP = '#9A3412'
+const BULB_DEEP = '#7C2D12'
+const BAND_LIGHT = '#FB923C'
+const BAND_MID = '#F97316'
+const BAND_DEEP = '#EA580C'
 
 // Builds a vase-shaped silhouette: wide attachment at the top (hidden
 // behind the band), narrow neck just below the band, then widens into
@@ -148,13 +152,11 @@ export function PaintDrip({
                 <stop offset="55%" stopColor="rgba(0,0,0,0)" />
                 <stop offset="100%" stopColor="rgba(0,0,0,0.22)" />
               </linearGradient>
-              {/* Specular reflection: small sharp white dot (not a tinted
-                  wash). Real paint catches light at one point that's much
-                  smaller than the surface. */}
+              {/* Specular reflection: small sharp warm-tinted dot. */}
               <radialGradient id={shineId} cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
-                <stop offset="45%" stopColor="rgba(255,255,255,0.08)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                <stop offset="0%" stopColor="rgba(255,237,213,0.55)" />
+                <stop offset="45%" stopColor="rgba(255,237,213,0.1)" />
+                <stop offset="100%" stopColor="rgba(255,237,213,0)" />
               </radialGradient>
             </defs>
             <g transform={`translate(1, 0)`}>
@@ -185,9 +187,9 @@ export function PaintDrip({
       >
         <defs>
           <linearGradient id={`${idBase}-band`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--purple-light)" />
-            <stop offset="30%" stopColor="var(--purple)" />
-            <stop offset="60%" stopColor="#6D28D9" />
+            <stop offset="0%" stopColor={BAND_LIGHT} />
+            <stop offset="30%" stopColor={BAND_MID} />
+            <stop offset="60%" stopColor={BAND_DEEP} />
             <stop offset="78%" stopColor={SEAM_COLOR} />
             <stop offset="100%" stopColor={SEAM_COLOR} />
           </linearGradient>
