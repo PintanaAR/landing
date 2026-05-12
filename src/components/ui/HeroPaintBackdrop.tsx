@@ -111,9 +111,13 @@ export function HeroPaintBackdrop() {
               <feGaussianBlur stdDeviation="7" />
             </filter>
           </defs>
-          {/* Upper stroke: purple, sweeps left to right with a gentle dip */}
+          {/* Both stroke endpoints are pulled well inward from the viewBox
+              edges (x in [300, 1320] of a 0..1600 viewBox), so the fully-
+              drawn rounded linecaps have ~280 units of clear margin on
+              each side instead of nearly touching the hero's overflow-
+              hidden boundary. */}
           <motion.path
-            d="M 120 230 C 380 100, 720 380, 1080 210 C 1360 80, 1480 240, 1520 220"
+            d="M 320 240 C 520 100, 780 400, 1040 220 C 1240 90, 1300 270, 1320 240"
             stroke="var(--purple-light)"
             strokeWidth={62}
             strokeLinecap="round"
@@ -131,9 +135,8 @@ export function HeroPaintBackdrop() {
               repeatDelay: 2,
             }}
           />
-          {/* Lower stroke: indigo, sweeps right to left with a gentle arc */}
           <motion.path
-            d="M 1500 660 C 1240 770, 880 510, 540 690 C 280 800, 140 620, 110 720"
+            d="M 1300 660 C 1100 790, 820 510, 540 680 C 340 800, 300 600, 320 660"
             stroke="var(--indigo)"
             strokeWidth={56}
             strokeLinecap="round"
