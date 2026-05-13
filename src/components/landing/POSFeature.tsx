@@ -1,26 +1,26 @@
 import { motion } from 'framer-motion'
 import {
   Keyboard,
-  CreditCard,
+  Split,
   Receipt,
   Trash2,
 } from 'lucide-react'
 
 const features = [
   {
-    icon: Keyboard,
-    title: 'Atajos simples',
-    desc: 'Las acciones más usadas a un toque. No hay que buscar botones cuando hay cola.',
+    icon: Split,
+    title: 'Cobro partido en un ticket',
+    desc: 'Una venta dividida — parte en MercadoPago, parte en efectivo, parte con cheque. El sistema arma el detalle solo.',
   },
   {
-    icon: CreditCard,
-    title: 'MercadoPago integrado',
-    desc: 'QR, link de pago o tarjeta. El ticket se cierra solo cuando entra la plata.',
+    icon: Keyboard,
+    title: 'Atajos a la mano',
+    desc: 'F1·F2·F3 para los productos top. Cero buscar botones cuando hay cola.',
   },
   {
     icon: Receipt,
-    title: 'Factura ARCA en un toque',
-    desc: 'Factura A, B o C emitida contra ARCA sin cambiar de pantalla.',
+    title: 'Factura ARCA en el acto',
+    desc: 'A, B o C emitida contra ARCA sin cambiar de pantalla ni copiar datos.',
   },
 ]
 
@@ -70,29 +70,33 @@ export function POSFeature() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="overline">Mostrador</span>
+            <span className="overline text-sage">Punto de venta</span>
             <h2
-              className="mt-3 max-w-[16ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
-              style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
+              className="mt-3 max-w-[14ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
+              style={{ fontSize: 'clamp(36px, 4.5vw, 56px)' }}
             >
-              Para cobrar cuando el local está lleno.
+              Una venta. Un toque.
             </h2>
-            <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.7] text-text-2">
-              Sin esperar pantallas, sin hojas sueltas, sin contar el vuelto
-              con la calculadora del celular.
+            <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.65] text-text-2">
+              Otros sistemas te hacen saltar entre pantallas para cobrar,
+              facturar y cerrar.{' '}
+              <span className="font-semibold text-text">
+                Pintana hace las tres en el mismo flujo
+              </span>
+              {' '}— desde el botón hasta el ticket fiscal.
             </p>
 
-            <ul className="mt-8 space-y-5">
+            <ul className="mt-9 space-y-5">
               {features.map(({ icon: Icon, title, desc }) => (
                 <li key={title} className="flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-2">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-2 transition-colors group-hover:text-text">
                     <Icon size={18} strokeWidth={2} />
                   </span>
                   <div>
                     <h4 className="font-display text-[16px] font-bold tracking-[-0.01em] text-text">
                       {title}
                     </h4>
-                    <p className="mt-1 max-w-[44ch] text-[14px] leading-[1.6] text-text-2">
+                    <p className="mt-1 max-w-[44ch] text-[14px] leading-[1.55] text-text-2">
                       {desc}
                     </p>
                   </div>
@@ -216,6 +220,30 @@ export function POSFeature() {
                       <span className="font-display text-[20px] font-extrabold tracking-[-0.02em] text-text">
                         ${fmt(total)}
                       </span>
+                    </div>
+                    {/* Payment split — shows the "fractioned payment"
+                        capability live in the mockup, not just in copy. */}
+                    <div className="mt-2 rounded-md border border-purple/30 bg-purple/[0.06] p-2">
+                      <div className="mb-1.5 flex items-center justify-between">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-purple">
+                          Pago combinado
+                        </span>
+                        <span className="text-[10px] text-text-3">3 medios</span>
+                      </div>
+                      <div className="space-y-0.5 text-[11px] text-text-2">
+                        <div className="flex justify-between">
+                          <span>MercadoPago QR</span>
+                          <span className="tabular-nums text-text">${fmt(Math.round(total * 0.6))}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Efectivo</span>
+                          <span className="tabular-nums text-text">${fmt(Math.round(total * 0.25))}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Cheque a 30 d.</span>
+                          <span className="tabular-nums text-text">${fmt(total - Math.round(total * 0.6) - Math.round(total * 0.25))}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="px-3.5 pb-3.5">

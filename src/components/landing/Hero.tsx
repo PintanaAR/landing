@@ -37,10 +37,10 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--grid-line)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_25%,black_0%,transparent_75%)]"
       />
 
-      {/* Single soft purple glow at top-center — restraint */}
+      {/* Soft warm wash at top-center — paint-accent ambient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-220px] h-[560px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,rgba(139,92,246,0.08)_0%,transparent_65%)]"
+        className="pointer-events-none absolute left-1/2 top-[-220px] h-[560px] w-[820px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_50%_40%,var(--purple-glow)_0%,transparent_65%)]"
       />
 
       <div
@@ -57,31 +57,31 @@ export function Hero() {
           animate="visible"
           className="flex flex-col items-center"
         >
+          <motion.div variants={fadeUp}>
+            <Eyebrow />
+          </motion.div>
+
           <motion.h1
             variants={fadeUp}
-            className="max-w-[16ch] font-display font-extrabold leading-[1.04] tracking-[-0.035em] text-text"
-            style={{ fontSize: 'clamp(44px, 6vw, 68px)' }}
+            className="mt-6 max-w-[14ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
+            style={{ fontSize: 'clamp(48px, 7vw, 84px)' }}
           >
-            El sistema que tu pintería{' '}
+            Menos caos.
+            <br />
             <span className="relative inline-block">
-              <span
-                className="bg-[linear-gradient(110deg,var(--purple)_0%,var(--purple-light)_55%,var(--purple)_100%)] bg-clip-text text-transparent"
-                style={{ backgroundSize: '200% 100%' }}
-              >
-                merecía
-              </span>
+              <span className="text-text">Más ventas.</span>
               <BrushUnderline reduce={!!reduce} />
-            </span>{' '}
-            desde siempre
+            </span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="mt-6 max-w-[56ch] text-[17px] leading-[1.7] text-text-2"
+            className="mt-7 max-w-[52ch] text-[17px] leading-[1.65] text-text-2"
           >
-            ERP, punto de venta e inventario en una sola pantalla.
-            Facturás en ARCA (ex-AFIP) y cobrás con MercadoPago desde el
-            mostrador, sin papeles.
+            Otras pinturerías cierran caja a mano y rastrean stock por
+            WhatsApp.{' '}
+            <span className="font-semibold text-text">Pintana lo hace por vos</span>
+            {' '}— en tiempo real, en todas tus sucursales.
           </motion.p>
 
           <motion.div
@@ -93,7 +93,7 @@ export function Hero() {
               <ArrowRight size={16} strokeWidth={2.5} />
             </a>
             <a href="#producto-vista" className="btn-secondary">
-              Ver el sistema
+              Ver cómo funciona
             </a>
           </motion.div>
         </motion.div>
@@ -104,6 +104,23 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg"
       />
     </section>
+  )
+}
+
+function Eyebrow() {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-border-2 bg-surface-1/70 py-1.5 pl-2 pr-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-text-2 backdrop-blur">
+      <span
+        className="relative inline-flex h-1.5 w-1.5"
+        aria-hidden
+      >
+        <span className="absolute inset-0 animate-ping rounded-full bg-purple/60" />
+        <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-purple" />
+      </span>
+      Sistema operativo · Pinturerías
+      <span className="text-text-3">·</span>
+      Multi-sucursal
+    </span>
   )
 }
 
@@ -123,7 +140,6 @@ function BrushUnderline({ reduce }: { reduce: boolean }) {
         },
       }
 
-  // Static tail bristles fade in with the main stroke
   const bristleFade = reduce
     ? { initial: { opacity: 0.55 } }
     : {
@@ -141,10 +157,10 @@ function BrushUnderline({ reduce }: { reduce: boolean }) {
     >
       <defs>
         <linearGradient id="brush-grad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="var(--purple)" stopOpacity="0.18" />
-          <stop offset="22%" stopColor="var(--purple-light)" stopOpacity="0.95" />
-          <stop offset="78%" stopColor="var(--purple)" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="var(--purple-light)" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--ink)" stopOpacity="0" />
+          <stop offset="14%" stopColor="var(--ink)" stopOpacity="0.92" />
+          <stop offset="82%" stopColor="var(--ink)" stopOpacity="0.92" />
+          <stop offset="100%" stopColor="var(--ink)" stopOpacity="0" />
         </linearGradient>
         <filter id="bristle" x="-2%" y="-50%" width="104%" height="200%">
           <feTurbulence
@@ -164,7 +180,6 @@ function BrushUnderline({ reduce }: { reduce: boolean }) {
         </filter>
       </defs>
 
-      {/* Main confident stroke */}
       <motion.path
         d="M 3 8.5 C 24 4, 44 12, 62 8 C 80 4, 98 12, 116 7"
         stroke="url(#brush-grad)"
@@ -175,7 +190,6 @@ function BrushUnderline({ reduce }: { reduce: boolean }) {
         {...draw}
       />
 
-      {/* Scratch follow-through, thinner and shifted down */}
       <motion.path
         d="M 6 11 C 28 7, 46 13, 64 10 C 82 7, 98 13, 114 10.5"
         stroke="url(#brush-grad)"
@@ -187,25 +201,24 @@ function BrushUnderline({ reduce }: { reduce: boolean }) {
         {...draw}
       />
 
-      {/* Dry-brush tail bristles — separated marks where the brush ran out */}
       <motion.g {...bristleFade}>
         <path
           d="M 112 7 L 119 7.6"
-          stroke="var(--purple)"
+          stroke="var(--ink)"
           strokeWidth="0.55"
           strokeLinecap="round"
           fill="none"
         />
         <path
           d="M 112 9 L 118 9.4"
-          stroke="var(--purple-light)"
+          stroke="var(--ink-2)"
           strokeWidth="0.5"
           strokeLinecap="round"
           fill="none"
         />
         <path
           d="M 112 10.8 L 116.5 11"
-          stroke="var(--purple)"
+          stroke="var(--ink)"
           strokeWidth="0.45"
           strokeLinecap="round"
           fill="none"

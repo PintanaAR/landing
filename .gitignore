@@ -141,3 +141,15 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Visual iteration workflow
+# reference.png is the visual spec — committed.
+# current-state.png is regenerated every iteration — never committed.
+design-references/**/current-state.png
+# _inspiration/ holds screenshots of other products. Treat as off-repo.
+# (README.md inside the folder is kept so the convention is discoverable.)
+design-references/_inspiration/*
+!design-references/_inspiration/README.md
+# Playwright MCP cache + ad-hoc screenshot dumps
+.playwright-mcp/
+screenshots/

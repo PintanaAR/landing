@@ -21,6 +21,23 @@ const config: Config = {
           DEFAULT: 'var(--indigo)',
           glow: 'var(--indigo-glow)',
         },
+        sage: {
+          DEFAULT: 'var(--sage)',
+          light: 'var(--sage-light)',
+          glow: 'var(--sage-glow)',
+          soft: 'var(--sage-soft)',
+        },
+        navy: {
+          DEFAULT: 'var(--navy)',
+          light: 'var(--navy-light)',
+          glow: 'var(--navy-glow)',
+          soft: 'var(--navy-soft)',
+        },
+        ink: {
+          DEFAULT: 'var(--ink)',
+          2: 'var(--ink-2)',
+          soft: 'var(--ink-soft)',
+        },
         border: {
           DEFAULT: 'var(--border)',
           2: 'var(--border-2)',
@@ -40,6 +57,7 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
+        editorial: ['var(--font-editorial)', 'serif'],
       },
       borderColor: {
         DEFAULT: 'var(--border)',

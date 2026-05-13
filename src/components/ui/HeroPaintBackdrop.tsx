@@ -67,15 +67,15 @@ export function HeroPaintBackdrop() {
       >
         <defs>
           <linearGradient id="hero-stroke-grad" x1="0" y1="0" x2="1" y2="0.4">
-            <stop offset="0%" stopColor="var(--purple)" stopOpacity="0" />
-            <stop offset="30%" stopColor="var(--purple)" stopOpacity="0.10" />
-            <stop offset="60%" stopColor="var(--purple-light)" stopOpacity="0.07" />
-            <stop offset="100%" stopColor="var(--purple)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--ink)" stopOpacity="0" />
+            <stop offset="30%" stopColor="var(--ink)" stopOpacity="0.07" />
+            <stop offset="70%" stopColor="var(--ink)" stopOpacity="0.05" />
+            <stop offset="100%" stopColor="var(--ink)" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="hero-stroke-grad-2" x1="0" y1="0" x2="0.7" y2="1">
-            <stop offset="0%" stopColor="var(--indigo)" stopOpacity="0" />
-            <stop offset="50%" stopColor="var(--indigo)" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="var(--indigo)" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--purple)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--purple)" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="var(--purple)" stopOpacity="0" />
           </linearGradient>
           <filter
             id="hero-stroke-blur"
@@ -125,47 +125,79 @@ export function HeroPaintBackdrop() {
           preserveAspectRatio="xMidYMid slice"
           viewBox="0 0 1600 900"
           aria-hidden
-          style={{ filter: 'blur(6px)', transform: 'translate3d(0, 0, 0)' }}
+          style={{ filter: 'blur(2px)', transform: 'translate3d(0, 0, 0)' }}
         >
-          {/* Both stroke endpoints are pulled well inward from the viewBox
-              edges so the fully-drawn rounded linecaps have clear margin on
-              each side instead of nearly touching the hero's overflow-
-              hidden boundary. */}
+          <defs>
+            {/* Bristle texture — turbulence displaces the path's edges so
+                the stroke reads as a real brush stroke with rough bristle
+                marks, not a smooth round vector ribbon. Higher scale =
+                rougher edges. */}
+            <filter
+              id="hero-stroke-bristle"
+              x="-3%"
+              y="-50%"
+              width="106%"
+              height="200%"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.6 1.2"
+                numOctaves="2"
+                seed="7"
+                result="noise"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="noise"
+                scale="6"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          </defs>
+
+          {/* Two confident sweeps. Draw ~1.8s (visible wrist motion, not a
+              snail trace and not a sprint), hold 2.4s, fade 1.5s. Long
+              14s pause between cycles. Strokes alternate so only one is
+              ever on screen. Bristle filter + flat butt caps make them
+              read as real paint, not a fluid ribbon. */}
           <motion.path
             d="M 320 240 C 520 100, 780 400, 1040 220 C 1240 90, 1300 270, 1320 240"
-            stroke="var(--purple-light)"
-            strokeWidth={48}
-            strokeLinecap="round"
+            stroke="var(--ink-2)"
+            strokeWidth={34}
+            strokeLinecap="butt"
             fill="none"
+            filter="url(#hero-stroke-bristle)"
             animate={{
               pathLength: [0, 1, 1, 0],
-              opacity: [0, 0.55, 0.55, 0],
+              opacity: [0, 0.6, 0.6, 0],
             }}
             transition={{
-              duration: 16,
-              times: [0, 0.4, 0.7, 1],
+              duration: 6,
+              times: [0, 0.3, 0.7, 0.95],
               repeat: Infinity,
-              ease: 'easeInOut',
-              repeatDelay: 5,
+              ease: [0.3, 0.1, 0.3, 1] as [number, number, number, number],
+              repeatDelay: 14,
             }}
           />
           <motion.path
             d="M 1300 660 C 1100 790, 820 510, 540 680 C 340 800, 300 600, 320 660"
-            stroke="var(--indigo)"
-            strokeWidth={42}
-            strokeLinecap="round"
+            stroke="var(--sage)"
+            strokeWidth={30}
+            strokeLinecap="butt"
             fill="none"
+            filter="url(#hero-stroke-bristle)"
             animate={{
               pathLength: [0, 1, 1, 0],
-              opacity: [0, 0.45, 0.45, 0],
+              opacity: [0, 0.52, 0.52, 0],
             }}
             transition={{
-              duration: 18,
-              times: [0, 0.4, 0.7, 1],
+              duration: 6,
+              times: [0, 0.3, 0.7, 0.95],
               repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 6,
-              repeatDelay: 6,
+              ease: [0.3, 0.1, 0.3, 1] as [number, number, number, number],
+              delay: 10,
+              repeatDelay: 14,
             }}
           />
         </svg>
@@ -173,22 +205,22 @@ export function HeroPaintBackdrop() {
 
       {/* Paint splatters near the corners */}
       <svg
-        className="absolute left-[3%] top-[18%] h-[180px] w-[180px] opacity-[0.07]"
+        className="absolute left-[3%] top-[18%] h-[180px] w-[180px] opacity-[0.09]"
         viewBox="0 0 100 100"
       >
         <path
           d="M52 28 Q60 32 64 40 Q74 38 72 50 Q78 56 70 62 Q72 72 60 70 Q54 78 46 72 Q34 76 32 64 Q22 60 28 50 Q22 40 34 40 Q42 28 52 28 Z M22 22 a2.5 2.5 0 1 0 0.1 0 Z M82 30 a2 2 0 1 0 0.1 0 Z M76 78 a3 3 0 1 0 0.1 0 Z M30 84 a1.5 1.5 0 1 0 0.1 0 Z"
-          fill="var(--purple)"
+          fill="var(--ink)"
           transform="rotate(-15 50 50)"
         />
       </svg>
       <svg
-        className="absolute right-[5%] top-[60%] h-[200px] w-[200px] opacity-[0.06]"
+        className="absolute right-[5%] top-[60%] h-[200px] w-[200px] opacity-[0.08]"
         viewBox="0 0 100 100"
       >
         <path
           d="M48 30 Q58 32 60 42 Q70 42 66 52 Q74 58 64 62 Q66 72 56 70 Q50 78 42 70 Q32 72 32 62 Q22 56 32 50 Q26 40 36 38 Q40 30 48 30 Z M16 50 a2 2 0 1 0 0.1 0 Z M80 24 a2.5 2.5 0 1 0 0.1 0 Z M68 84 a2 2 0 1 0 0.1 0 Z"
-          fill="var(--purple-light)"
+          fill="var(--sage)"
           transform="rotate(28 50 50)"
         />
       </svg>

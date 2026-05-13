@@ -1,5 +1,4 @@
 import { useId } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/cn'
 
 type Drip = {
@@ -23,15 +22,16 @@ const DEFAULT_DRIPS: Drip[] = [
   { x: 93, width: 5, length: 34, delay: 0.2 },
 ]
 
-// Terracotta ramp — deliberately outside the brand purple family so the
-// drip reads as a contrasting paint accent rather than another purple
-// element on an already purple-heavy page. Classic interior paint color.
-const SEAM_COLOR = '#C2410C' // band bottom = drip top
-const MID_DEEP = '#9A3412'
-const BULB_DEEP = '#7C2D12'
-const BAND_LIGHT = '#FB923C'
-const BAND_MID = '#F97316'
-const BAND_DEEP = '#EA580C'
+// Ink-black ramp — wet-paint drip imagery. Slightly off-pure-black at the
+// band top so it reads as a deep pigment with subtle depth, pooling toward
+// pure black at the drip tips. Graphic / editorial feel; doesn't compete
+// with the purple brand and reads unambiguously as paint, not as a UI panel.
+const SEAM_COLOR = '#16161B' // band bottom = drip top
+const MID_DEEP = '#0A0A0D'
+const BULB_DEEP = '#000000'
+const BAND_LIGHT = '#3A3A42'
+const BAND_MID = '#22232A'
+const BAND_DEEP = '#16161B'
 
 // Builds a vase-shaped silhouette: wide attachment at the top (hidden
 // behind the band), narrow neck just below the band, then widens into
@@ -83,7 +83,6 @@ export function PaintDrip({
   drips?: Drip[]
   bandHeight?: number
 }) {
-  const reduce = useReducedMotion()
   const idBase = useId().replace(/:/g, '')
   const dripWithR = drips.map((d) => ({
     ...d,
@@ -98,9 +97,29 @@ export function PaintDrip({
       className={cn('pointer-events-none relative w-full overflow-hidden', className)}
       style={{ height: `${totalHeight}px` }}
     >
+      {/* Cast shadow zone — the band is a physical ledge of paint, and
+          the surface immediately below it sits in its shadow. Sits
+          BEHIND every drip so drips silhouette over a darker background,
+          reading as physically attached to a 3D edge instead of floating
+          over a flat surface. Width matches the container; fades to
+          transparent within ~48px. */}
+      <div
+        className="absolute inset-x-0"
+        style={{
+          top: `${bandHeight - 2}px`,
+          height: '54px',
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.10) 45%, rgba(0,0,0,0) 100%)',
+        }}
+      />
+
       {/* Drips render FIRST so the band can paint on top and hide their
           attachment region. The seam between band and drip is no longer
-          an exposed connection — it's just where the band ends. */}
+          an exposed connection — it's just where the band ends.
+          Intentionally STATIC — drips read as already-set paint, not as
+          something rendering in real time. The earlier reveal animation
+          looked like a glitch. Motion lives on the actual content
+          (cards, KPIs) which is what the user is tracking. */}
       {dripWithR.map((drip, i) => {
         const { width: w, length, R } = drip
         const vbW = 2 * R + 6
@@ -108,12 +127,10 @@ export function PaintDrip({
         const totalDripH = bandHeight + length
         const gradId = `${idBase}-drip-${i}`
         const shineId = `${idBase}-drip-${i}-shine`
-        // path coords use cx = R + 2; viewBox is R + 3 wide. Inner <g>
-        // shifts by 1px so the silhouette sits centered in the viewBox.
         const path = dripPath(w, length, R, bandHeight)
 
         return (
-          <motion.svg
+          <svg
             key={i}
             className="absolute"
             style={{
@@ -124,14 +141,6 @@ export function PaintDrip({
             width={vbW}
             height={totalDripH + 2}
             viewBox={`0 0 ${vbW} ${totalDripH + 2}`}
-            initial={reduce ? false : { clipPath: 'inset(0 0 100% 0)' }}
-            whileInView={reduce ? undefined : { clipPath: 'inset(0 0 0% 0)' }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{
-              duration: 0.8,
-              delay: drip.delay,
-              ease: [0.22, 0.9, 0.4, 1.05] as [number, number, number, number],
-            }}
           >
             <defs>
               {/* Body color: mostly flat. Holds SEAM_COLOR through the hidden
@@ -152,11 +161,11 @@ export function PaintDrip({
                 <stop offset="55%" stopColor="rgba(0,0,0,0)" />
                 <stop offset="100%" stopColor="rgba(0,0,0,0.22)" />
               </linearGradient>
-              {/* Specular reflection: small sharp warm-tinted dot. */}
+              {/* Specular reflection: small cool highlight on the wet bulb. */}
               <radialGradient id={shineId} cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(255,237,213,0.55)" />
-                <stop offset="45%" stopColor="rgba(255,237,213,0.1)" />
-                <stop offset="100%" stopColor="rgba(255,237,213,0)" />
+                <stop offset="0%" stopColor="rgba(255,255,255,0.45)" />
+                <stop offset="45%" stopColor="rgba(255,255,255,0.08)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
               </radialGradient>
             </defs>
             <g transform={`translate(1, 0)`}>
@@ -171,7 +180,7 @@ export function PaintDrip({
                 transform={`rotate(-22 ${cx - 1 - R * 0.32} ${totalDripH - R * 1.7})`}
               />
             </g>
-          </motion.svg>
+          </svg>
         )
       })}
 
@@ -193,6 +202,21 @@ export function PaintDrip({
             <stop offset="78%" stopColor={SEAM_COLOR} />
             <stop offset="100%" stopColor={SEAM_COLOR} />
           </linearGradient>
+          {/* Top-edge highlight — soft falloff over ~3 viewBox units.
+              Reads as the lit top face of a horizontal ledge catching
+              ambient light from above. */}
+          <linearGradient id={`${idBase}-highlight`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.28)" />
+            <stop offset="40%" stopColor="rgba(255,255,255,0.10)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+          </linearGradient>
+          {/* Inner shadow at the band's bottom — the underside of the
+              ledge, just before the wavy edge where paint pools and
+              drips form. Adds a sense of thickness. */}
+          <linearGradient id={`${idBase}-underside`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(0,0,0,0)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0.35)" />
+          </linearGradient>
         </defs>
         <path
           d={`M0 0 L1200 0 L1200 ${bandHeight - 2}
@@ -204,6 +228,30 @@ export function PaintDrip({
              C240 ${bandHeight + 12}, 180 ${bandHeight - 4}, 120 ${bandHeight + 6}
              C60 ${bandHeight + 14}, 30 ${bandHeight - 2}, 0 ${bandHeight + 4} Z`}
           fill={`url(#${idBase}-band)`}
+        />
+        {/* Highlight strip sits ON TOP of the band gradient. Only
+            covers the top portion so the wavy bottom edge keeps its
+            dark seam color where it meets the drips. */}
+        <rect
+          x="0"
+          y="0"
+          width="1200"
+          height={Math.max(3, bandHeight * 0.12)}
+          fill={`url(#${idBase}-highlight)`}
+        />
+        {/* Underside shadow — bottom 35% of the band darkens, like the
+            shaded face of a ledge. Clipped to the wavy-bottom band
+            path via the same path used above. */}
+        <path
+          d={`M0 ${bandHeight * 0.55} L1200 ${bandHeight * 0.55} L1200 ${bandHeight - 2}
+             C1140 ${bandHeight + 8}, 1080 ${bandHeight - 6}, 1020 ${bandHeight + 4}
+             C960 ${bandHeight + 12}, 900 ${bandHeight - 4}, 840 ${bandHeight + 6}
+             C780 ${bandHeight + 14}, 720 ${bandHeight - 2}, 660 ${bandHeight + 8}
+             C600 ${bandHeight + 16}, 540 ${bandHeight - 4}, 480 ${bandHeight + 6}
+             C420 ${bandHeight + 14}, 360 ${bandHeight - 8}, 300 ${bandHeight + 4}
+             C240 ${bandHeight + 12}, 180 ${bandHeight - 4}, 120 ${bandHeight + 6}
+             C60 ${bandHeight + 14}, 30 ${bandHeight - 2}, 0 ${bandHeight + 4} Z`}
+          fill={`url(#${idBase}-underside)`}
         />
       </svg>
     </div>

@@ -6,19 +6,17 @@ import {
   BellRing,
   Smartphone,
   ShieldCheck,
-  Paperclip,
   Phone,
   Video,
-  MoreVertical,
-  Check,
   CheckCheck,
   Play,
   ArrowLeft,
-  Smile,
   Camera,
   Signal,
   Wifi,
   BatteryFull,
+  Plus,
+  Sticker,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { PintanaIcon } from '@/components/ui/PintanaIcon'
@@ -30,6 +28,9 @@ const COLOR_SWATCHES: Record<string, string> = {
   Negro: '#1E1E1E',
   Marfil: '#F0E7CC',
 }
+
+const WALLPAPER_DOODLES =
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><g fill='none' stroke='%23ffffff' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round' opacity='0.06'><path d='M24 32c5-4 12-4 17 0'/><path d='M150 24l7 7m0-7l-7 7'/><circle cx='92' cy='52' r='3.5'/><path d='M52 84c0 5 4 9 9 9s9-4 9-9'/><path d='M125 92l-5 5 5 5 5-5z'/><path d='M26 142c7 2 13 2 20-2'/><path d='M166 148c0 7-5 12-12 12'/><circle cx='75' cy='168' r='2.5'/><path d='M125 168c3-3 8-3 12 0'/><path d='M184 66c-3 0-7 3-7 7'/><path d='M8 108l5-2 3 5'/><path d='M104 126l-3-6 6-3 3 6z'/><path d='M58 50h5m-2.5-2.5v5'/></g></svg>\")"
 
 type ChartItem = { label: string; pct: number }
 
@@ -290,52 +291,58 @@ export function WhatsAppFeature() {
               />
 
               {/* OS status bar */}
-              <div className="absolute inset-x-0 top-0 z-10 flex h-9 items-center justify-between px-6 pt-2 text-[11px] font-semibold tabular-nums text-white">
-                <span>11:32</span>
-                <span className="flex items-center gap-1.5 text-white">
-                  <Signal size={11} strokeWidth={2.5} aria-hidden />
-                  <Wifi size={12} strokeWidth={2.5} aria-hidden />
-                  <BatteryFull size={16} strokeWidth={2.2} aria-hidden />
+              <div className="absolute inset-x-0 top-0 z-20 flex h-11 items-center justify-between px-6 pt-3 text-[15px] font-semibold tabular-nums text-white">
+                <span className="leading-none">11:32</span>
+                <span className="flex items-center gap-1.5">
+                  <Signal size={13} strokeWidth={2.5} aria-hidden />
+                  <Wifi size={14} strokeWidth={2.5} aria-hidden />
+                  <BatteryFull size={18} strokeWidth={2.2} aria-hidden />
                 </span>
               </div>
 
-              <div className="flex h-full flex-col pt-9">
+              <div className="flex h-full flex-col pt-11">
                 {/* Chat header */}
-                <div className="flex items-center gap-2.5 border-b border-white/5 bg-[#1F2C34] px-2.5 py-2">
+                <div className="relative z-10 flex items-center gap-3 border-b border-white/5 bg-[#1F2C33]/85 px-3 py-2 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
                   <ArrowLeft
-                    size={18}
+                    size={20}
                     strokeWidth={2}
-                    className="shrink-0 text-white/70"
+                    className="shrink-0 text-white/75"
                     aria-hidden
                   />
                   <span
                     aria-hidden
-                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#0F1A20] ring-1 ring-inset ring-white/10"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#111B21] ring-1 ring-inset ring-white/10"
                   >
-                    <PintanaIcon size={22} />
+                    <PintanaIcon size={24} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[13px] font-semibold text-white">
+                    <p className="truncate text-[14.5px] font-medium leading-tight text-[#E9EDEF]">
                       Pintana · Asistente
                     </p>
-                    <p className="text-[10.5px] text-[#8FA1AC]">en línea</p>
+                    <p className="mt-0.5 text-[11px] font-normal leading-tight text-[#8696A0]">
+                      en línea
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3.5 text-white/65">
-                    <Video size={16} strokeWidth={1.9} aria-hidden />
-                    <Phone size={15} strokeWidth={1.9} aria-hidden />
-                    <MoreVertical size={16} strokeWidth={2} aria-hidden />
+                  <div className="flex items-center gap-[18px] pl-1 text-white/90">
+                    <Video size={22} strokeWidth={1.8} aria-hidden />
+                    <Phone size={22} strokeWidth={1.8} aria-hidden />
                   </div>
                 </div>
 
                 {/* Chat body */}
                 <div
                   ref={chatRef}
-                  className="flex-1 overflow-y-auto bg-[#0B141A] bg-[radial-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:18px_18px] px-3 py-3"
+                  className="flex-1 overflow-y-auto bg-[#0B141A] px-1.5 py-3"
+                  style={{
+                    backgroundImage: WALLPAPER_DOODLES,
+                    backgroundSize: '200px 200px',
+                    backgroundRepeat: 'repeat',
+                  }}
                 >
-                  <p className="mx-auto mb-3 w-fit rounded-md bg-[#182229] px-2 py-0.5 text-[10px] text-[#8FA1AC]">
-                    Hoy
+                  <p className="mx-auto mb-3 w-fit rounded-[7.5px] bg-[#1D282F] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-[#8696A0] shadow-[0_1px_0.5px_rgba(0,0,0,0.18)]">
+                    HOY
                   </p>
-                  <div className="space-y-1.5">
+                  <div className="space-y-[3px]">
                     <AnimatePresence initial={false}>
                       {messages.map((m) => (
                         <Bubble key={m.id} message={m} reduce={!!reduce} />
@@ -348,8 +355,9 @@ export function WhatsAppFeature() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -4 }}
                           transition={{ duration: 0.2 }}
-                          className="mr-auto inline-flex max-w-[80%] items-center gap-1 rounded-[14px] bg-[#1F2C34] px-3 py-2.5"
+                          className="relative ml-1.5 inline-flex max-w-[80%] items-center gap-[3px] rounded-[7.5px] rounded-tl-[2px] bg-[#202C33] px-2.5 py-2 shadow-[0_1px_0.5px_rgba(0,0,0,0.2)]"
                         >
+                          <BubbleTail kind="received" />
                           <TypingDot delay={0} />
                           <TypingDot delay={160} />
                           <TypingDot delay={320} />
@@ -360,25 +368,34 @@ export function WhatsAppFeature() {
                 </div>
 
                 {/* Input bar */}
-                <div className="flex items-center gap-2 bg-[#1F2C34] px-2.5 pb-3 pt-2">
-                  <div className="flex flex-1 items-center gap-2 rounded-full bg-[#2A3942] px-3 py-2 text-[12.5px] text-white/45">
-                    <Smile size={18} strokeWidth={1.9} className="shrink-0" aria-hidden />
-                    <span className="flex-1 truncate">Mensaje</span>
-                    <Paperclip
-                      size={16}
-                      strokeWidth={1.9}
-                      className="shrink-0 -rotate-45"
+                <div className="flex items-center gap-3 bg-[#0B141A] px-2 pb-3 pt-1.5">
+                  <Plus
+                    size={24}
+                    strokeWidth={1.8}
+                    className="shrink-0 text-white/85"
+                    aria-hidden
+                  />
+                  <div className="flex flex-1 items-center gap-3 rounded-full bg-[#1F2C33] px-3 py-[9px]">
+                    <span className="flex-1" aria-hidden />
+                    <Sticker
+                      size={20}
+                      strokeWidth={1.8}
+                      className="shrink-0 text-white/85"
                       aria-hidden
                     />
-                    <Camera size={16} strokeWidth={1.9} className="shrink-0" aria-hidden />
+                    <Camera
+                      size={20}
+                      strokeWidth={1.8}
+                      className="shrink-0 text-white/85"
+                      aria-hidden
+                    />
+                    <Mic
+                      size={20}
+                      strokeWidth={1.8}
+                      className="shrink-0 text-white/85"
+                      aria-hidden
+                    />
                   </div>
-                  <button
-                    type="button"
-                    aria-label="Grabar mensaje de voz"
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00A884] text-white"
-                  >
-                    <Mic size={16} strokeWidth={2.2} aria-hidden />
-                  </button>
                 </div>
               </div>
             </div>
@@ -391,16 +408,19 @@ export function WhatsAppFeature() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
           >
-            <span className="overline">Asistente en WhatsApp</span>
+            <span className="overline text-sage">Asistente WhatsApp</span>
             <h2
-              className="mt-3 max-w-[18ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
-              style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
+              className="mt-3 max-w-[18ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
+              style={{ fontSize: 'clamp(36px, 4.5vw, 56px)' }}
             >
               Si sabés usar WhatsApp, sabés usar Pintana.
             </h2>
-            <p className="mt-5 max-w-[54ch] text-[17px] leading-[1.7] text-text-2">
-              Hablale al asistente como a un empleado. Audio, foto o texto —
-              entiende los tres y hace lo que se hace en el sistema.
+            <p className="mt-5 max-w-[54ch] text-[17px] leading-[1.65] text-text-2">
+              Otros sistemas te obligan a aprender pantallas nuevas.{' '}
+              <span className="font-semibold text-text">
+                Pintana te entiende como WhatsApp
+              </span>
+              {' '}— por audio, foto o texto, como le hablás a un empleado.
             </p>
 
             <ul className="mt-8 space-y-5">
@@ -456,36 +476,54 @@ export function WhatsAppFeature() {
 
 function Bubble({ message, reduce }: { message: Message; reduce: boolean }) {
   const isUser = message.kind === 'user' || message.kind === 'user-audio'
+  const isText = message.kind === 'user' || message.kind === 'ai'
   return (
     <motion.div
       layout
       initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-      className={cn('flex', isUser ? 'justify-end pr-2' : 'justify-start pl-2')}
+      className={cn('flex', isUser ? 'justify-end pr-1.5' : 'justify-start pl-1.5')}
     >
       <div
         className={cn(
-          'relative max-w-[82%] px-2.5 py-1.5 text-white shadow-[0_1px_0_rgba(0,0,0,0.2)]',
+          'relative max-w-[78%] text-[#E9EDEF] shadow-[0_1px_0.5px_rgba(0,0,0,0.2)]',
+          // WhatsApp bubbles are barely rounded — 7.5px on most corners,
+          // with the corner adjacent to the tail squared off to 2px.
+          'rounded-[7.5px]',
           isUser
-            ? 'rounded-[8px] rounded-tr-[2px] bg-[#005C4B]'
-            : 'rounded-[8px] rounded-tl-[2px] bg-[#1F2C34]'
+            ? 'rounded-tr-[2px] bg-[#005C4B]'
+            : 'rounded-tl-[2px] bg-[#202C33]'
         )}
       >
         <BubbleTail kind={isUser ? 'sent' : 'received'} />
-        {message.kind === 'user' || message.kind === 'ai' ? (
-          <p className="whitespace-pre-wrap break-words pr-12 text-[13px] leading-snug">
-            {message.text}
+        {isText && (
+          <p className="whitespace-pre-wrap break-words px-2.5 pb-[6px] pt-[6px] text-[13.5px] leading-[1.34]">
+            {message.kind === 'user' || message.kind === 'ai' ? message.text : ''}
+            <span
+              aria-hidden
+              className="inline-block align-text-bottom"
+              style={{ width: isUser ? 68 : 44, height: 10 }}
+            />
           </p>
-        ) : message.kind === 'user-audio' ? (
-          <AudioBlock durationLabel={message.durationLabel} waveform={message.waveform} />
-        ) : (
-          <ChartBlock
-            title={message.title}
-            items={message.items}
-            total={message.total}
-            reduce={reduce}
-          />
+        )}
+        {message.kind === 'user-audio' && (
+          <div className="px-2 pb-[20px] pt-2">
+            <AudioBlock
+              durationLabel={message.durationLabel}
+              waveform={message.waveform}
+            />
+          </div>
+        )}
+        {message.kind === 'ai-chart' && (
+          <div className="px-2.5 pb-[20px] pt-2">
+            <ChartBlock
+              title={message.title}
+              items={message.items}
+              total={message.total}
+              reduce={reduce}
+            />
+          </div>
         )}
         <BubbleMeta isUser={isUser} />
       </div>
@@ -493,45 +531,49 @@ function Bubble({ message, reduce }: { message: Message; reduce: boolean }) {
   )
 }
 
+function BubbleMeta({ isUser }: { isUser: boolean }) {
+  return (
+    <span className="pointer-events-none absolute bottom-[4px] right-[8px] inline-flex items-center gap-1 text-[11px] font-normal leading-none text-white/60">
+      <span className="tabular-nums">11:32</span>
+      {isUser && (
+        <CheckCheck
+          size={15}
+          strokeWidth={2.2}
+          className="-mr-0.5 text-[#53BDEB]"
+          aria-hidden
+        />
+      )}
+    </span>
+  )
+}
+
+// Tails attach to the TOP corner of each bubble, matching real WhatsApp.
+// Received bubble: tail on the upper-left. Sent bubble: tail on the upper-right.
+// The shape is a thin pointer that flares into the bubble fill.
 function BubbleTail({ kind }: { kind: 'sent' | 'received' }) {
   if (kind === 'sent') {
     return (
       <svg
         aria-hidden
-        width="9"
+        width="8"
         height="13"
-        viewBox="0 0 9 13"
-        className="absolute -right-[7px] top-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.2)]"
+        viewBox="0 0 8 13"
+        className="absolute -right-[7px] top-0"
       >
-        <path
-          d="M0 0 C1 4 4 7 9 9 L 9 0 Z"
-          fill="#005C4B"
-        />
+        <path d="M0 0 L 8 0 L 0 8 Z" fill="#005C4B" />
       </svg>
     )
   }
   return (
     <svg
       aria-hidden
-      width="9"
+      width="8"
       height="13"
-      viewBox="0 0 9 13"
-      className="absolute -left-[7px] top-0 drop-shadow-[0_1px_0_rgba(0,0,0,0.2)]"
+      viewBox="0 0 8 13"
+      className="absolute -left-[7px] top-0"
     >
-      <path
-        d="M9 0 C8 4 5 7 0 9 L 0 0 Z"
-        fill="#1F2C34"
-      />
+      <path d="M0 0 L 8 0 L 8 8 Z" fill="#202C33" />
     </svg>
-  )
-}
-
-function BubbleMeta({ isUser }: { isUser: boolean }) {
-  return (
-    <div className="-mb-0.5 -mt-0.5 flex items-center justify-end gap-1 text-[9.5px] text-white/55">
-      <span className="tabular-nums">11:32</span>
-      {isUser && <CheckCheck size={12} className="text-[#53BDEB]" aria-hidden />}
-    </div>
   )
 }
 
@@ -542,35 +584,61 @@ function AudioBlock({
   durationLabel: string
   waveform: number[]
 }) {
+  const played = 6
+  const progressPct = (played / waveform.length) * 100
   return (
-    <div className="flex min-w-[225px] items-center gap-2 py-0.5">
-      <span
+    <div className="flex min-w-[228px] items-center gap-2.5 py-0.5">
+      {/* Play button — circular pill with subtle surface, matches real
+          WhatsApp sent audio. translate-x adjusts for the visual weight of
+          the play triangle. */}
+      <button
+        type="button"
         aria-hidden
-        className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-[#005C4B]"
+        tabIndex={-1}
+        className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-white/10 text-white/95"
       >
-        <Play size={13} fill="currentColor" strokeWidth={0} className="translate-x-[1px]" />
-      </span>
-      <div className="flex flex-1 flex-col gap-1">
-        <div className="flex h-6 items-center gap-[1.8px]">
+        <Play
+          size={14}
+          fill="currentColor"
+          strokeWidth={0}
+          className="translate-x-[1px]"
+        />
+      </button>
+      <div className="min-w-0 flex-1">
+        <div className="relative flex h-6 items-center gap-[3px]">
           {waveform.map((h, i) => (
             <span
               key={i}
               className={cn(
-                'block w-[2px] rounded-full',
-                i < 6 ? 'bg-white/95' : 'bg-white/40'
+                'block w-[2.5px] rounded-full',
+                i < played ? 'bg-white/95' : 'bg-white/35',
               )}
-              style={{ height: `${Math.max(12, h)}%` }}
+              style={{ height: `${Math.max(22, h)}%` }}
             />
           ))}
+          <span
+            aria-hidden
+            className="absolute top-1/2 h-[14px] w-[14px] -translate-y-1/2 rounded-full bg-white shadow-[0_1px_3px_rgba(0,0,0,0.45)]"
+            style={{ left: `calc(${progressPct}% - 7px)` }}
+          />
         </div>
-        <span className="text-[10px] tabular-nums text-white/60">{durationLabel}</span>
+        <div className="mt-1 flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1 text-[11px] tabular-nums text-white/60">
+            <Mic
+              size={11}
+              strokeWidth={2.4}
+              className="text-[#00A884]"
+              aria-hidden
+            />
+            {durationLabel}
+          </span>
+          {/* Playback speed — appears once the listener taps play. We
+              snapshot the audio mid-listen, so the badge is visible. */}
+          <span className="rounded-full bg-white/10 px-1.5 py-[1px] text-[10px] font-semibold tabular-nums text-white/80">
+            1×
+          </span>
+        </div>
       </div>
-      <span
-        aria-hidden
-        className="ml-1 flex h-5 w-5 shrink-0 items-center justify-center text-white/55"
-      >
-        <Mic size={12} strokeWidth={2.2} />
-      </span>
     </div>
   )
 }
@@ -587,9 +655,9 @@ function ChartBlock({
   reduce: boolean
 }) {
   return (
-    <div className="min-w-[240px] space-y-1.5">
-      <p className="text-[11.5px] font-semibold text-white">{title}</p>
-      <ul className="space-y-1.5 pt-1">
+    <div className="min-w-[244px] space-y-1.5">
+      <p className="text-[12px] font-semibold text-white">{title}</p>
+      <ul className="space-y-1.5 pt-0.5">
         {items.map((it, i) => {
           const swatch = COLOR_SWATCHES[it.label]
           return (
@@ -603,7 +671,7 @@ function ChartBlock({
                 style={{ backgroundColor: swatch ?? '#9CA3AF' }}
               />
               <span className="w-14 shrink-0 truncate">{it.label}</span>
-              <span className="relative h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+              <span className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
                 <motion.span
                   initial={reduce ? false : { width: 0 }}
                   animate={{ width: `${it.pct}%` }}
@@ -631,7 +699,7 @@ function TypingDot({ delay }: { delay: number }) {
   return (
     <span
       aria-hidden
-      className="inline-block h-1.5 w-1.5 rounded-full bg-white/60"
+      className="inline-block h-2 w-2 rounded-full bg-white/50"
       style={{
         animation: `typing-bounce 1.2s ease-in-out ${delay}ms infinite`,
       }}

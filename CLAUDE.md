@@ -405,3 +405,127 @@ Schema.org structured data: `SoftwareApplication` type with `applicationCategory
 - ❌ Hardcoded hex colors in JSX — always use CSS variables
 - ❌ `Inter` or `Roboto` — we use Bricolage Grotesque + DM Sans only
 - ❌ Animations that run on every scroll (use `viewport={{ once: true }}`)
+
+---
+
+## Stack reality (override the earlier "Tech Stack" section)
+
+The "Tech Stack" section near the top of this file is aspirational. The
+**actual** stack today is:
+
+- **Build**: Vite 5 (not Next.js)
+- **Routing**: React Router v7 (`src/App.tsx`, `src/pages/*.tsx`)
+- **Fonts**: Bricolage Grotesque + Plus Jakarta Sans, loaded via `<link>` in
+  `index.html` (not `next/font/google`)
+- **Theme**: **light-first** today — `--bg: #FAFAFA`. The `.theme-dark` class
+  is a *scoped* override used only by product mockup containers
+  (`AppWindow`, `POSFeature`, `WhatsAppFeature`) to render the in-page ERP
+  preview in dark mode. The marketing page itself is light. (The
+  "Anti-Patterns" entry forbidding light backgrounds is stale; defer to
+  `src/styles/globals.css`.)
+- **Contact API**: Vercel function under `api/contact.ts` + a Vite dev
+  middleware in `vite.config.ts` that proxies it in development.
+
+When in doubt about tokens or types, read `src/styles/globals.css` and
+`tailwind.config.ts` first — they are authoritative. See
+`LANDING_DESIGN_SYSTEM.md` for a curated summary.
+
+---
+
+## Visual iteration workflow
+
+The project has a dev-only playground at `/dev/*` for reviewing, comparing,
+and varying landing components in isolation. The pieces:
+
+- **`/dev/preview`** — every registered component rendered in its own
+  section, with a sticky TOC and a viewport-width simulator
+  (mobile/tablet/desktop). Anchor links: `/dev/preview#section-<slug>`.
+- **`/dev/compare/<slug>`** — side-by-side: `reference.png` on the left, the
+  live component on the right.
+- **`/dev/variants/<slug>`** — every registered variant of a component
+  rendered side-by-side, including the canonical current implementation.
+
+All three routes are gated by `import.meta.env.DEV` and do not exist in
+production builds.
+
+The registry lives at `src/dev/registry.ts`. To register a new component, add
+an entry there. The `slug` is the URL segment **and** the folder name under
+`design-references/`.
+
+Reference images are served by a small dev middleware (see
+`vite.config.ts`) from `<repo>/design-references/<slug>/*` at the URL
+`/design-references/<slug>/*`. The folder structure is documented in
+`design-references/README.md`.
+
+### Loop A — Iterate against a reference
+
+When asked to improve a specific landing component and a `reference.png`
+exists, follow this loop:
+
+1. Read `design-references/<slug>/notes.md` if it exists, and the
+   `reference.png` (it is served at `/design-references/<slug>/reference.png`).
+2. Read `src/components/landing/<Name>.tsx`.
+3. Use the Playwright MCP server to navigate to
+   `http://localhost:3000/dev/compare/<slug>` and take a full-page screenshot.
+4. **Before writing any code**, list the top 10 visual differences between
+   reference and current, ordered by user-perceived impact (hierarchy,
+   density, color, typography, spacing, motion, polish).
+5. Wait for user confirmation on which differences to address — unless the
+   prompt explicitly says "proceed with all".
+6. Apply fixes in `src/components/landing/<Name>.tsx`. Use only existing
+   tokens (`src/styles/globals.css`, `tailwind.config.ts`). Never introduce
+   a new color or font without explicit approval.
+7. Re-screenshot, self-critique, iterate. **Cap at 5 cycles** — if not
+   converged, stop and ask.
+8. Save the final screenshot to
+   `design-references/<slug>/current-state.png` (gitignored).
+9. End with a short summary: what changed, what was deferred, why.
+
+### Loop B — Generate variants
+
+When the user asks for variants instead of a refinement:
+
+1. Plan 2–4 variants that differ in **meaningful** ways (layout, hierarchy,
+   density, motion). Cosmetic-only variants are noise — kill them.
+2. For each, write a one-line "design thesis" — what is this variant arguing
+   for? Each thesis must be contradictable by another variant.
+3. Create files at
+   `src/components/landing/<Name>/variants/V<n><Slug>.tsx`. The first time
+   you add variants to a component, you may need to migrate it from a flat
+   file to a `<Name>/index.tsx` folder. Keep the existing named export
+   shape so consumers do not break.
+4. Register the variants in `src/dev/registry.ts` under the matching entry.
+5. Screenshot `/dev/variants/<slug>` via Playwright MCP and present the URL
+   plus each variant's thesis. Do **not** advocate for one yet.
+6. Wait for the user to pick or refine. Only after that, merge the chosen
+   variant back into the canonical `index.tsx` and archive the rest under
+   `src/components/landing/<Name>/_archive/<YYYY-MM-DD>-<name>.tsx`.
+
+### Hard rules during iteration
+
+- **Never** introduce a new color or font without explicit approval.
+- **Never** add a library to fix a styling problem.
+- **Never** justify a change with "it looks better" alone — name the
+  principle (hierarchy / density / rhythm / consistency / contrast).
+- Animations: `framer-motion` only, easing `[0.16, 1, 0.3, 1]`, duration
+  0.4–0.7s. No spring overshoots, no looping motion. The global
+  `prefers-reduced-motion` override in `globals.css` must not be bypassed.
+- Body text minimum contrast: **WCAG AA** against the surface it sits on.
+- Do not add emojis to production UI.
+
+### Helper script
+
+```bash
+npm run visual <slug>
+# e.g. npm run visual hero
+```
+
+Prints every URL and filepath needed to start iterating on the named
+component, plus whether the dev server is responding and whether the
+reference image exists. Read-only.
+
+### Quick reference
+
+- Pre-built prompt templates: `scripts/visual-check.md`
+- Design tokens summary: `LANDING_DESIGN_SYSTEM.md`
+- Reference folder convention: `design-references/README.md`

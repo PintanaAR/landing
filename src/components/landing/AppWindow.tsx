@@ -193,7 +193,7 @@ export function AppWindow() {
     <section
       id="producto-vista"
       aria-label="Vista del producto"
-      className="relative -mt-16 pb-6"
+      className="relative -mt-16 pb-24 md:pb-32"
     >
       <div
         aria-hidden
@@ -297,8 +297,23 @@ export function AppWindow() {
                 </span>
               </div>
 
-              {/* KPI cards */}
-              <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4">
+              {/* KPI cards — cascade in after the window mockup itself
+                  has finished revealing. Reads as "dashboard loading
+                  its tiles" rather than four static placeholders that
+                  were there all along. delayChildren ≈ window reveal
+                  duration so the cascade starts as the window settles. */}
+              <motion.div
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: { staggerChildren: 0.08, delayChildren: 0.45 },
+                  },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                className="grid grid-cols-2 gap-2.5 md:grid-cols-4"
+              >
                 <KpiCard label="Ventas hoy" icon={DollarSign} delta="+12,4%" up>
                   <AnimatedNumber value={`$ ${fmt(ventas)}`} />
                 </KpiCard>
@@ -311,7 +326,7 @@ export function AppWindow() {
                 <KpiCard label="Stock crítico" icon={Package} delta="−2" up={false}>
                   8
                 </KpiCard>
-              </div>
+              </motion.div>
 
               {/* Chart + activity */}
               <div className="mt-3 grid grid-cols-1 gap-2.5 lg:grid-cols-[1.4fr_1fr]">
@@ -463,6 +478,15 @@ export function AppWindow() {
   )
 }
 
+const kpiCardVariant = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  },
+}
+
 function KpiCard({
   label,
   icon: Icon,
@@ -477,7 +501,7 @@ function KpiCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-lg border border-border bg-surface-1 p-3">
+    <motion.div variants={kpiCardVariant} className="rounded-lg border border-border bg-surface-1 p-3">
       <div className="flex items-center justify-between text-text-3">
         <span className="text-[11px] font-semibold uppercase tracking-[0.08em]">{label}</span>
         <Icon size={13} aria-hidden />
@@ -494,7 +518,7 @@ function KpiCard({
         {up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
         {delta}
       </p>
-    </div>
+    </motion.div>
   )
 }
 

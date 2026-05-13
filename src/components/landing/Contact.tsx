@@ -130,16 +130,19 @@ export function Contact() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="overline">Hablemos</span>
+            <span className="overline text-sage">Hablemos</span>
             <h2
-              className="mt-3 max-w-[17ch] font-display font-extrabold leading-[1.05] tracking-[-0.03em] text-text"
-              style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
+              className="mt-3 max-w-[14ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
+              style={{ fontSize: 'clamp(36px, 4.5vw, 56px)' }}
             >
-              Veámoslo funcionando en tu pintería.
+              Veámoslo en tu pintería.
             </h2>
-            <p className="mt-4 max-w-[50ch] text-[16px] leading-[1.7] text-text-2">
-              30 minutos. Te mostramos el sistema con datos reales de tu
-              negocio y te pasamos un presupuesto a tu medida. Sin compromiso.
+            <p className="mt-5 max-w-[50ch] text-[16px] leading-[1.65] text-text-2">
+              30 minutos.{' '}
+              <span className="font-semibold text-text">
+                Te lo mostramos con datos reales de tu pintería
+              </span>
+              {' '}y te pasamos presupuesto a medida. Sin compromiso.
             </p>
 
             <ul className="mt-10 space-y-5">
