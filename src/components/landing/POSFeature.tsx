@@ -50,7 +50,7 @@ export function POSFeature() {
     <section
       id="pos"
       aria-label="Punto de venta"
-      className="relative py-24 md:py-32"
+      className="relative overflow-hidden py-24 md:py-32"
     >
       <div
         aria-hidden

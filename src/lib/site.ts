@@ -58,24 +58,24 @@ export const site = {
     // big punchline; unit = small modifier; label = 1-line proof.
     productFacts: [
       {
-        value: '1 min',
-        unit: '',
-        label: 'Cerrás caja al final del día. Sin cuadrar con Excel.',
+        value: '3',
+        unit: 'clics',
+        label: 'Cierre Z al final del día. Sin cuadrar con Excel.',
       },
       {
-        value: 'Cero',
-        unit: 'papeles',
-        label: 'Facturás ARCA al instante. Adiós a los archivadores.',
+        value: '<8s',
+        unit: '',
+        label: 'Factura ARCA emitida con CAE, lista para imprimir.',
       },
       {
         value: 'En el celu',
         unit: '',
-        label: 'Ves cada venta y cada caja, estés donde estés.',
+        label: 'Cada venta y cada caja, en tiempo real, estés donde estés.',
       },
       {
-        value: '1',
-        unit: 'responsable',
-        label: 'Cada cobro queda firmado. Sin filtraciones.',
+        value: '0',
+        unit: 'planillas',
+        label: 'Stock, listas de precios y cuentas corrientes en un solo lugar.',
       },
     ] as ReadonlyArray<{
       value: string
@@ -84,34 +84,104 @@ export const site = {
     }>,
   },
 
-  // FAQ section — preempts the most common pre-demo objections. Read by
-  // <FAQ />. Edit, reorder, add, or remove entries here; the section
-  // re-renders automatically. If the array is empty the section hides
-  // itself. Keep `q` short (one line) and `a` to 2–3 sentences max.
+  // Pricing anchor — shown in the <Pricing /> section. Replace the
+  // [PENDIENTE] values before publishing. Keep the comparison and note
+  // verbatim regardless of the final number.
+  pricing: {
+    // Headline anchor — "Desde $X por sucursal/mes". Currency is part
+    // of the string so we don't bake USD/ARS into copy until pricing
+    // is locked. Replace `[PENDIENTE: USD XX]` with the agreed anchor.
+    anchor: '[PENDIENTE: USD XX]',
+    period: 'por sucursal/mes',
+    // Relative-cost framing that lands for SMEs.
+    comparison:
+      'Cuesta menos que un empleado a medio tiempo. Y trabaja 24/7 en todas tus sucursales.',
+    note: 'Presupuesto exacto en la demo, a medida de tu pinturería. Sin setup fee. Sin contratos largos.',
+  } as {
+    anchor: string
+    period: string
+    comparison: string
+    note: string
+  },
+
+  // Social proof — empty until we have real clients. <SocialProof />
+  // hides itself when `logos` and `testimonials` are both empty.
+  socialProof: {
+    logos: [] as ReadonlyArray<{ name: string; src?: string }>,
+    testimonials: [] as ReadonlyArray<{
+      quote: string
+      name: string
+      role: string
+      photo?: string
+    }>,
+    // Aggregate counters — rendered alongside logos. `invoicedThisMonth`
+    // is a display string, not a raw number, because the figure is
+    // meaningless without currency + period framing.
+    aggregate: {
+      stores: 0,
+      branches: 0,
+      invoicedThisMonth: '',
+    },
+  } as {
+    logos: ReadonlyArray<{ name: string; src?: string }>
+    testimonials: ReadonlyArray<{
+      quote: string
+      name: string
+      role: string
+      photo?: string
+    }>
+    aggregate: {
+      stores: number
+      branches: number
+      invoicedThisMonth: string
+    }
+  },
+
+  // FAQ section — preempts the most common pre-demo objections from
+  // both personas (Persona A = sale de Zeus/Flexxus/Líder; Persona B =
+  // viene de Excel + cuaderno + facturador AFIP). Order matters:
+  // highest-impact unblockers first. Read by <FAQ />. If the array
+  // is empty the section hides itself.
   faq: [
     {
-      q: '¿Cuánto cuesta?',
-      a: 'Plan mensual sin contratos largos. Te armamos un presupuesto en la demo según cantidad de sucursales y empleados. Cancelás cuando quieras.',
+      q: '¿Migran mi base de datos desde Zeus, Flexxus o Líder?',
+      a: 'Sí. Exportamos tus productos, precios, clientes, cuentas corrientes y proveedores desde tu sistema actual y los cargamos en Pintana. No reescribís ni un dato a mano.',
     },
     {
-      q: '¿Cuánto tarda en estar operativo?',
-      a: 'En 1 día empezás a vender con el POS. La migración completa de tu stock y clientes desde planillas o tu sistema actual se hace en 1 semana, con acompañamiento del equipo de Pintana.',
+      q: '¿Mantienen mi numeración de facturación con ARCA?',
+      a: 'Sí. Conservamos la numeración de tus puntos de venta para que no haya saltos ni quiebres ante ARCA. Lo configuramos antes de cortar el sistema viejo.',
     },
     {
-      q: '¿Y si ya uso otro sistema?',
-      a: 'Migramos tu base de productos, precios, clientes y proveedores desde tu sistema actual o desde planillas. No reescribís nada a mano.',
+      q: '¿Funciona si se corta internet?',
+      a: 'Sí. El punto de venta sigue cobrando offline y sincroniza solo cuando vuelve la conexión. No perdés ninguna venta ni cierre de caja.',
     },
     {
-      q: '¿Funciona si se cae internet?',
-      a: 'Sí. El punto de venta sigue cobrando offline y sincroniza con el sistema cuando vuelve la conexión. No perdés ninguna venta.',
+      q: '¿Qué pasa con mis datos si decido irme?',
+      a: 'Te los llevás. Exportamos toda tu información — productos, clientes, ventas, cuentas corrientes — en formatos abiertos. Sin trampas, sin demoras.',
     },
     {
-      q: '¿Mis empleados van a saber usarlo?',
-      a: 'Sí. El POS está pensado para que un empleado nuevo cobre desde el primer turno. Incluye un tutorial guiado dentro de la pantalla y soporte por WhatsApp.',
+      q: '¿Soporta mi impresora fiscal? ¿Cuáles son compatibles?',
+      a: 'Trabajamos con las principales impresoras fiscales del mercado argentino — Epson, Hasar, NCR y Olivetti. Si tu modelo no está, lo certificamos antes de migrarte.',
     },
     {
-      q: '¿Sirve si tengo una sola sucursal?',
-      a: 'Sí. Pintana funciona igual con una o veinte sucursales — el módulo multi-sucursal se activa cuando lo necesitás, sin migrar nada.',
+      q: '¿Cuántos usuarios y sucursales incluye el plan?',
+      a: 'El plan se arma por sucursal y se ajusta a tu equipo. No te cobramos por empleado: si tu pinturería tiene 8 personas, las 8 entran. El presupuesto exacto se define en la demo.',
+    },
+    {
+      q: '¿Necesito contratar un sistemas para usarlo?',
+      a: 'No. Pintana corre en la nube — no se instala servidor ni se contrata IT. Vos abrís el navegador y entrás. Nosotros nos ocupamos de todo lo técnico.',
+    },
+    {
+      q: '¿Cómo es el soporte? ¿Tiene horarios?',
+      a: 'Soporte por WhatsApp de lunes a sábado, en horario comercial extendido. Durante el primer mes, todos los días. La persona que te atiende conoce tu pinturería — no es un call center.',
+    },
+    {
+      q: '¿Manejo varias sucursales con un solo login?',
+      a: 'Sí. Un solo usuario ve todas tus sucursales en tiempo real desde cualquier dispositivo. Stock, caja, ventas y cuentas corrientes — todo consolidado, sin cambiar de sesión.',
+    },
+    {
+      q: '¿Tienen app para el celular o solo web?',
+      a: 'Pintana funciona en cualquier navegador del celular sin instalar nada. Mirás KPIs, autorizás operaciones y revisás stock desde el teléfono. La caja registradora rinde mejor en pantalla grande, pero operás desde cualquier lado.',
     },
   ] as ReadonlyArray<{ q: string; a: string }>,
 } as const

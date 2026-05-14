@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Home } from '@/pages/Home'
+import { Migrate } from '@/pages/Migrate'
 import { Privacy } from '@/pages/Privacy'
 import { Terms } from '@/pages/Terms'
 import { DevCompare } from '@/pages/dev/Compare'
@@ -23,6 +24,7 @@ export function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/migrate" element={<Migrate />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/tos" element={<Terms />} />
         {import.meta.env.DEV && (

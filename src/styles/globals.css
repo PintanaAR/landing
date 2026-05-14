@@ -112,6 +112,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Catch-all for decorative absolute children that bleed past the viewport
+     edge (radial glows, paint drips, edge highlights). `clip` instead of
+     `hidden` so children using `position: sticky` (Migration) still work. */
+  overflow-x: clip;
 }
 
 /* Paper-grain overlay — fractal noise rendered at low opacity, fixed to

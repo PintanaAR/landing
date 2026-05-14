@@ -63,25 +63,24 @@ export function Hero() {
 
           <motion.h1
             variants={fadeUp}
-            className="mt-6 max-w-[14ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
-            style={{ fontSize: 'clamp(48px, 7vw, 84px)' }}
+            className="mt-6 max-w-[16ch] font-display font-extrabold leading-[1.02] tracking-[-0.035em] text-text"
+            style={{ fontSize: 'clamp(46px, 6.6vw, 80px)' }}
           >
-            Menos caos.
-            <br />
+            Cada día se te{' '}
             <span className="relative inline-block">
-              <span className="text-text">Más ventas.</span>
+              <span className="text-text">escapa plata.</span>
               <BrushUnderline reduce={!!reduce} />
             </span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="mt-7 max-w-[52ch] text-[17px] leading-[1.65] text-text-2"
+            className="mt-7 max-w-[60ch] text-[17px] leading-[1.65] text-text-2"
           >
-            Otras pinturerías cierran caja a mano y rastrean stock por
-            WhatsApp.{' '}
-            <span className="font-semibold text-text">Pintana lo hace por vos</span>
-            {' '}— en tiempo real, en todas tus sucursales.
+            <span className="font-semibold text-text">Pintana</span> es el sistema
+            de gestión, punto de venta y facturación para pinturerías argentinas.
+            Reemplaza tu sistema viejo — o tu combinación de Excel, cuaderno y
+            facturador AFIP.
           </motion.p>
 
           <motion.div
@@ -117,9 +116,9 @@ function Eyebrow() {
         <span className="absolute inset-0 animate-ping rounded-full bg-purple/60" />
         <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-purple" />
       </span>
-      Sistema operativo · Pinturerías
+      Punto de venta · Gestión
       <span className="text-text-3">·</span>
-      Multi-sucursal
+      Facturación ARCA
     </span>
   )
 }
